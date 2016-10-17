@@ -1,0 +1,20 @@
+{
+  "name": "feng",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "./node_modules/.bin/webpack-dev-server --content-base dist/",
+    "build": "./node_modules/.bin/webpack -p"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "d3plus": "^1.9.8",
+    "jquery": "^3.1.1",
+    "materialize": "^1.0.0",
+    "materialize-css": "^0.97.7",
+    "materialize-loader": "^1.1.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "style-loader": "^0.13.1",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
