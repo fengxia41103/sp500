@@ -12,41 +12,6 @@ h6 {
     font-family: 'Baloo Paaji', cursive;
 }
 
-.my-image-center {
-    margin-top: 30px;
-    padding: 20px;
-    height: 300px;
-}
-
-.my-logo {
-    font-size: 1.3em;
-}
-
-.my-header {
-    height: 100px;
-    padding: 40px;
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #eee;
-}
-
-.my-banner {
-    font-size: 5em;
-    font-weight: bold;
-    padding-top: 40px;
-    color: #adaded;
-    font-family: 'Alfa Slab One', cursive;
-}
-
-.my-subbanner {
-    margin-top: 30px;
-    font-family: Copperplate/Copperplate Gothic Light, sans-serif;
-}
-
-.my-footer-banner {
-    margin-top: 3%;
-    font-family: Copperplate/Copperplate Gothic Light, sans-serif;
-}
 
 .my-nobreak{
     overflow: hidden; /* Fix for firefox and IE 10-11  */
@@ -125,90 +90,6 @@ h6 {
 }
 
 
-/* Customize Bootstrap default CSS
--------------------------------------------------- */
-
-.dropdown-menu {
-    color: #333;
-}
-
-.my-dl-horizontal dt,
-.my-dl-horizontal dd {
-    border-bottom: 1px dashed #ddd;
-}
-
-.my-dl-horizontal dt {
-    font-weight: normal;
-    text-align: left;
-    width: 30%;
-}
-
-.my-dl-horizontal dd {
-    margin-left: 40%;
-}
-
-.my-section-header {
-    background-color: #EFEFEf;
-    border-left: 3px solid #89e;
-    padding: 5px 0 5px 10px;
-    border-radius: 2px 0px 0px 2px;
-}
-
-.my-huge-font {
-    font-family: 'Francois One', sans-serif;
-    font-size: 3em;
-    display: inline-block;
-}
-
-
-/* Wrapper for page content to push down footer */
-
-#wrap {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    /* Negative indent footer by it's height */
-    margin: 0 auto -120px;
-}
-
-
-/* Set the fixed height of the footer here */
-
-#push {
-    height: 150px;
-}
-
-#footer {
-    height: 120px;
-    text-align: center;
-    border-top: 2px solid #eeeeee;
-    padding: 10px 0;
-    min-height: 200px;
-    background-color: #f5f5f5;
-    margin-top: 30px;
-}
-
-
-/* Lastly, apply responsive CSS fixes as necessary */
-
-@media (max-width: 767px) {
-    #footer {
-        margin-left: -20px;
-        margin-right: -20px;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-}
-
-.background-shade {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    background-size: cover;
-}
 
 .pin-card {
     width: 100%;
@@ -235,96 +116,6 @@ label {
     font-weight: 600;
 }
 
-.img-thumbnail {
-    margin: 10px 0px;
-}
-
-.byline {
-    display: block;
-    font-style: italic;
-    margin: 0.5em 0 0 0;
-    padding-bottom: 0.5em;
-}
-
-
-/* Button */
-
-.button {
-    display: inline-block;
-    text-decoration: none;
-    cursor: pointer;
-    border: 0;
-    border-radius: 5px;
-    background: #d52349;
-    color: #fff !important;
-    font-weight: 700;
-    outline: 0;
-    -moz-transition: background-color .25s ease-in-out;
-    -webkit-transition: background-color .25s ease-in-out;
-    -o-transition: background-color .25s ease-in-out;
-    -ms-transition: background-color .25s ease-in-out;
-    transition: background-color .25s ease-in-out;
-}
-
-.button:hover {
-    background: #f7456b;
-}
-
-
-/* Pennant */
-
-.pennant {
-    position: relative;
-    display: inline-block;
-    width: 9em;
-    padding: 1.5em 0 0.5em 0;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    text-align: center;
-    color: #fff;
-    font-family: 'Teko', sans-serif;
-    font-size: 1.5em;
-}
-
-.pennant:after {
-    content: '';
-    position: absolute;
-    bottom: -1.98em;
-    left: 0;
-    border-top: solid 2em #d52349;
-    border-left: solid 4.5em transparent;
-    border-right: solid 4.5em transparent;
-}
-
-.pennant span {
-    display: block;
-    margin: 0 auto;
-}
-
-.pennant-alt {
-    background-color: #d52349;
-}
-
-.pennant-alt:after {
-    border-top-color: #d52349;
-}
-
-.pennant-alt2 {
-    background-color: #827a7c;
-}
-
-.pennant-alt2:after {
-    border-top-color: #827a7c;
-}
-
-.date {
-    color: white;
-    float: left;
-    font-weight: bold;
-    font-size: 1em;
-    text-align: center;
-    margin-right: 2em;
-}
 
 article p {
     line-height: 1.5em;
@@ -332,11 +123,7 @@ article p {
 }
 
 footer {
-    padding: 3em 5em;
-    bottom: 0;
     /* Set the fixed height of the footer here */
-    min-height: 300px;
-    background-color: #3e3e3c;
     color: #fff;
 }
 
@@ -349,7 +136,7 @@ footer a:hover {
 }
 
 .myheader {
-    background: url("/theme/images/background-1684.jpg") no-repeat;
+    background: url("/images/photo-1451187580459-43490279c0fa.jpg") no-repeat;
     min-height: 700px;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -363,32 +150,6 @@ footer a:hover {
 
 .myhighlight {
     color: #d52349;
-}
-
-.my-resume-header {
-    font-weight: bold;
-    //font-variant: small-caps;
-    padding: 1em;
-    //background-color: #eee;
-    border: 1px solid #eee;
-    border-left: 0.5em solid #eee;
-    color: #232323;
-    margin-bottom: 1em;
-    font-size: 0.9em;
-}
-
-.my-resume-header:hover {
-    border: 1px solid #d52349;
-    border-left: 0.5em solid #d52349;
-}
-
-resume li:last-child {
-    margin-bottom: 1em;
-}
-
-
-img {
-    margin-bottom: 1em;
 }
 
 article{
@@ -409,69 +170,4 @@ figcaption:before{
 }
 figure img{
     max-width: 100%;
-}
-
-.btn.mytag {
-  border: none;
-  background: #fff;
-  color: #333;
-  position: relative;
-  -webkit-border-radius: .25em;
-  border-radius: .25em;
-  margin-left: .5em;
-  margin-right: .5em;
-  margin-bottom: .75em;
-}
-
-.btn.mytag:before{
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 100%;
-  margin-right: -1px;
-  border: solid transparent 1.2em;
-  //border-right: solid 0.6em #91A3A2;
-  border-right: solid 0.6em #fff;
-}
-
-.btn.mytag:hover{
-    background: #efefef;
-}
-.btn.mytag:hover:before{
-  border-right: solid 0.6em #efefef;
-}
-
-/* fluid 5 columns */
-.grid {
-    -webkit-column-gap: 1px; /* Chrome, Safari, Opera */
-    -moz-column-gap: 1px; /* Firefox */
-    column-gap: 1px;
-}
-.grid img{
-    margin: 0px;
-    vertical-align: none;
-}
-
-.fa-expand:hover {
-    -webkit-transition: all 0.6s ease-in-out;
-    -moz-transition: all 0.6s ease-in-out;
-    -o-transition: all 0.6s ease-in-out;
-    -ms-transition: all 0.6s ease-in-out;
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    color: #ffe933;
-}
-#showMore:hover {
-    color: #ffe933;
-}
-
-.mythumbnail{
-    width: 80px;
-    height: 100px;
-}
-
-.mynav {
-    opacity: 0.5;
 }

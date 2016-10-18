@@ -79,31 +79,31 @@ var GraphFactory = React.createClass({
             // container id
             var containerId = randomId();
             return (
-                <div>
-                    <h3>
-                        {this.props.countryCode}
-                    </h3>
-                    <GraphBox containerId={containerId}
-                        {...this.props}
-                        d3config={this.props.d3config.default}/>
-                    <div className="divider" />
-                </div>
+            <div>
+                <h3>
+                    {this.props.countryCode}
+                </h3>
+                <GraphBox containerId={containerId}
+                    {...this.props}
+                    d3config={this.props.d3config.default}/>
+                <div className="divider" />
+            </div>
             );
         } else if (this.props.type === "line"){
             // container id
             var containerId = randomId();
             return (
-                <div>
-                    <h3>
-                        {this.props.countryCode}
-                    </h3>
-                    <GraphBox containerId={containerId}
-                        {...this.props}
-                        data={data}
-                        d3config={this.props.d3config.line}
-                    />
-                    <div className="divider" />
-                </div>
+            <div>
+                <h3>
+                    {this.props.countryCode}
+                </h3>
+                <GraphBox containerId={containerId}
+                    {...this.props}
+                    data={data}
+                    d3config={this.props.d3config.line}
+                />
+                <div className="divider" />
+            </div>
             );
         } else if (this.props.type === "pie"){
             var graphs = [];
@@ -206,9 +206,9 @@ var CountryAlphabeticList = React.createClass({
         var fields = this.props.countries.map(function(c){
             var itemClass = classNames(
                 'chip',
-                {'teal lighten-2': activeCountry && c.iso2Code==activeCountry}
+                {'teal lighten-2 grey-text text-lighten-4': activeCountry && c.iso2Code==activeCountry}
             );
-            if (c.iso2Code.startsWith(letter) || letter.toLowerCase()=="all"){
+            if (c.iso2Code.startsWith(letter)){
                 return (
                     <div key={c.iso2Code} className={itemClass}>
                     <span onClick={setCountry.bind(null,c.iso2Code)}>
@@ -255,7 +255,6 @@ var CountryBox = React.createClass({
     render: function(){
         // Build A-Z index
         var alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
-        alphabet.unshift("All");
         var current = this.state.index;
         var setIndex = this.setIndex;
         var index = alphabet.map(function(letter){
@@ -281,19 +280,19 @@ var CountryBox = React.createClass({
 
         // Render
         return (
-            <div>
-                <nav>
-                    <div className="nav-wrapper">
-                    <ul id="nav-mobile" className="hide-on-med-and-down">
-                    {index}
-                    </ul>
-                    </div>
-                </nav>
-                <CountryAlphabeticList
-                    letter={current}
-                    countries={this.state.data}
-                    {...this.props} />
-            </div>
+        <div>
+            <nav>
+                <div className="nav-wrapper">
+                <ul className="right hide-on-med-and-down">
+                {index}
+                </ul>
+                </div>
+            </nav>
+            <CountryAlphabeticList
+                letter={current}
+                countries={this.state.data}
+                {...this.props} />
+        </div>
         );
     }
 });

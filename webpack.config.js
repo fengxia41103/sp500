@@ -13,7 +13,9 @@ var config = {
         path: BUILD_DIR,
         filename: 'bundle.js'
     },
-    devServer: { inline: true },
+    devServer: {
+        inline: true
+    },
     module: {
         loaders: [{
             test: /\.jsx?/,
@@ -26,10 +28,17 @@ var config = {
         }, {
             test: /\.css$/,
             loader: "style-loader!css-loader"
-        },{
-    test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
-    loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
-}],
+        }, {
+            test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
+            loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]',
+
+        }, {
+            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            loader: "url-loader?limit=10000&minetype=application/font-woff"
+        }, {
+            test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            loader: "file-loader"
+        }],
         plugins: [
             new ExtractTextPlugin("styles.css", {
                 allChunks: false

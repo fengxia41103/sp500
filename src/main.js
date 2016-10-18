@@ -1,5 +1,6 @@
 // main.js
 require("materialize-loader");
+require("font-awesome/css/font-awesome.css");
 require("./stylesheets/my.css");
 
 import React from "react";
@@ -11,9 +12,11 @@ var RootBox = require("./country.jsx");
 var Page = React.createClass({
   render () {
     return (
-      <div>
-        <RootBox />
+      <div id="wrap" style={{backgroundColor: "#fefefe"}}>
         <Header />
+        <div className="container">
+        <RootBox />
+        </div>
         <Footer />
       </div>
     );
