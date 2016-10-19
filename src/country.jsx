@@ -30,9 +30,10 @@ var AjaxContainer = React.createClass({
         }
 
         // Get data
-        var that = this;
+        var api = this.props.apiUrl;
         var handleUpdate = this.props.handleUpdate;
-        fetch(this.props.apiUrl)
+        console.log("Getting: "+api);
+        fetch(api)
         .then(function(resp){
             return resp.json();
         }).then(function(json){
