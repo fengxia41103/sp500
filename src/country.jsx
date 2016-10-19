@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import d3plus from 'd3plus';
 
 var _ = require('lodash');
-var j$ = require("jquery");
 var classNames = require('classnames');
 
 var randomId = function(){
