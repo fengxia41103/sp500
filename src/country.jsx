@@ -33,17 +33,13 @@ var AjaxContainer = React.createClass({
         // Get data
         var that = this;
         var handleUpdate = this.props.handleUpdate;
-        console.log("getting: "+this.props.apiUrl);
-
-        j$.ajax({
-            url: this.props.apiUrl,
-            dataType: "json",
-            method: "GET",
-            success: function(resp){
-                if ((typeof resp != "undefined") && resp){
-                    handleUpdate(resp);
-                }
-            } // end of success
+        fetch(this.props.apiUrl)
+        .then(function(resp){
+            return resp.json();
+        }).then(function(json){
+            if ((typeof json != "undefined") && json){
+                handleUpdate(json);
+            }
         });
     },
     componentWillMount: function(){
@@ -244,7 +240,7 @@ var CountryBox = React.createClass({
     },
     getUrl: function(){
         //var api = "http://api.dhsprogram.com/rest/dhs/countries";
-        var api = "http://api.worldbank.org/countries?format=json&per_page=1000";
+        var api = "http://api.worldbank.org/v2/en/countries?format=json&per_page=1000";
         return api;
     },
     setIndex: function(letter){
@@ -269,7 +265,7 @@ var CountryBox = React.createClass({
         });
 
         // Update data
-        if (this.state.data=="undefined" || this.state.data.length < 1){
+        if (typeof this.state.data=="undefined" || (this.state.data && this.state.data.length < 1)){
             var api = this.getUrl();
             return (
                 <AjaxContainer
@@ -440,7 +436,7 @@ var WbGraphContainer = React.createClass({
     },
     getUrl: function(countryCode, indicator){
         // Build DHS API url
-        var baseUrl = "http://api.worldbank.org/countries/";
+        var baseUrl = "http://api.worldbank.org/v2/en/countries/";
         var tmp = [countryCode, "indicators", indicator].join("/");
         var query = "?date="+this.state.start+":"+this.state.end+"&format=json&per_page=1000";
         return baseUrl+tmp+query;

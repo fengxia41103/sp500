@@ -8,7 +8,10 @@ var APP_DIR = path.resolve(__dirname, 'src');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var config = {
-    entry: APP_DIR + '/main.js',
+    entry: [
+        'whatwg-fetch',
+        APP_DIR + '/main.js'
+    ],
     output: {
         path: BUILD_DIR,
         filename: 'bundle.js'

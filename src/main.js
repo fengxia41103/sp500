@@ -1,4 +1,7 @@
 // main.js
+require('es5-shim');
+require('es5-shim/es5-sham');
+require('console-polyfill');
 require("materialize-loader");
 require("font-awesome/css/font-awesome.css");
 require("./stylesheets/my.css");

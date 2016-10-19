@@ -18,7 +18,9 @@ var Footer = React.createClass({
           <div className="footer-copyright">
             <div className="container">
             <i className="fa fa-copyright"></i>2016 PY Consulting Ltd.
-            <a className="grey-text text-lighten-4 right" href="http://fengxia.co">Read more</a>
+            <span className="grey-text text-lighten-4 right">
+                Made by <a href="http://fengxia.co">Feng Xia</a>
+            </span>
             </div>
           </div>
       </footer>

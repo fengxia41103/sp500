@@ -127,17 +127,9 @@ footer {
     color: #fff;
 }
 
-footer a {
-    color: #FFE933;
-}
-
-footer a:hover {
-    color: #f7456b;
-}
-
 .myheader {
     background: url("/images/photo-1451187580459-43490279c0fa.jpg") no-repeat;
-    min-height: 700px;
+    min-height: 100vh;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
