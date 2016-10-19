@@ -45,6 +45,6 @@ var api = "http://api.worldbank.org/v2/en/countries?format=json&per_page=1000";
 
 ## Development
 
-> `npm install`: to pull all dependencies
-> go to _dist_ folder and run `npm run dev`
-> browse `localhost:8080`, browser will auto-refresh when webpack detects a change to source files.
+1. `npm install`: to pull all dependencies
+2. go to _dist_ folder and run `npm run dev`
+3. browse `localhost:8080`, browser will auto-refresh when webpack detects a change to source files.
