@@ -4,6 +4,7 @@ import d3plus from 'd3plus';
 
 var _ = require('lodash');
 var classNames = require('classnames');
+import WayPoint from 'react-waypoint';
 
 var randomId = function(){
     return "DHS"+(Math.random()*1e32).toString(12);
@@ -166,6 +167,9 @@ var GraphBox = React.createClass({
             that.viz.data(data);
             that.viz.draw();
         }, 500);
+    },
+    componentWillUnmount: function(){
+        this.viz = null;
     },
     render: function(){
         // If data changed
@@ -491,9 +495,11 @@ var WbGraphContainer = React.createClass({
 
 var RootBox = React.createClass({
     getInitialState: function(){
+        this.graphs = [];
+        this.graphsInDisplay = [];
         return {
             countryCode: null,
-            dhsGraphs: [{
+            graphs: [{
                 title: "Age-specific fertility rate for the three years preceding the survey, expressed per 1,000 women",
                 indicators:[
                     "FE_FRTR_W_A15",
@@ -504,7 +510,7 @@ var RootBox = React.createClass({
                     "FE_FRTR_W_A40",
                     "FE_FRTR_W_A45",
                 ],
-                type: "bar"
+                type: "bar", source: "dhs"
             },{
                 title:"HIV prevalence among couples",
                 indicators:[
@@ -513,211 +519,234 @@ var RootBox = React.createClass({
                     "HA_HPAC_B_CNP",
                     "HA_HPAC_B_CNN"
                 ],
-                type: "pie"
-            }],
-            wbGraphs:[{
+                type: "pie", source: "dhs"
+            },{
                 title: "GNI per capita, Atlas method (current US$)",
                 indicator: "NY.GNP.PCAP.CD",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "GDP per person employed (constant 2011 PPP $)",
                 indicator: "SL.GDP.PCAP.EM.KD",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Labor force, total",
                 indicator: "SL.TLF.TOTL.IN",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Life expectancy at birth, total (years)",
                 indicator: "SP.DYN.LE00.IN",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Inflation, GDP deflator (annual %)",
                 indicator: "NY.GDP.DEFL.KD.ZG",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "Inflation, consumer prices (annual %)",
                 indicator: "FP.CPI.TOTL.ZG",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "Real interest rate (%)",
                 indicator: "FR.INR.RINR",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Fertility rate, total (births per woman)",
                 indicator: "SP.DYN.TFRT.IN",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Population ages 0-14 (% of total)",
                 indicator: "SP.POP.0014.TO.ZS",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Population ages 15-64 (% of total)",
                 indicator: "SP.POP.1564.TO.ZS",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Health expenditure, total (% of GDP)",
                 indicator: "SH.XPD.TOTL.ZS",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "Health expenditure per capita (current US$)",
                 indicator: "SH.XPD.PCAP",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "Rural population (% of total population)",
                 indicator: "SP.RUR.TOTL.ZS",
-                type: "bar"
+                type: "line", source: "wb"
             },{
                 title: "Urban population (% of total)",
                 indicator: "SP.URB.TOTL.IN.ZS",
-                type: "bar"
+                type: "line", source: "wb"
             },{
                 title: "Population living in slums, (% of urban population)",
                 indicator: "EN.POP.SLUM.UR.ZS",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "Revenue, excluding grants (% of GDP)",
                 indicator: "GC.REV.XGRT.GD.ZS",
-                type: "bar"
+                type: "line", source: "wb"
             },{
                 title: "External debt stocks, public and publicly guaranteed (PPG) (DOD, current US$)",
                 indicator: "DT.DOD.DPPG.CD",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Bank nonperforming loans to total gross loans (%)",
                 indicator: "FB.AST.NPER.ZS",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "Bank capital to assets ratio (%)",
                 indicator: "FB.BNK.CAPA.ZS",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "Broad money growth (annual %)",
                 indicator: "FM.LBL.BMNY.ZG",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Net barter terms of trade index (2000 = 100)",
                 indicator: "TT.PRI.MRCH.XD.WD",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "Merchandise trade (% of GDP)",
                 indicator: "TG.VAL.TOTL.GD.ZS",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Exports of goods and services (% of GDP)",
                 indicator: "NE.EXP.GNFS.ZS",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Imports of goods and services (% of GDP)",
                 indicator: "NE.IMP.GNFS.ZS",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Merchandise exports (current US$)",
                 indicator: "TX.VAL.MRCH.CD.WT",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Merchandise imports (current US$)",
                 indicator: "TM.VAL.MRCH.CD.WT",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "High-technology exports (% of manufactured exports)",
                 indicator: "TX.VAL.TECH.MF.ZS",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Foreign direct investment, net inflows (BoP, current US$)",
                 indicator: "BX.KLT.DINV.CD.WD",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Stocks traded, total value (% of GDP)",
                 indicator: "CM.MKT.TRAD.GD.ZS",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Stocks traded, turnover ratio of domestic shares (%)",
                 indicator: "CM.MKT.TRNR",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Expense (% of GDP)",
                 indicator: "GC.XPN.TOTL.GD.ZS",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Tax revenue (% of GDP)",
                 indicator: "GC.TAX.TOTL.GD.ZS",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Patent applications, residents",
                 indicator: "IP.PAT.RESD",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Patent applications, nonresidents",
                 indicator: "IP.PAT.NRES",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Researchers in R&D (per million people)",
                 indicator: "SP.POP.SCIE.RD.P6",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "Scientific and technical journal articles",
                 indicator: "IP.JRN.ARTC.SC",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "Research and development expenditure (% of GDP)",
                 indicator: "GB.XPD.RSDV.GD.ZS",
-                type: "bar"
+                type: "bar", source: "wb"
             },{
                 title: "CO2 emissions (metric tons per capita)",
                 indicator: "EN.ATM.CO2E.PC",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "Energy use (kg of oil equivalent per capita)",
                 indicator: "EG.USE.PCAP.KG.OE",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "International tourism, expenditures (% of total imports)",
                 indicator: "ST.INT.XPND.MP.ZS",
-                type: "line"
+                type: "line", source: "wb"
             },{
                 title: "International tourism, receipts (% of total exports)",
                 indicator: "ST.INT.RCPT.XP.ZS",
-                type: "line"
-            }]
+                type: "line", source: "wb"
+            }],
+            index: 0,
         }
+
     },
     setCountry: function(code){
         this.setState({
-            countryCode: code
-        });
-    },
-    render: function(){
-        var countryCode = this.state.countryCode;
-        var dhs = this.state.dhsGraphs.map(function(g){
-            var id = randomId();
-            return (
-                <DhsGraphContainer
-                    key={id}
-                    countryCode={countryCode}
-                    {...g}
-                />
-            );
-        });
-        var wb = this.state.wbGraphs.map(function(g){
-            var id = randomId();
-            return (
-                <WbGraphContainer
-                    key={id}
-                    countryCode={countryCode}
-                    {...g}
-                />
-            );
+            countryCode: code,
+            index: 1
         });
 
+        // Re-write all graphs
+        this.graphs = this.state.graphs.map(function(g){
+            var id = randomId();
+            if (g.source === "dhs"){
+                return (
+                    <DhsGraphContainer
+                        key={id}
+                        countryCode={code}
+                        {...g}
+                    />
+                );
+            }else if (g.source === "wb"){
+                return (
+                    <WbGraphContainer
+                        key={id}
+                        countryCode={code}
+                        {...g}
+                    />
+                );
+            }
+        });
+        this.graphsInDisplay = [];
+
+        // Initial showing
+        this._handleShowMore();
+    },
+    _handleShowMore: function(){
+        var step = 5;
+        var current = this.graphsInDisplay;
+        current.push.apply(current, this.graphs.slice(this.state.index*step, (this.state.index+1)*step));
+        this.graphsInDisplay = current;
+
+        this.setState({
+            index: this.state.index+1
+        });
+    },
+
+    render: function(){
         return (
             <div>
                 <article>
                 <CountryBox setCountry={this.setCountry}
                             activeCountry={this.state.countryCode}/>
-                {dhs}
-                {wb}
                 </article>
+                {this.graphsInDisplay}
+
+                {this.graphsInDisplay.length < this.graphs.length?
+                <div className="right-align">
+                     <span className="waves-effect waves-light btn" style={{marginTop:"1em"}}
+                     onClick={this._handleShowMore}>Load more</span>
+                </div>
+                : null}
             </div>
         );
     }
