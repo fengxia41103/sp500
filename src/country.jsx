@@ -41,12 +41,13 @@ var AjaxContainer = React.createClass({
             if ((typeof json != "undefined") && json){
                 handleUpdate(json);
             }
+        }).catch(function(error){
         });
     },
     componentWillMount: function(){
         this.debounceGetData = _.debounce(function(){
             this.getData();
-        }, 500);
+        }, 200);
     },
     render: function(){
         // Get data
@@ -498,12 +499,35 @@ var WbGraphContainer = React.createClass({
     }
 });
 
+var WbIndicators = React.createClass({
+    getInitialState: function(){
+        this.api = "http://api.worldbank.org/v2/indicators?format=json&per_page=17000";
+        return null;
+    },
+    render: function(){
+        var indicators = this.props.indicators;
+
+        // Update data
+        if (typeof indicators=="undefined" || (indicators && indicators.length < 1)){
+            return (
+                <AjaxContainer
+                    apiUrl={this.api}
+                    handleUpdate={this.props.handleUpdate} />
+            );
+        }
+
+        // Render
+        return null;
+    }
+});
+
 var RootBox = React.createClass({
     getInitialState: function(){
         this.graphs = [];
         this.graphsInDisplay = [];
         return {
             countryCode: null,
+            indicators: [],
             graphs: [{
                 title: "Age-specific fertility rate for the three years preceding the survey, expressed per 1,000 women",
                 indicators:[
@@ -660,7 +684,7 @@ var RootBox = React.createClass({
             },{
                 title: "Patent applications, nonresidents",
                 indicator: "IP.PAT.NRES",
-                type: "line", source: "wb"
+                type: "line", source: "wub"
             },{
                 title: "Researchers in R&D (per million people)",
                 indicator: "SP.POP.SCIE.RD.P6",
@@ -726,8 +750,28 @@ var RootBox = React.createClass({
         // Initial showing
         this._handleShowMore();
     },
+    handleIndicatorUpdate: function(data){
+        this.setState({
+            indicators: data[1].slice(0,1)
+        });
+
+        var tmp = this.state.graphs.slice();
+        for(var i=0; i<data.length; i++){
+            tmp.push({
+                title: data[i].name,
+                indicator: data[i].id,
+                type: "line",
+                source: "wb",
+                sourceNote: data[i].sourceNote
+            });
+        }
+
+        this.setState({
+            graphs: tmp
+        });
+    },
     _handleShowMore: function(){
-        var step = 5;
+        var step = 10;
         var current = this.graphsInDisplay;
         current.push.apply(current, this.graphs.slice(this.state.index*step, (this.state.index+1)*step));
         this.graphsInDisplay = current;
@@ -741,6 +785,10 @@ var RootBox = React.createClass({
         return (
             <div>
                 <article>
+                {this.state.indicators.length<1?
+                    <WbIndicators handleUpdate={this.handleIndicatorUpdate} />
+                :null}
+
                 <CountryBox setCountry={this.setCountry}
                             activeCountry={this.state.countryCode}/>
                 </article>
