@@ -80,7 +80,7 @@ var GraphFactory = React.createClass({
         // Default type
         var graphType = "";
         if (typeof this.props.type === "undefined" || !this.props.type){
-            graphType = _.sample(["bar","line"]);
+            graphType = "line"; // Catch-all, if graph type is not defined!
         }else{
             graphType = this.props.type;
         }
@@ -566,31 +566,31 @@ var RootBox = React.createClass({
             },{
                 title: "GDP per person employed (constant 2011 PPP $)",
                 indicator: "SL.GDP.PCAP.EM.KD",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Labor force, total",
                 indicator: "SL.TLF.TOTL.IN",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Life expectancy at birth, total (years)",
                 indicator: "SP.DYN.LE00.IN",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Inflation, GDP deflator (annual %)",
                 indicator: "NY.GDP.DEFL.KD.ZG",
-                source: "wb"
+                type: "bar", source: "wb"
             },{
                 title: "Inflation, consumer prices (annual %)",
                 indicator: "FP.CPI.TOTL.ZG",
-                source: "wb"
+                type: "bar", source: "wb"
             },{
                 title: "Real interest rate (%)",
                 indicator: "FR.INR.RINR",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Fertility rate, total (births per woman)",
                 indicator: "SP.DYN.TFRT.IN",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Population ages 0-14 (% of total)",
                 indicator: "SP.POP.0014.TO.ZS",
@@ -610,11 +610,11 @@ var RootBox = React.createClass({
             },{
                 title: "Rural population (% of total population)",
                 indicator: "SP.RUR.TOTL.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Urban population (% of total)",
                 indicator: "SP.URB.TOTL.IN.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Population living in slums, (% of urban population)",
                 indicator: "EN.POP.SLUM.UR.ZS",
@@ -622,11 +622,11 @@ var RootBox = React.createClass({
             },{
                 title: "Revenue, excluding grants (% of GDP)",
                 indicator: "GC.REV.XGRT.GD.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "External debt stocks, public and publicly guaranteed (PPG) (DOD, current US$)",
                 indicator: "DT.DOD.DPPG.CD",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Bank nonperforming loans to total gross loans (%)",
                 indicator: "FB.AST.NPER.ZS",
@@ -634,97 +634,97 @@ var RootBox = React.createClass({
             },{
                 title: "Bank capital to assets ratio (%)",
                 indicator: "FB.BNK.CAPA.ZS",
-                type: "bar", source: "wb"
+                source: "wb"
             },{
                 title: "Broad money growth (annual %)",
                 indicator: "FM.LBL.BMNY.ZG",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Net barter terms of trade index (2000 = 100)",
                 indicator: "TT.PRI.MRCH.XD.WD",
-                type: "bar", source: "wb"
+                source: "wb"
             },{
                 title: "Merchandise trade (% of GDP)",
                 indicator: "TG.VAL.TOTL.GD.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Exports of goods and services (% of GDP)",
                 indicator: "NE.EXP.GNFS.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Imports of goods and services (% of GDP)",
                 indicator: "NE.IMP.GNFS.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Merchandise exports (current US$)",
                 indicator: "TX.VAL.MRCH.CD.WT",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Merchandise imports (current US$)",
                 indicator: "TM.VAL.MRCH.CD.WT",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "High-technology exports (% of manufactured exports)",
                 indicator: "TX.VAL.TECH.MF.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Foreign direct investment, net inflows (BoP, current US$)",
                 indicator: "BX.KLT.DINV.CD.WD",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Stocks traded, total value (% of GDP)",
                 indicator: "CM.MKT.TRAD.GD.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Stocks traded, turnover ratio of domestic shares (%)",
                 indicator: "CM.MKT.TRNR",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Expense (% of GDP)",
                 indicator: "GC.XPN.TOTL.GD.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Tax revenue (% of GDP)",
                 indicator: "GC.TAX.TOTL.GD.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Patent applications, residents",
                 indicator: "IP.PAT.RESD",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Patent applications, nonresidents",
                 indicator: "IP.PAT.NRES",
-                type: "line", source: "wub"
+                source: "wub"
             },{
                 title: "Researchers in R&D (per million people)",
                 indicator: "SP.POP.SCIE.RD.P6",
-                type: "bar", source: "wb"
+                source: "wb"
             },{
                 title: "Scientific and technical journal articles",
                 indicator: "IP.JRN.ARTC.SC",
-                type: "bar", source: "wb"
+                source: "wb"
             },{
                 title: "Research and development expenditure (% of GDP)",
                 indicator: "GB.XPD.RSDV.GD.ZS",
-                type: "bar", source: "wb"
+                source: "wb"
             },{
                 title: "CO2 emissions (metric tons per capita)",
                 indicator: "EN.ATM.CO2E.PC",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "Energy use (kg of oil equivalent per capita)",
                 indicator: "EG.USE.PCAP.KG.OE",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "International tourism, expenditures (% of total imports)",
                 indicator: "ST.INT.XPND.MP.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             },{
                 title: "International tourism, receipts (% of total exports)",
                 indicator: "ST.INT.RCPT.XP.ZS",
-                type: "line", source: "wb"
+                source: "wb"
             }],
-            index: 0,
+            index: 0, // load more function starting index
         }
     },
     setCountry: function(code){
@@ -751,7 +751,6 @@ var RootBox = React.createClass({
             tmp.push({
                 title: indicators[i].name,
                 indicator: indicators[i].id,
-                type: "line",
                 source: "wb",
                 sourceNote: indicators[i].sourceNote
             });
@@ -763,22 +762,30 @@ var RootBox = React.createClass({
     _generateGraphs: function(){
         // Show more step
         const step = 5;
+        const graphTypes = _.shuffle(["line","line","line","line","bar"]);
 
         // Generate more graphs
         var code = this.state.countryCode;
         var index = this.state.index;
         var total = this.state.graphs.length;
         var tmp = [];
-        var i = index;
-        for (i=index; i<Math.min(index+step,total); i++){
+        for (var i=index, j=0; i<Math.min(index+step,total); i++, j++){
             var id = randomId();
             var g = this.state.graphs[i];
+            var graphType = "";
+
+            if (typeof g.type === "undefined"){
+                graphType = graphTypes[j];
+             }else{
+                graphType = g.type;
+             }
 
             if (g.source === "dhs"){
                 tmp.push(
                     <DhsGraphContainer
                         key={id}
                         countryCode={code}
+                        type={graphType}
                         {...g}
                     />
                 );
@@ -787,6 +794,7 @@ var RootBox = React.createClass({
                     <WbGraphContainer
                         key={id}
                         countryCode={code}
+                        type={graphType}
                         {...g}
                     />
                 );
@@ -803,6 +811,12 @@ var RootBox = React.createClass({
     },
 
     render: function(){
+        var loadWbIndicators = (
+            this.state.indicators.length<1?
+                <WbIndicators handleUpdate={this.handleIndicatorUpdate} />
+            :null
+
+        );
         var haveMore = (
             this.state.index>0 && this.state.index < this.state.graphs.length?
                 <div className="right-align">
@@ -814,10 +828,6 @@ var RootBox = React.createClass({
         return (
             <div>
                 <article>
-                {this.state.indicators.length<1?
-                    <WbIndicators handleUpdate={this.handleIndicatorUpdate} />
-                :null}
-
                 <CountryBox setCountry={this.setCountry}
                             activeCountry={this.state.countryCode}/>
 
