@@ -523,7 +523,6 @@ var WbIndicators = React.createClass({
 
 var RootBox = React.createClass({
     getInitialState: function(){
-        this.graphs = [];
         this.graphsInDisplay = [];
         return {
             countryCode: null,
@@ -716,19 +715,56 @@ var RootBox = React.createClass({
             }],
             index: 0,
         }
-
     },
     setCountry: function(code){
         this.setState({
             countryCode: code,
-            index: 1
+            index: 0
+        }, function(){
+           this.graphsInDisplay = [];
+
+           // Initial showing
+           this._generateGraphs();
+       });
+    },
+    handleIndicatorUpdate: function(data){
+        // Acquired indicator list from data API
+        this.setState({
+            indicators: data[1].slice(0,1)
         });
 
-        // Re-write all graphs
-        this.graphs = this.state.graphs.map(function(g){
+        // Extend pre-existing indicator list
+        var tmp = this.state.graphs.slice();
+        var indicators = data[1];
+        for(var i=0; i<indicators.length; i++){
+            tmp.push({
+                title: indicators[i].name,
+                indicator: indicators[i].id,
+                type: "line",
+                source: "wb",
+                sourceNote: indicators[i].sourceNote
+            });
+        }
+        this.setState({
+            graphs: tmp
+        });
+    },
+    _generateGraphs: function(){
+        // Show more step
+        const step = 5;
+
+        // Generate more graphs
+        var code = this.state.countryCode;
+        var index = this.state.index;
+        var total = this.state.graphs.length;
+        var tmp = [];
+        var i = index;
+        for (i=index; i<Math.min(index+step,total); i++){
             var id = randomId();
+            var g = this.state.graphs[i];
+
             if (g.source === "dhs"){
-                return (
+                tmp.push(
                     <DhsGraphContainer
                         key={id}
                         countryCode={code}
@@ -736,7 +772,7 @@ var RootBox = React.createClass({
                     />
                 );
             }else if (g.source === "wb"){
-                return (
+                tmp.push(
                     <WbGraphContainer
                         key={id}
                         countryCode={code}
@@ -744,44 +780,26 @@ var RootBox = React.createClass({
                     />
                 );
             }
-        });
-        this.graphsInDisplay = [];
-
-        // Initial showing
-        this._handleShowMore();
-    },
-    handleIndicatorUpdate: function(data){
-        this.setState({
-            indicators: data[1].slice(0,1)
-        });
-
-        var tmp = this.state.graphs.slice();
-        for(var i=0; i<data.length; i++){
-            tmp.push({
-                title: data[i].name,
-                indicator: data[i].id,
-                type: "line",
-                source: "wb",
-                sourceNote: data[i].sourceNote
-            });
         }
 
-        this.setState({
-            graphs: tmp
-        });
-    },
-    _handleShowMore: function(){
-        var step = 10;
-        var current = this.graphsInDisplay;
-        current.push.apply(current, this.graphs.slice(this.state.index*step, (this.state.index+1)*step));
-        this.graphsInDisplay = current;
+        // Add to graph in display
+        this.graphsInDisplay = _.concat(this.graphsInDisplay, tmp);
 
+        // Set up next starting index
         this.setState({
-            index: this.state.index+1
+            index: i
         });
     },
 
     render: function(){
+        var haveMore = (
+            this.state.index>0 && this.state.index < this.state.graphs.length?
+                <div className="right-align">
+                     <span className="waves-effect waves-light btn" style={{marginTop:"1em"}}
+                     onClick={this._generateGraphs}>Load more</span>
+                </div>
+                : null);
+
         return (
             <div>
                 <article>
@@ -791,15 +809,11 @@ var RootBox = React.createClass({
 
                 <CountryBox setCountry={this.setCountry}
                             activeCountry={this.state.countryCode}/>
-                </article>
+
                 {this.graphsInDisplay}
 
-                {this.graphsInDisplay.length < this.graphs.length?
-                <div className="right-align">
-                     <span className="waves-effect waves-light btn" style={{marginTop:"1em"}}
-                     onClick={this._handleShowMore}>Load more</span>
-                </div>
-                : null}
+                {haveMore}
+                </article>
             </div>
         );
     }
