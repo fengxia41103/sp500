@@ -53,7 +53,12 @@ var AjaxContainer = React.createClass({
         if (!this.state.loading && this.debounceGetData){
             this.debounceGetData();
         }
-        return null;
+        return (
+           // Progress bar
+           <div className="progress">
+              <div className="indeterminate"></div>
+           </div>
+        );
     }
 });
 
