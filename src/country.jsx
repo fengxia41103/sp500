@@ -77,8 +77,16 @@ var GraphFactory = React.createClass({
             return null;
         }
 
+        // Default type
+        var graphType = "";
+        if (typeof this.props.type === "undefined" || !this.props.type){
+            graphType = _.sample(["bar","line"]);
+        }else{
+            graphType = this.props.type;
+        }
+
         // Render graph by chart type
-        if (this.props.type === "bar"){
+        if (graphType === "bar"){
             // container id
             var containerId = randomId();
             return (
@@ -87,6 +95,7 @@ var GraphFactory = React.createClass({
                     {this.props.countryCode}
                 </h3>
                 <GraphBox containerId={containerId}
+                    graphType={graphType}
                     {...this.props}
                     d3config={this.props.d3config.default}/>
                 <div className="divider" />
@@ -101,6 +110,7 @@ var GraphFactory = React.createClass({
                     {this.props.countryCode}
                 </h3>
                 <GraphBox containerId={containerId}
+                    graphType={graphType}
                     {...this.props}
                     data={data}
                     d3config={this.props.d3config.line}
@@ -108,7 +118,7 @@ var GraphFactory = React.createClass({
                 <div className="divider" />
             </div>
             );
-        } else if (this.props.type === "pie"){
+        } else if (graphType === "pie"){
             var graphs = [];
             var data = this.props.data;
 
@@ -134,6 +144,7 @@ var GraphFactory = React.createClass({
                             {this.props.countryCode}
                         </h3>
                         <GraphBox containerId={containerId}
+                            graphType={graphType}
                             {...this.props}
                             data={tmp[year]}
                             d3config={this.props.d3config.default}
@@ -160,7 +171,7 @@ var GraphBox = React.createClass({
             .container("#"+this.props.containerId)
             .config(this.props.d3config)
             .data(this.props.data)
-            .type(this.props.type)
+            .type(this.props.graphType)
             .draw();
     },
     componentDidMount: function(){
@@ -567,11 +578,11 @@ var RootBox = React.createClass({
             },{
                 title: "Inflation, GDP deflator (annual %)",
                 indicator: "NY.GDP.DEFL.KD.ZG",
-                type: "bar", source: "wb"
+                source: "wb"
             },{
                 title: "Inflation, consumer prices (annual %)",
                 indicator: "FP.CPI.TOTL.ZG",
-                type: "bar", source: "wb"
+                source: "wb"
             },{
                 title: "Real interest rate (%)",
                 indicator: "FR.INR.RINR",
