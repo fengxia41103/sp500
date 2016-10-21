@@ -7,13 +7,11 @@ var Footer = React.createClass({
     return (
       <footer className="page-footer">
           <div className="container">
-            <div className="row">
             <h5>Data source</h5>
             <ul>
               <li>The World Bank</li>
               <li>USAID</li>
             </ul>
-            </div>
           </div>
           <div className="footer-copyright">
             <div className="container">

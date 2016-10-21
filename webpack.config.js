@@ -10,7 +10,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var config = {
     entry: [
         'whatwg-fetch',
-        APP_DIR + '/main.js'
+        APP_DIR + '/main.jsx'
     ],
     output: {
         path: BUILD_DIR,

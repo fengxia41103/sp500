@@ -8,9 +8,9 @@ require("./stylesheets/my.css");
 
 import React from "react";
 import ReactDom from "react-dom";
-var Header = require("./header");
-var Footer = require("./footer");
-var RootBox = require("./country.jsx");
+var Header = require("./header.jsx");
+var Footer = require("./footer.jsx");
+import RootBox from "./rootbox.jsx";
 
 var Page = React.createClass({
   render () {
