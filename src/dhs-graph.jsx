@@ -67,9 +67,11 @@ var DhsGraphContainer = React.createClass({
         }
 
         // Render graphs
+        var footer = "Source: USAID DHS Program";
         return (
             <GraphFactory
                 data={this.state.data}
+                footer={footer}
                 {...this.props}
             />
         );

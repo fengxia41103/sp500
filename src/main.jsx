@@ -17,9 +17,7 @@ var Page = React.createClass({
     return (
       <div id="wrap" style={{backgroundColor: "#fefefe"}}>
         <Header />
-        <div className="container">
         <RootBox />
-        </div>
         <Footer />
       </div>
     );

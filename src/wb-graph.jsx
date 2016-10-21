@@ -60,9 +60,11 @@ var WbGraphContainer = React.createClass({
         }
 
         // Render graphs
+        var footer = "Source: The World Bank";
         return (
             <GraphFactory
                 data={this.state.data}
+                footer={footer}
                 {...this.props}
             />
         );

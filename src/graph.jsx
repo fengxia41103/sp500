@@ -109,7 +109,7 @@ var GraphBox = React.createClass({
             },
             "footer": {
                 position: "top",
-                value: "Data source: USAID DHS Program"
+                value: this.props.footer
             }
         };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import AjaxContainer from "./ajax.jsx";
+import CountryIndex from "./country-index.jsx";
 
 var _ = require('lodash');
 var classNames = require('classnames');
@@ -33,7 +34,7 @@ var CountryAlphabeticList = React.createClass({
 
         return (
             <div>
-                <h3>{this.props.letter}</h3>
+                <h3 id={this.props.letter}>{this.props.letter}</h3>
                 {fields}
                 <div className="divider"></div>
             </div>
@@ -70,12 +71,13 @@ var CountryBox = React.createClass({
         var current = this.state.index;
         var setIndex = this.setIndex;
         var index = alphabet.map(function(letter){
-            var highlight = current==letter?"active":"";
+            var highlight = current==letter?"myhighlight":"";
             return (
                 <li key={letter}
-                    className={highlight}
                     onClick={setIndex.bind(null,letter)}>
-                    <a>{letter}</a>
+                       <a className={highlight}>
+                          {letter}
+                       </a>
                 </li>
             );
         });
@@ -93,13 +95,9 @@ var CountryBox = React.createClass({
         // Render
         return (
         <div>
-            <nav>
-                <div className="nav-wrapper">
-                <ul className="right hide-on-med-and-down">
-                {index}
-                </ul>
-                </div>
-            </nav>
+            <CountryIndex current={this.state.index}
+                setIndex={this.setIndex} />
+
             <CountryAlphabeticList
                 letter={current}
                 countries={this.state.data}

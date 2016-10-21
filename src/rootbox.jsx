@@ -308,11 +308,11 @@ var RootBox = React.createClass({
                 : null);
 
         return (
-            <div>
-                <article>
+            <div className="container">
                 <CountryBox setCountry={this.setCountry}
                             activeCountry={this.state.countryCode}/>
 
+                <article>
                 {this.graphsInDisplay}
 
                 {haveMore}

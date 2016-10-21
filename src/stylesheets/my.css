@@ -163,3 +163,7 @@ figcaption:before{
 figure img{
     max-width: 100%;
 }
+
+li.waves-effect a:hover{
+    text-decoration: underline;
+}
