@@ -7,6 +7,10 @@ var randomId = function(){
     return "MY"+(Math.random()*1e32).toString(12);
 };
 
+// Index can be numbers, so prepend an arbitrary letter
+// to make HTML acceptable ID string
+const FAKED_PREFIX="XYZ-";
+
 //****************************************
 //
 //    Index containers
@@ -72,8 +76,7 @@ var IndexList = React.createClass({
                 {"active": isIndexActive(activeIndex, letter)}
             );
 
-            // Index can be numbers, so prepend an arbitrary letter
-            var anchor = "#XYZ-"+letter;
+            var anchor = "#"+FAKED_PREFIX+letter;
 
             // Render
             return (
@@ -141,9 +144,10 @@ var ItemList = React.createClass({
             }
         });
 
+        var id = FAKED_PREFIX+activeIndex;
         return (
             <div>
-                <h3 id={activeIndex}>{activeIndex}</h3>
+                <h3 id={id}>{activeIndex}</h3>
                 {fields}
                 <div className="divider"></div>
             </div>
