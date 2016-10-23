@@ -97,7 +97,7 @@ var IndexList = React.createClass({
                 </nav>
 
                 <div className="fixed-action-btn click-to-toggle"
-                    style={{bottom:"20vh"}}>
+                    style={{bottom:"10vh"}}>
                     <a className="btn-floating btn-large blue accent-4">
                         <i className="fa fa-bars"></i>
                     </a>
