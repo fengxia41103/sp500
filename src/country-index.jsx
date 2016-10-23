@@ -35,9 +35,9 @@ var CountryIndex = React.createClass({
             </nav>
 
             <div className="fixed-action-btn click-to-toggle"
-            style={{bottom:"20vh"}}>
-                <a className="btn-floating btn-large light-blue">
-                    <i className="fa fa-book"></i>
+            style={{bottom:"5vh"}}>
+                <a className="btn-floating btn-large waves-effect waves-light teal darken-2">
+                    <i className="fa fa-bars"></i>
                 </a>
                 <ul className="my-multicol-3">
                     {index}
