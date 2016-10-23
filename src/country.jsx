@@ -66,22 +66,6 @@ var CountryBox = React.createClass({
         });
     },
     render: function(){
-        // Build A-Z index
-        var alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
-        var current = this.state.index;
-        var setIndex = this.setIndex;
-        var index = alphabet.map(function(letter){
-            var highlight = current==letter?"myhighlight":"";
-            return (
-                <li key={letter}
-                    onClick={setIndex.bind(null,letter)}>
-                       <a className={highlight}>
-                          {letter}
-                       </a>
-                </li>
-            );
-        });
-
         // Update data
         if (typeof this.state.data=="undefined" || (this.state.data && this.state.data.length < 1)){
             var api = this.getUrl();
@@ -99,7 +83,7 @@ var CountryBox = React.createClass({
                 setIndex={this.setIndex} />
 
             <CountryAlphabeticList
-                letter={current}
+                letter={this.state.index}
                 countries={this.state.data}
                 {...this.props} />
         </div>
