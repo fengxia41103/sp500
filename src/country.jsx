@@ -1,6 +1,5 @@
 import React from 'react';
-import AjaxContainer from "./ajax.jsx";
-import CountryIndex from "./country-index.jsx";
+import IndexBox from "./index.jsx";
 
 var _ = require('lodash');
 var classNames = require('classnames');
@@ -10,83 +9,64 @@ var classNames = require('classnames');
 //    Country containers
 //
 //****************************************
-var CountryAlphabeticList = React.createClass({
-    render: function(){
-        var letter = this.props.letter;
-        var setCountry = this.props.setCountry;
-        var activeCountry = this.props.activeCountry;
-
-        var fields = this.props.countries.map(function(c){
-            var itemClass = classNames(
-                'chip',
-                {'teal lighten-2 grey-text text-lighten-4': activeCountry && c.iso2Code==activeCountry}
-            );
-            if (c.iso2Code.startsWith(letter)){
-                return (
-                    <div key={c.iso2Code} className={itemClass}>
-                    <span onClick={setCountry.bind(null,c.iso2Code)}>
-                        {c.name} ({c.iso2Code})
-                    </span>
-                    </div>
-                );
-            }
-        });
-
-        return (
-            <div>
-                <h3 id={this.props.letter}>{this.props.letter}</h3>
-                {fields}
-                <div className="divider"></div>
-            </div>
-        );
-    }
-});
-
 var CountryBox = React.createClass({
-    getInitialState: function(){
-        return {
-            data: [],
-            index: "A"
-        }
-    },
-    handleUpdate: function(data){
-        // Save response data
-        this.setState({
-            data: data[1]
-        });
-    },
-    getUrl: function(){
-        //var api = "http://api.dhsprogram.com/rest/dhs/countries";
-        var api = "http://api.worldbank.org/v2/en/countries?format=json&per_page=1000";
-        return api;
-    },
-    setIndex: function(letter){
-        this.setState({
-            index: letter
-        });
-    },
     render: function(){
-        // Update data
-        if (typeof this.state.data=="undefined" || (this.state.data && this.state.data.length < 1)){
-            var api = this.getUrl();
+        // Index list
+        var indexes = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
+
+        // API endpoint to get list of items
+        var indexItemUrl = "http://api.worldbank.org/v2/en/countries?format=json&per_page=1000";
+
+        // Data are items retrieved from API.
+        // Depending on its format, we are to extract
+        // the actual items to list.
+        var getItems = function(data){
+            return data[1];
+        };
+
+        // Determine an index is active
+        var isIndexActive = function(activeIndex, i){
+            return activeIndex && activeIndex === i;
+        };
+
+        // Determine an item is active
+        var isItemActive = function(activeItem, i){
+            return activeItem && i.iso2Code === activeItem
+        };
+
+        // Map a list item to index for grouping
+        var itemMapToIndex = function(i){
+            return i.iso2Code.charAt(0);
+        };
+
+        // Item value
+        var getItemValue = function(i){
+            return i.iso2Code;
+        }
+
+        // Item render display
+        var getItemRender = function(i){
             return (
-                <AjaxContainer
-                    apiUrl={api}
-                    handleUpdate={this.handleUpdate} />
+                <div>
+                    {i.name} ({i.iso2Code})
+                </div>
             );
         }
 
         // Render
         return (
-        <div>
-            <CountryIndex current={this.state.index}
-                setIndex={this.setIndex} />
-
-            <CountryAlphabeticList
-                letter={this.state.index}
-                countries={this.state.data}
-                {...this.props} />
-        </div>
+            <div>
+                <IndexBox 
+                    indexes={indexes}
+                    indexItemUrl={indexItemUrl}
+                    getItems={getItems}
+                    isIndexActive={isIndexActive}
+                    isItemActive={isItemActive}
+                    itemMapToIndex={itemMapToIndex}
+                    getItemValue={getItemValue}
+                    getItemRender={getItemRender}
+                    {...this.props} />
+            </div>
         );
     }
 });

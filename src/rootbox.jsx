@@ -309,8 +309,8 @@ var RootBox = React.createClass({
 
         return (
             <div className="container">
-                <CountryBox setCountry={this.setCountry}
-                            activeCountry={this.state.countryCode}/>
+                <CountryBox setItem={this.setCountry}
+                            activeItem={this.state.countryCode} />
 
                 <article>
                 {this.graphsInDisplay}
