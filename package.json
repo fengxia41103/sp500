@@ -31,6 +31,7 @@
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "coffee-script": "^1.11.1",
     "copy-webpack-plugin": "^4.0.0",
     "react-addons-css-transition-group": "^15.3.2",

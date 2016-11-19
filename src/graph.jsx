@@ -124,7 +124,7 @@ var GraphTypeBox = React.createClass({
 
         return (
             <div>
-                <ul className="left">
+                <ul className="right">
                 {options}
                 </ul>
             </div>

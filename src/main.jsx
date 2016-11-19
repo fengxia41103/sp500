@@ -2,8 +2,10 @@
 require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
-require("materialize-loader");
 require("font-awesome/css/font-awesome.css");
+require("bootstrap/dist/css/bootstrap.min.css");
+require("bootstrap");
+require("materialize-loader");
 require("./stylesheets/my.css");
 
 import React from "react";
