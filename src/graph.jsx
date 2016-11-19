@@ -16,8 +16,9 @@ var randomId = function(){
 //****************************************
 var GraphFactory = React.createClass({
     getInitialState: function(){
+        var type = (typeof this.props.type === "undefined" || !this.props.type)? "bar":this.props.type;
         return {
-            graphType: (typeof this.props.type === "undefined" || !this.props.type)? "bar":this.props.type
+            graphType: type
         }
     },
     setGraphType: function(newType) {
