@@ -1,8 +1,9 @@
 {
   "name": "feng",
   "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "dev": "./node_modules/.bin/webpack-dev-server --content-base dist/",
+    "dev": "./node_modules/.bin/webpack-dev-server --hot",
     "build": "./node_modules/.bin/webpack -p"
   },
   "dependencies": {
@@ -28,5 +29,11 @@
     "url-loader": "^0.5.7",
     "webpack-dev-server": "^1.16.2",
     "whatwg-fetch": "^1.0.0"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.11.1",
+    "copy-webpack-plugin": "^4.0.0",
+    "react-addons-css-transition-group": "^15.3.2",
+    "react-tap-event-plugin": "^1.0.0"
   }
 }
