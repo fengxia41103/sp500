@@ -302,8 +302,10 @@ var RootBox = React.createClass({
         var haveMore = (
             this.state.index>0 && this.state.index < this.state.graphs.length?
                 <div className="right-align">
-                     <span className="waves-effect waves-light btn" style={{marginTop:"1em"}}
-                     onClick={this._generateGraphs}>Load more</span>
+                    <span className="waves-effect waves-light btn" style={{marginTop:"1em"}}
+                     onClick={this._generateGraphs}>
+                        Load more
+                    </span>
                 </div>
                 : null);
 

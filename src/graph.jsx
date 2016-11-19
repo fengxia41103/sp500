@@ -15,20 +15,23 @@ var randomId = function(){
 //
 //****************************************
 var GraphFactory = React.createClass({
+    getInitialState: function(){
+        return {
+            graphType: (typeof this.props.type === "undefined" || !this.props.type)? "bar":this.props.type
+        }
+    },
+    setGraphType: function(newType) {
+        this.setState({
+            graphType: newType
+        });
+    },
     render: function(){
         var data = this.props.data;
+        var graphType = this.state.graphType;
 
         // Validate data set
         if (typeof data == "undefined" || data === null || data.length == 0){
             return null;
-        }
-
-        // Default type
-        var graphType = "";
-        if (typeof this.props.type === "undefined" || !this.props.type){
-            graphType = "line"; // Catch-all, if graph type is not defined!
-        }else{
-            graphType = this.props.type;
         }
 
         // Render graph by chart type
@@ -40,6 +43,12 @@ var GraphFactory = React.createClass({
                 <h3>
                     {this.props.countryCode}
                 </h3>
+
+                <GraphTypeBox
+                    current={this.state.graphType}
+                    setGraphType={this.setGraphType}
+                    {...this.props} />
+
                 <GraphBox containerId={containerId}
                     graphType={graphType}
                     {...this.props}
@@ -49,7 +58,6 @@ var GraphFactory = React.createClass({
             );
         } else if (graphType === "pie"){
             var graphs = [];
-            var data = this.props.data;
 
             // Regroup by year
             var tmp = {};
@@ -93,12 +101,42 @@ var GraphFactory = React.createClass({
     }
 });
 
+var GraphTypeBox = React.createClass({
+    render: function(){
+        var current = this.props.current;
+        var setGraphType = this.props.setGraphType;
+        var types = ["bar","line"];
+        var options = types.map(function(t){
+            var highlight = classNames(
+                "waves-effect waves-light",
+                "flabel",
+                {"myhighlight": current==t}
+            );
+            return (
+                <li key={t}
+                    className={highlight}
+                    onClick={setGraphType.bind(null,t)}>
+                       {t}
+                </li>
+            );
+        });
+
+        return (
+            <div>
+                <ul className="left">
+                {options}
+                </ul>
+            </div>
+        );
+    }
+});
+
 var GraphBox = React.createClass({
     makeViz: function(){
         var config = {
             "id": "category",
             "color": "category",
-            "text": "category",
+            "text": "name",
             "legend": false,
             "y": "value",
             "x": "name",
@@ -113,7 +151,7 @@ var GraphBox = React.createClass({
             }
         };
 
-        //
+        // Draw graph
         this.viz = d3plus.viz()
             .container("#"+this.props.containerId)
             .config(config)
@@ -131,6 +169,13 @@ var GraphBox = React.createClass({
             that.viz.data(data);
             that.viz.draw();
         }, 500);
+
+        // Set up graph type updater
+        this.debounceGraphTypeUpdate = _.debounce(function(type){
+            that.viz.type(type);
+            that.viz.size(type=="line"?"":"value");
+            that.viz.draw();
+        }, 500);
     },
     componentWillUnmount: function(){
         this.viz = null;
@@ -144,6 +189,17 @@ var GraphBox = React.createClass({
             // Update graph data
             if (this.viz && this.debounceUpdate){
                 this.debounceUpdate(this.props.data);
+            }
+        }
+
+        // If type changed
+        var currentType = this.props.graphType && this.props.graphType.valueOf();
+        if (currentType != null && this.preType !== currentType){
+            this.preType = currentType;
+
+            // Update graph data
+            if (this.viz && this.debounceGraphTypeUpdate){
+                this.debounceGraphTypeUpdate(this.props.graphType);
             }
         }
 
