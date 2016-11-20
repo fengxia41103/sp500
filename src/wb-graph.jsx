@@ -24,6 +24,9 @@ var WbGraphContainer = React.createClass({
         });
     },
     cleanData:function(data){
+        // WB data cleanse function.
+        // Here we are to normalize API data into a data format
+        // that is uniform for consumption internally.
         if (typeof data === "undefined" || data === null){
             return [];
         }else{
@@ -34,15 +37,19 @@ var WbGraphContainer = React.createClass({
                 if (data[i].value !== null){
                     data[i].value = parseFloat(data[i].value);
                     if (data[i].value > 0){
-                        tmp.push({
-                            name: data[i].date,
-                            value: data[i].value,
-                            category: data[i].country
-                        });
+                       // Internal data format is a dict.
+                       tmp.push({
+                           year: data[i].date,
+                           value: data[i].value,
+                           category: data[i].country,
+                           text: data[i].date // Label for each data point
+                       });
                     }
                 }
             }
-            return  _.sortBy(tmp, 'date');
+
+            // Sort data by "date" field
+            return  _.sortBy(tmp, 'year');
         }
     },
     render: function(){

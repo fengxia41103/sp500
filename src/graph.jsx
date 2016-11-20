@@ -58,12 +58,10 @@ var GraphFactory = React.createClass({
             </div>
             );
         } else if (graphType === "pie"){
-            var graphs = [];
-
             // Regroup by year
             var tmp = {};
             for (var i=0; i<data.length;i++){
-                var year = data[i].name;
+                var year = data[i].year;
                 if (tmp.hasOwnProperty(year)){
                     tmp[year].push(data[i])
                 } else{
@@ -72,6 +70,7 @@ var GraphFactory = React.createClass({
             }
 
             // One pie chart per year's data
+            var graphs = [];
             for (year in tmp){
                 var containerId = randomId();
                 var title= [this.props.title, year].join(" -- ");
@@ -137,11 +136,11 @@ var GraphBox = React.createClass({
         var config = {
             "id": "category",
             "color": "category",
-            "text": "name",
+            "text": "text",
             "legend": false,
             "y": "value",
-            "x": "name",
-            "time": "name",
+            "x": "year",
+            "time": "year",
             "size": this.props.graphType=="line"?"":"value",
             "shape": {
                  interpolate: "basis"

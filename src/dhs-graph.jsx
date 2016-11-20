@@ -38,9 +38,10 @@ var DhsGraphContainer = React.createClass({
             // Data needs to be massaged
             for (var i = 0; i<data.length; i++){
                 tmp.push({
-                    name: ""+data[i].SurveyYear,
+                    year: ""+data[i].SurveyYear,
                     value: data[i].Value,
-                    category: data[i].Indicator
+                    category: data[i].Indicator,
+                    text: data[i].Indicator // Label for each data point
                 });
             }
             return tmp;

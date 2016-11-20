@@ -244,6 +244,10 @@ var RootBox = React.createClass({
     _generateGraphs: function(){
         // Show more step
         const step = 5;
+
+        // We randomize bar charts and line charts, maintain a ratio of 4 lines to 1 bar.
+        // Note: this requirement is completely arbitrary and is applicable only to
+        // graphs which have no defined "type" in this.state.graphs.
         const graphTypes = _.shuffle(["line","line","line","line","bar"]);
 
         // Generate more graphs
