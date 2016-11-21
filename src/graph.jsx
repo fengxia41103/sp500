@@ -36,28 +36,7 @@ var GraphFactory = React.createClass({
         }
 
         // Render graph by chart type
-        if (graphType != "pie"){
-            // container id
-            var containerId = randomId();
-            return (
-            <div>
-                <h3>
-                    {this.props.countryCode}
-                </h3>
-
-                <GraphTypeBox
-                    current={this.state.graphType}
-                    setGraphType={this.setGraphType}
-                    {...this.props} />
-
-                <GraphBox containerId={containerId}
-                    graphType={graphType}
-                    {...this.props}
-                />
-                <div className="divider" />
-            </div>
-            );
-        } else if (graphType === "pie"){
+        if (graphType === "pie"){
             // Regroup by year
             var tmp = {};
             for (var i=0; i<data.length;i++){
@@ -94,6 +73,43 @@ var GraphFactory = React.createClass({
                     <div className="divider" />
                 </div>
             );
+        } else if (graphType === "table"){
+            return (
+            <div>
+                <h3>
+                    {this.props.countryCode}
+                </h3>
+
+                <GraphTypeBox
+                    current={this.state.graphType}
+                    setGraphType={this.setGraphType}
+                    {...this.props} />
+
+                <GraphDatatable {...this.props} />
+                <div className="divider" />
+            </div>
+            );
+        } else { // Default graphs
+            // container id
+            var containerId = randomId();
+            return (
+            <div>
+                <h3>
+                    {this.props.countryCode}
+                </h3>
+
+                <GraphTypeBox
+                    current={this.state.graphType}
+                    setGraphType={this.setGraphType}
+                    {...this.props} />
+
+                <GraphBox containerId={containerId}
+                    graphType={graphType}
+                    {...this.props}
+                />
+                <div className="divider" />
+            </div>
+            );
         }
 
         // Default
@@ -105,7 +121,7 @@ var GraphTypeBox = React.createClass({
     render: function(){
         var current = this.props.current;
         var setGraphType = this.props.setGraphType;
-        var types = ["bar","line"];
+        var types = ["bar","line","table"];
         var options = types.map(function(t){
             var highlight = classNames(
                 "waves-effect waves-light",
@@ -204,9 +220,41 @@ var GraphBox = React.createClass({
         }
 
         return (
+        <div>
             <figure id={this.props.containerId} style={{minHeight:"500px"}}>
                 <figcaption>{this.props.title}</figcaption>
             </figure>
+        </div>
+        );
+    }
+});
+
+var GraphDatatable = React.createClass({
+    render: function(){
+        var fields = this.props.data.map(function(d){
+            var randomKey = randomId();
+            return (
+                <tr key={randomKey}><td>
+                    {d.text}
+                </td><td>
+                    {d.year}
+                </td><td>
+                    {d.value}
+                </td></tr>
+            );
+        });
+
+        return (
+        <div>
+            <figure id={this.props.containerId}>
+                <figcaption>{this.props.title}</figcaption>
+            <table className="table table-responsive table-striped">
+                <tbody>
+                {fields}
+                </tbody>
+            </table>
+            </figure>
+        </div>
         );
     }
 });
