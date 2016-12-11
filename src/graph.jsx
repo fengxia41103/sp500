@@ -235,8 +235,6 @@ var GraphDatatable = React.createClass({
             var randomKey = randomId();
             return (
                 <tr key={randomKey}><td>
-                    {d.text}
-                </td><td>
                     {d.year}
                 </td><td>
                     {d.value}
@@ -249,6 +247,10 @@ var GraphDatatable = React.createClass({
             <figure id={this.props.containerId}>
                 <figcaption>{this.props.title}</figcaption>
             <table className="table table-responsive table-striped">
+                <thead>
+                    <th>Year</th>
+                    <th>Value</th>
+                </thead>
                 <tbody>
                 {fields}
                 </tbody>
