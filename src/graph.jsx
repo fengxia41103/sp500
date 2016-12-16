@@ -122,14 +122,15 @@ var GraphTypeBox = React.createClass({
         var current = this.props.current;
         var setGraphType = this.props.setGraphType;
         var types = ["bar","line","table"];
-        var options = types.map(function(t){
+        const options = types.map((t) => {
+            var randomKey = randomId();
             var highlight = classNames(
                 "waves-effect waves-light",
                 "flabel",
                 {"myhighlight": current==t}
             );
             return (
-                <li key={t}
+                <li key={randomKey}
                     className={highlight}
                     onClick={setGraphType.bind(null,t)}>
                        {t}
@@ -231,7 +232,7 @@ var GraphBox = React.createClass({
 
 var GraphDatatable = React.createClass({
     render: function(){
-        var fields = this.props.data.map(function(d){
+        const fields = this.props.data.map((d)=>{
             var randomKey = randomId();
             return (
                 <tr key={randomKey}><td>

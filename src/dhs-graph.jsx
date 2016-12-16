@@ -11,7 +11,10 @@ var DhsGraphContainer = React.createClass({
     },
     getUrl: function(countryCode, indicators){
         // Build DHS API url
-        var baseUrl = "http://api.dhsprogram.com/rest/dhs/v4/data?";
+        //var baseUrl = "http://api.dhsprogram.com/rest/dhs/v4/data?";
+
+        // 12/15/2016, the DHS API endpoint has changed.
+        var baseUrl = "http://api.dhsprogram.com/rest/dhs/data?";
         var queries = {
             "countryIds": countryCode,
             "indicatorIds": indicators.join(","),
