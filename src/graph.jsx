@@ -160,7 +160,8 @@ var GraphBox = React.createClass({
             "time": "year",
             "size": this.props.graphType=="line"?"":"value",
             "shape": {
-                 interpolate: "basis"
+                 interpolate: "basis",
+                 rendering: "optimizeSpeed"
             },
             "footer": {
                 position: "top",
@@ -183,6 +184,20 @@ var GraphBox = React.createClass({
         // Set up data updater
         var that = this;
         this.debounceUpdate = _.debounce(function(data){
+          var tmp = _.countBy(this.props.data, function(item){
+            return item.coun;
+          });
+          var cat = null;
+          if (_.size(tmp) > 1){
+            that.viz.legend({
+              value: true
+            });
+          }else{
+            that.viz.legend({
+              value: false
+            });
+          }
+
             that.viz.data(data);
             that.viz.draw();
         }, 500);
@@ -191,6 +206,7 @@ var GraphBox = React.createClass({
         this.debounceGraphTypeUpdate = _.debounce(function(type){
             that.viz.type(type);
             that.viz.size(type=="line"?"":"value");
+            that.viz.shape(type=="line"?"line":"square")
             that.viz.draw();
         }, 500);
     },
@@ -220,6 +236,7 @@ var GraphBox = React.createClass({
             }
         }
 
+        // Render
         return (
         <div>
             <figure id={this.props.containerId} style={{minHeight:"500px"}}>

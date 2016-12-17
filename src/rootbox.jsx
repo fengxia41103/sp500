@@ -18,7 +18,7 @@ var RootBox = React.createClass({
     getInitialState: function(){
         this.graphsInDisplay = [];
         return {
-            countryCode: null,
+            countryCode: [],
             indicators: [],
             graphs: [{
                 title: "Age-specific fertility rate for the three years preceding the survey, expressed per 1,000 women",
@@ -210,8 +210,21 @@ var RootBox = React.createClass({
         }
     },
     setCountry: function(code){
+        var existing = this.state.countryCode;
+
+        // toggle it, if on the list, remove;
+        // if not, add
+        if (_.includes(code)){
+          var tmp = _.filter(existing, function(item){
+            return item != code;
+          });
+        }else{
+          existing.push(code);
+          var tmp = existing;
+        }
+
         this.setState({
-            countryCode: code,
+            countryCode: tmp,
             index: 0
         }, function(){
            this.graphsInDisplay = [];

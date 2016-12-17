@@ -20,7 +20,7 @@ var WbGraphContainer = React.createClass({
     },
     handleUpdate: function(data){
         this.setState({
-            data: this.cleanData(data[1])
+            data: _.concat(this.state.data, this.cleanData(data[1]))
         });
     },
     cleanData:function(data){
@@ -41,8 +41,8 @@ var WbGraphContainer = React.createClass({
                        tmp.push({
                            year: data[i].date,
                            value: data[i].value,
-                           category: data[i].country,
-                           text: data[i].date // Label for each data point
+                           category: data[i].country.value,
+                           text: data[i].country.value+"-"+data[i].date // Label for each data point
                        });
                     }
                 }
@@ -58,11 +58,22 @@ var WbGraphContainer = React.createClass({
         var currentValue = this.props.countryCode && this.props.countryCode.valueOf();
         if (currentValue != null && this.preValue !== currentValue){
             this.preValue = currentValue;
-            var api = this.getUrl(this.props.countryCode, this.props.indicator);
-            return (
+
+            // Iterate through requested countries
+            var indicator = this.props.indicator;
+            const ajaxReqs = this.props.countryCode.map((c) => {
+              var api = this.getUrl(c, indicator);
+              return (
                 <AjaxContainer
                     handleUpdate={this.handleUpdate}
                     apiUrl={api} />
+              );
+            });
+
+            return (
+              <div>
+                {ajaxReqs}
+              </div>
             );
         }
 
