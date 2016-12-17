@@ -154,7 +154,8 @@ var GraphBox = React.createClass({
             "id": "category",
             "color": "category",
             "text": "text",
-            "legend": false,
+            "legend": false, // default to turn off legend
+            "labels": true,
             "y": "value",
             "x": "year",
             "time": "year",
@@ -185,17 +186,18 @@ var GraphBox = React.createClass({
         var that = this;
         this.debounceUpdate = _.debounce(function(data){
           var tmp = _.countBy(this.props.data, function(item){
-            return item.coun;
+            return item.category;
           });
           var cat = null;
           if (_.size(tmp) > 1){
             that.viz.legend({
-              value: true
+              align: "end",
+              filters: true,
+              value: true,
+              text: "category"
             });
           }else{
-            that.viz.legend({
-              value: false
-            });
+            that.viz.legend(false);
           }
 
             that.viz.data(data);

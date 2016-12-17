@@ -65,6 +65,7 @@ var WbGraphContainer = React.createClass({
               var api = this.getUrl(c, indicator);
               return (
                 <AjaxContainer
+                    key={c}
                     handleUpdate={this.handleUpdate}
                     apiUrl={api} />
               );
