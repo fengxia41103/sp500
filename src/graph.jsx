@@ -155,7 +155,7 @@ var GraphBox = React.createClass({
     makeViz: function(){
         var config = {
             "id": "category",
-            "color": "category",
+            "color": "uniqueKey",
             "text": "text",
             "legend": false, // default to turn off legend
             "labels": true,
@@ -193,19 +193,26 @@ var GraphBox = React.createClass({
           });
           var cat = null;
           if (_.size(tmp) > 1){
+            that.viz.config({
+              color: "category"
+            });
             that.viz.legend({
               align: "end",
               filters: true,
               value: true,
-              text: "category"
+              text: "category",
+              title: "category"
             });
           }else{
-            that.viz.legend(false);
+            that.viz.config({
+              color: "uniqueKey",
+              legend: false
+            });
           }
 
             that.viz.data(data);
             that.viz.draw();
-        }, 500);
+        }, 1000);
 
         // Set up graph type updater
         this.debounceGraphTypeUpdate = _.debounce(function(type){

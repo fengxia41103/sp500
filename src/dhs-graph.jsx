@@ -21,7 +21,7 @@ var DhsGraphContainer = React.createClass({
             "perpage": 1000, // max for non-registered user
 
             // return fields must match what is being used in D3 graph
-            "returnFields": ["Indicator","Value","SurveyYear"].join(",")
+            "returnFields": ["DHS_countryCode","Indicator","Value","SurveyYear"].join(",")
         };
         var tmp = [];
         for (var key in queries){
@@ -40,20 +40,22 @@ var DhsGraphContainer = React.createClass({
 
             // Data needs to be massaged
             for (var i = 0; i<data.length; i++){
+                var country = data[i].DHS_CountryCode;
                 tmp.push({
-                    year: ""+data[i].SurveyYear,
+                    uniqueKey: data[i].Indicator+i,
+                    year: data[i].SurveyYear,
                     value: data[i].Value,
                     category: data[i].Indicator,
-                    text: data[i].Indicator // Label for each data point
+                    text: [country,data[i].Indicator].join('-') // Label for each data point
                 });
             }
-            return tmp;
+            return _.sortBy(tmp, 'year');
         }
 
     },
     handleUpdate: function(data){
         this.setState({
-            data: this.cleanData(data.Data)
+            data: _.concat(this.state.data, this.cleanData(data.Data))
         });
     },
     render: function(){
@@ -62,11 +64,20 @@ var DhsGraphContainer = React.createClass({
         var currentValue = this.props.countryCode && this.props.countryCode.valueOf();
         if (currentValue != null && this.preValue !== currentValue){
             this.preValue = currentValue;
-            var api = this.getUrl(this.props.countryCode, this.props.indicators);
-            return (
-                <AjaxContainer
+
+            var indicators = this.props.indicators;
+            const ajaxReqs = this.props.countryCode.map((c) => {
+              var api = this.getUrl(c, this.props.indicators);
+              return (
+                  <AjaxContainer
+                    key={c}
                     handleUpdate={this.handleUpdate}
                     apiUrl={api} />
+              );
+            });
+
+            return (
+              <div>{ajaxReqs}</div>
             );
         }
 

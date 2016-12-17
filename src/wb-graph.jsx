@@ -37,12 +37,15 @@ var WbGraphContainer = React.createClass({
                 if (data[i].value !== null){
                     data[i].value = parseFloat(data[i].value);
                     if (data[i].value > 0){
+                       var country = data[i].country.id;
+
                        // Internal data format is a dict.
                        tmp.push({
+                           uniqueKey: country+i,
                            year: data[i].date,
                            value: data[i].value,
-                           category: data[i].country.value,
-                           text: data[i].country.value+"-"+data[i].date // Label for each data point
+                           category: country,
+                           text: [country,data[i].date].join('-') // Label for each data point
                        });
                     }
                 }
