@@ -35,6 +35,9 @@ var GraphFactory = React.createClass({
             return null;
         }
 
+        // Country code is an array
+        var countries = this.props.countryCode.join("/");
+
         // Render graph by chart type
         if (graphType === "pie"){
             // Regroup by year
@@ -57,7 +60,7 @@ var GraphFactory = React.createClass({
                 graphs.push(
                     <div key={randomId()} style={{display:"inline-block"}}>
                         <h3>
-                            {this.props.countryCode}
+                            {countries}
                         </h3>
                         <GraphBox containerId={containerId}
                             graphType={graphType}
@@ -77,7 +80,7 @@ var GraphFactory = React.createClass({
             return (
             <div>
                 <h3>
-                    {this.props.countryCode}
+                    {countries}
                 </h3>
 
                 <GraphTypeBox
@@ -95,7 +98,7 @@ var GraphFactory = React.createClass({
             return (
             <div>
                 <h3>
-                    {this.props.countryCode}
+                    {countries}
                 </h3>
 
                 <GraphTypeBox

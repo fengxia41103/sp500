@@ -31,7 +31,9 @@ var CountryBox = React.createClass({
 
         // Determine an item is active
         var isItemActive = function(activeItem, i){
-            return activeItem && i.iso2Code === activeItem
+            return activeItem && _.some(activeItem, function(item){
+              return i.iso2Code == item;
+            });
         };
 
         // Map a list item to index for grouping

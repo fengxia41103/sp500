@@ -212,19 +212,22 @@ var RootBox = React.createClass({
     setCountry: function(code){
         var existing = this.state.countryCode;
 
-        // toggle it, if on the list, remove;
+        // toggle it: if on the list, remove;
         // if not, add
-        if (_.includes(code)){
-          var tmp = _.filter(existing, function(item){
+        var modified = null;
+        if (_.some(existing, function(item){return item == code;})){
+          modified = _.filter(existing, function(item){
             return item != code;
           });
         }else{
           existing.push(code);
-          var tmp = existing;
+          modified = existing;
         }
 
+        // Update country code selections
+        // and re-initialize the graphs
         this.setState({
-            countryCode: tmp,
+            countryCode: modified,
             index: 0
         }, function(){
            this.graphsInDisplay = [];
