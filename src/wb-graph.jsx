@@ -42,6 +42,7 @@ var WbGraphContainer = React.createClass({
                        // Internal data format is a dict.
                        tmp.push({
                            uniqueKey: country+i,
+                           country: country,
                            year: data[i].date,
                            value: data[i].value,
                            category: country,

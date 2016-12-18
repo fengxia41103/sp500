@@ -39,7 +39,7 @@ var GraphFactory = React.createClass({
         var countries = this.props.countryCode.join("/");
 
         // Render graph by chart type
-        if (graphType === "pie"){
+        if (graphType == "pie"){
             // Regroup by year
             var tmp = {};
             for (var i=0; i<data.length;i++){
@@ -76,7 +76,7 @@ var GraphFactory = React.createClass({
                     <div className="divider" />
                 </div>
             );
-        } else if (graphType === "table"){
+        } else if (graphType == "table"){
             return (
             <div>
                 <h3>
@@ -126,14 +126,13 @@ var GraphTypeBox = React.createClass({
         var setGraphType = this.props.setGraphType;
         var types = ["bar","line","table"];
         const options = types.map((t) => {
-            var randomKey = randomId();
             var highlight = classNames(
                 "waves-effect waves-light",
                 "flabel",
                 {"myhighlight": current==t}
             );
             return (
-                <li key={randomKey}
+                <li key={t}
                     className={highlight}
                     onClick={setGraphType.bind(null,t)}>
                        {t}
@@ -155,9 +154,7 @@ var GraphBox = React.createClass({
     makeViz: function(){
         var config = {
             "id": "category",
-            "color": "uniqueKey",
             "text": "text",
-            "legend": false, // default to turn off legend
             "labels": true,
             "y": "value",
             "x": "year",
@@ -174,12 +171,36 @@ var GraphBox = React.createClass({
         };
 
         // Draw graph
+        config = _.merge(config, this._updateGraphConfig(this.props.data));
         this.viz = d3plus.viz()
             .container("#"+this.props.containerId)
             .config(config)
             .data(this.props.data)
             .type(this.props.graphType)
             .draw();
+    },
+    _updateGraphConfig: function(data){
+      var tmp = _.countBy(data, function(item){
+        return item.category;
+      });
+      var cat = null;
+      if (_.size(tmp) > 1){
+        return {
+          color: "category",
+          legend: {
+            align: "end",
+            filters: true,
+            value: true,
+            text: "category",
+            title: "category"
+          }
+        };
+      }else{
+        return {
+          color: "uniqueKey",
+          legend: false
+        };
+      }
     },
     componentDidMount: function(){
         // Initialize graph
@@ -188,28 +209,8 @@ var GraphBox = React.createClass({
         // Set up data updater
         var that = this;
         this.debounceUpdate = _.debounce(function(data){
-          var tmp = _.countBy(this.props.data, function(item){
-            return item.category;
-          });
-          var cat = null;
-          if (_.size(tmp) > 1){
-            that.viz.config({
-              color: "category"
-            });
-            that.viz.legend({
-              align: "end",
-              filters: true,
-              value: true,
-              text: "category",
-              title: "category"
-            });
-          }else{
-            that.viz.config({
-              color: "uniqueKey",
-              legend: false
-            });
-          }
-
+            var config = that._updateGraphConfig(data);
+            that.viz.config(config);
             that.viz.data(data);
             that.viz.draw();
         }, 1000);
@@ -219,6 +220,10 @@ var GraphBox = React.createClass({
             that.viz.type(type);
             that.viz.size(type=="line"?"":"value");
             that.viz.shape(type=="line"?"line":"square")
+
+            // Update config
+            var config = that._updateGraphConfig(that.props.data);
+            that.viz.config(config);
             that.viz.draw();
         }, 500);
     },
@@ -226,20 +231,20 @@ var GraphBox = React.createClass({
         this.viz = null;
     },
     render: function(){
-        // If data changed
-        var currentValue = this.props.data && this.props.data.valueOf();
-        if (currentValue != null && this.preValue !== currentValue){
-            this.preValue = currentValue;
+      // If data changed
+      var currentValue = this.props.data && this.props.data.valueOf();
+      if (currentValue != null && this.preValue !== currentValue){
+        this.preValue = currentValue;
 
-            // Update graph data
-            if (this.viz && this.debounceUpdate){
-                this.debounceUpdate(this.props.data);
-            }
+        // Update graph data
+        if (this.viz && this.debounceUpdate){
+          this.debounceUpdate(this.props.data);
         }
+      }
 
-        // If type changed
-        var currentType = this.props.graphType && this.props.graphType.valueOf();
-        if (currentType != null && this.preType !== currentType){
+      // If type changed
+      var currentType = this.props.graphType && this.props.graphType.valueOf();
+      if (currentType != null && this.preType !== currentType){
             this.preType = currentType;
 
             // Update graph data
@@ -261,13 +266,15 @@ var GraphBox = React.createClass({
 
 var GraphDatatable = React.createClass({
     render: function(){
-        const fields = this.props.data.map((d)=>{
+      const fields = this.props.data.map((d) => {
             var randomKey = randomId();
             return (
                 <tr key={randomKey}><td>
                     {d.year}
                 </td><td>
                     {d.value}
+                </td><td>
+                    {d.country}
                 </td></tr>
             );
         });
@@ -280,6 +287,7 @@ var GraphDatatable = React.createClass({
                 <thead>
                     <th>Year</th>
                     <th>Value</th>
+                    <th>Country</th>
                 </thead>
                 <tbody>
                 {fields}

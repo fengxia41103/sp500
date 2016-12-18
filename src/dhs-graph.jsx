@@ -42,6 +42,7 @@ var DhsGraphContainer = React.createClass({
             for (var i = 0; i<data.length; i++){
                 var country = data[i].DHS_CountryCode;
                 tmp.push({
+                    country: country,
                     uniqueKey: data[i].Indicator+i,
                     year: data[i].SurveyYear,
                     value: data[i].Value,
