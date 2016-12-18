@@ -232,7 +232,7 @@ var GraphBox = React.createClass({
     },
     render: function(){
       // If data changed
-      var currentValue = this.props.data && this.props.data.valueOf();
+      var currentValue = (this.props.data!=null) && this.props.data.length;
       if (currentValue != null && this.preValue !== currentValue){
         this.preValue = currentValue;
 

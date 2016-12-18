@@ -61,11 +61,11 @@ var WbGraphContainer = React.createClass({
         var changed = false;
         var currentValue = this.props.countryCode && this.props.countryCode.valueOf();
         if (currentValue != null && this.preValue !== currentValue){
-            this.preValue = currentValue;
+          this.preValue = currentValue;
 
-            // Iterate through requested countries
-            var indicator = this.props.indicator;
-            const ajaxReqs = this.props.countryCode.map((c) => {
+          // Iterate through requested countries
+          var indicator = this.props.indicator;
+          const ajaxReqs = this.props.countryCode.map((c) => {
               var api = this.getUrl(c, indicator);
               return (
                 <AjaxContainer
