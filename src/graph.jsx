@@ -18,8 +18,14 @@ var GraphFactory = React.createClass({
     getInitialState: function(){
         var type = (typeof this.props.type === "undefined" || !this.props.type)? "bar":this.props.type;
         return {
-            graphType: type
+            graphType: type,
+            graphEngine: "d3plus", // possible values: [google, highchart]
         }
+    },
+    setGraphEngine: function(newEngine){
+      this.setState({
+        graphEngine: newEngine
+      });
     },
     setGraphType: function(newType) {
         this.setState({
@@ -62,7 +68,7 @@ var GraphFactory = React.createClass({
                         <h3>
                             {countries}
                         </h3>
-                        <GraphBox containerId={containerId}
+                        <D3PlusGraphBox containerId={containerId}
                             graphType={graphType}
                             {...this.props}
                             data={tmp[year]}
@@ -106,7 +112,7 @@ var GraphFactory = React.createClass({
                     setGraphType={this.setGraphType}
                     {...this.props} />
 
-                <GraphBox containerId={containerId}
+                <GoogleGraphBox containerId={containerId}
                     graphType={graphType}
                     {...this.props}
                 />
@@ -150,7 +156,7 @@ var GraphTypeBox = React.createClass({
     }
 });
 
-var GraphBox = React.createClass({
+var D3PlusGraphBox = React.createClass({
     makeViz: function(){
         var config = {
             "id": "category",
@@ -293,6 +299,126 @@ var GraphDatatable = React.createClass({
                 {fields}
                 </tbody>
             </table>
+            </figure>
+        </div>
+        );
+    }
+});
+
+var GoogleGraphBox = React.createClass({
+    makeViz: function(){
+      var options = {
+        chart: {
+          title: this.props.title,
+          subtitle: this.props.footer
+        },
+        width: "100%",
+        height: 500
+      };
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'Day');
+      data.addColumn('number', 'Guardians of the Galaxy');
+      data.addColumn('number', 'The Avengers');
+      data.addColumn('number', 'Transformers: Age of Extinction');
+
+      data.addRows([
+        [1,  37.8, 80.8, 41.8],
+        [2,  30.9, 69.5, 32.4],
+        [3,  25.4,   57, 25.7],
+        [4,  11.7, 18.8, 10.5],
+        [5,  11.9, 17.6, 10.4],
+        [6,   8.8, 13.6,  7.7],
+        [7,   7.6, 12.3,  9.6],
+        [8,  12.3, 29.2, 10.6],
+        [9,  16.9, 42.9, 14.8],
+        [10, 12.8, 30.9, 11.6],
+        [11,  5.3,  7.9,  4.7],
+        [12,  6.6,  8.4,  5.2],
+        [13,  4.8,  6.3,  3.6],
+        [14,  4.2,  6.2,  3.4]
+      ]);
+      this.chart = new google.charts.Line(document.getElementById(this.props.containerId));
+      this.chart.draw(data, options);
+    },
+    _updateGraphData: function(data){
+      // Return a new Google Datatable
+      var d = d3.nest()
+        .key(function(d){return d.year})
+        .key(function(d){return d.country})
+        .key(function(d){return d.category})
+        .entries(data);
+
+      var datatable = new Array();
+      var categories = ['Year'];
+      _.forEach(d, function(byYear){
+        var year = byYear.key;
+        var values = [];
+        _.forEach(byYear.values, function(byCountry){
+          var country = byCountry.key;
+          _.forEach(byCountry.values, function(byCategory){
+            var category = byCategory.key;
+            categories.push(category);
+            _.forEach(byCategory.values, function(item){
+              values.push(item.value);
+            });
+          });
+        });
+        datatable.push(_.flatten([year,values]));
+      });
+      return {
+          categories: _.uniq(categories),
+          datatable: datatable
+        };
+    },
+    componentDidMount: function(){
+      // Initialize graph
+      google.charts.load('current', {'packages':['line']});
+      google.charts.setOnLoadCallback(this.makeViz);
+
+        // Set up data updater
+        var that = this;
+        this.debounceUpdate = _.debounce(function(data){
+          var datatable = that._updateGraphData(data);
+          console.log(datatable);
+        }, 1000);
+
+        // Set up graph type updater
+        this.debounceGraphTypeUpdate = _.debounce(function(type){
+
+        }, 500);
+    },
+    componentWillUnmount: function(){
+        this.chart = null;
+    },
+    render: function(){
+      // If data changed
+      var currentValue = (this.props.data!=null) && this.props.data.length;
+      if (currentValue != null && this.preValue !== currentValue){
+        this.preValue = currentValue;
+
+        // Update graph data
+        if (this.chart && this.debounceUpdate){
+          this.debounceUpdate(this.props.data);
+        }
+      }
+
+      // If type changed
+      var currentType = this.props.graphType && this.props.graphType.valueOf();
+      if (currentType != null && this.preType !== currentType){
+            this.preType = currentType;
+
+            // Update graph data
+            if (this.chart && this.debounceGraphTypeUpdate){
+                this.debounceGraphTypeUpdate(this.props.graphType);
+            }
+        }
+
+        // Render
+        return (
+        <div>
+            <figure id={this.props.containerId} style={{minHeight:"500px"}}>
+                <figcaption>{this.props.title}</figcaption>
             </figure>
         </div>
         );
