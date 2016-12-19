@@ -42,12 +42,15 @@ var DhsGraphContainer = React.createClass({
             for (var i = 0; i<data.length; i++){
                 var country = data[i].DHS_CountryCode;
                 tmp.push({
-                    country: country,
-                    uniqueKey: data[i].Indicator+i,
-                    year: data[i].SurveyYear,
-                    value: data[i].Value,
-                    category: data[i].Indicator,
-                    text: [country,data[i].Indicator].join('-') // Label for each data point
+                  country: country,
+                  uniqueKey: data[i].Indicator+i,
+
+                  // in String form, otherwise D3plus will convert "1986" to "1,986"
+                  year: data[i].SurveyYear,
+
+                  value: data[i].Value,
+                  category: data[i].Indicator,
+                  text: [country,data[i].Indicator].join('-') // Label for each data point
                 });
             }
             return _.sortBy(tmp, 'year');
