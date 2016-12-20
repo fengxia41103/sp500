@@ -341,33 +341,45 @@ var GoogleGraphBox = React.createClass({
       // Return a new Google Datatable
       var d = d3.nest()
         .key(function(d){return d.year})
-        .key(function(d){return d.country})
         .key(function(d){return d.category})
         .entries(data);
+
+      // Get all categories. This is necessary so we can handle
+      // missing values. Otherwise, there will be row
+      // that has less values than the number of columns.
+      var categories = _.keys(_.countBy(data, function(item){
+        return item.category;
+      }));
 
       // Convert format from a flat two-dimension array
       // to a table with columns: year, category 1, category 2, ...
       var datatable = new Array();
-      var categories = ['Year'];
       _.forEach(d, function(byYear){
         var year = byYear.key;
         var values = [];
-        _.forEach(byYear.values, function(byCountry){
-          var country = byCountry.key;
-          _.forEach(byCountry.values, function(byCategory){
-            var category = byCategory.key;
-            categories.push(category);
-            _.forEach(byCategory.values, function(item){
-              values.push(item.value);
+
+        var byCategory = _.groupBy(byYear.values, function(item){
+          return item.key;
+        });
+
+        _.forEach(categories, function(cat){
+          if (byCategory.hasOwnProperty(cat)){
+            _.forEach(byCategory[cat], function(item){
+              _.forEach(item.values, function(val){
+                values.push(val.value);
+              })
             });
-          });
+          }else{
+            values.push(null);
+          }
         });
         datatable.push(_.flatten([year,values]));
       });
 
       // Convert formatted data to google DataTable
+      categories.unshift('Year');
       var formattedData = {
-        categories: _.uniq(categories),
+        categories: categories,
         datatable: datatable
       };
 
