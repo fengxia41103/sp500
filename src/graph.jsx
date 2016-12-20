@@ -99,23 +99,31 @@ var GraphFactory = React.createClass({
             </div>
             );
         } else { // Default graphs
-            // container id
-            var containerId = randomId();
+          // container id
+          var containerId = randomId();
+
             return (
             <div>
                 <h3>
                     {countries}
                 </h3>
 
+                <GraphEngineBox
+                  current={this.state.graphEngine}
+                  setGraphEngine={this.setGraphEngine}
+                  {...this.props} />
+
                 <GraphTypeBox
                     current={this.state.graphType}
                     setGraphType={this.setGraphType}
                     {...this.props} />
 
-                <GoogleGraphBox containerId={containerId}
-                    graphType={graphType}
-                    {...this.props}
-                />
+                <GraphBox
+                  containerId={containerId}
+                  graphType={this.state.graphType}
+                  graphEngine={this.state.graphEngine}
+                  {...this.props} />
+
                 <div className="divider" />
             </div>
             );
@@ -124,6 +132,27 @@ var GraphFactory = React.createClass({
         // Default
         return null;
     }
+});
+
+var GraphBox = React.createClass({
+  render: function(){
+    switch(this.props.graphEngine){
+      case "google":
+        return (
+          <div>
+          <GoogleGraphBox {...this.props} />
+          </div>
+        );
+
+      case "d3plus":
+      default:
+        return (
+          <div>
+          <D3PlusGraphBox {...this.props} />
+          </div>
+        );
+    }
+  }
 });
 
 var GraphTypeBox = React.createClass({
@@ -141,6 +170,36 @@ var GraphTypeBox = React.createClass({
                 <li key={t}
                     className={highlight}
                     onClick={setGraphType.bind(null,t)}>
+                       {t}
+                </li>
+            );
+        });
+
+        return (
+            <div>
+                <ul className="right">
+                {options}
+                </ul>
+            </div>
+        );
+    }
+});
+
+var GraphEngineBox = React.createClass({
+    render: function(){
+        var current = this.props.current;
+        var setGraphEngine = this.props.setGraphEngine;
+        var types = ["d3","Google"];
+        const options = types.map((t) => {
+            var highlight = classNames(
+                "waves-effect waves-light",
+                "flabel",
+                {"myhighlight": current==t}
+            );
+            return (
+                <li key={t}
+                    className={highlight}
+                    onClick={setGraphEngine.bind(null,t)}>
                        {t}
                 </li>
             );
