@@ -19,7 +19,7 @@ var GraphFactory = React.createClass({
         var type = (typeof this.props.type === "undefined" || !this.props.type)? "bar":this.props.type;
         return {
             graphType: type,
-            graphEngine: "d3plus", // possible values: [google, highchart]
+            graphEngine: "D3", // possible values: [D3, Google, Highchart]
         }
     },
     setGraphEngine: function(newEngine){
@@ -137,14 +137,14 @@ var GraphFactory = React.createClass({
 var GraphBox = React.createClass({
   render: function(){
     switch(this.props.graphEngine){
-      case "google":
+      case "Google":
         return (
           <div>
           <GoogleGraphBox {...this.props} />
           </div>
         );
 
-      case "d3plus":
+      case "D3":
       default:
         return (
           <div>
@@ -189,7 +189,7 @@ var GraphEngineBox = React.createClass({
     render: function(){
         var current = this.props.current;
         var setGraphEngine = this.props.setGraphEngine;
-        var types = ["d3","Google"];
+        var types = ["D3","Google"];
         const options = types.map((t) => {
             var highlight = classNames(
                 "waves-effect waves-light",
