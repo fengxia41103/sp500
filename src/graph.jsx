@@ -186,7 +186,7 @@ var GraphTypeBox = React.createClass({
             var highlight = classNames(
                 "waves-effect waves-light",
                 "chip",
-                {"myhighlight": current==t}
+                {'teal lighten-2 grey-text text-lighten-4': current==t}
             );
             return (
                 <li key={t}
@@ -218,7 +218,7 @@ var GraphEngineBox = React.createClass({
             var highlight = classNames(
                 "waves-effect waves-light",
                 "chip",
-                {"myhighlight": current==t}
+                {'teal lighten-2 grey-text text-lighten-4': current==t}
             );
             return (
                 <li key={t}
