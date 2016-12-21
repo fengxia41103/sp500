@@ -1,5 +1,6 @@
 import React from 'react';
 import d3plus from 'd3plus';
+import * as ReactBootstrap from 'react-bootstrap';
 
 var _ = require('lodash');
 var classNames = require('classnames');
@@ -108,16 +109,12 @@ var GraphFactory = React.createClass({
                     {countries}
                 </h3>
 
-                <GraphEngineBox
-                  current={this.state.graphEngine}
+                <GraphConfigBox
+                  graphType={this.state.graphType}
+                  setGraphType={this.setGraphType}
+                  graphEngine={this.state.graphEngine}
                   setGraphEngine={this.setGraphEngine}
                   {...this.props} />
-
-                <GraphTypeBox
-                    current={this.state.graphType}
-                    setGraphType={this.setGraphType}
-                    {...this.props} />
-
                 <GraphBox
                   containerId={containerId}
                   graphType={this.state.graphType}
@@ -155,6 +152,31 @@ var GraphBox = React.createClass({
   }
 });
 
+var GraphConfigBox = React.createClass({
+  render: function(){
+    var randomKey = randomId();
+    return (
+      <div className="right">
+        <ReactBootstrap.DropdownButton title="config" id={randomKey}>
+          <ReactBootstrap.MenuItem>
+            <GraphEngineBox
+              current={this.props.graphEngine}
+              setGraphEngine={this.props.setGraphEngine}
+              {...this.props} />
+          </ReactBootstrap.MenuItem>
+
+          <ReactBootstrap.MenuItem>
+            <GraphTypeBox
+              current={this.props.graphType}
+              setGraphType={this.props.setGraphType}
+              {...this.props} />
+           </ReactBootstrap.MenuItem>
+         </ReactBootstrap.DropdownButton>
+      </div>
+      );
+    }
+});
+
 var GraphTypeBox = React.createClass({
     render: function(){
         var current = this.props.current;
@@ -163,7 +185,7 @@ var GraphTypeBox = React.createClass({
         const options = types.map((t) => {
             var highlight = classNames(
                 "waves-effect waves-light",
-                "flabel",
+                "chip",
                 {"myhighlight": current==t}
             );
             return (
@@ -176,11 +198,13 @@ var GraphTypeBox = React.createClass({
         });
 
         return (
-            <div>
-                <ul className="right">
-                {options}
-                </ul>
-            </div>
+          <div>
+            <h5>Graph Type</h5>
+            <div className="divider"></div>
+            <ul>
+              {options}
+            </ul>
+          </div>
         );
     }
 });
@@ -193,7 +217,7 @@ var GraphEngineBox = React.createClass({
         const options = types.map((t) => {
             var highlight = classNames(
                 "waves-effect waves-light",
-                "flabel",
+                "chip",
                 {"myhighlight": current==t}
             );
             return (
@@ -206,11 +230,13 @@ var GraphEngineBox = React.createClass({
         });
 
         return (
-            <div>
-                <ul className="right">
-                {options}
-                </ul>
-            </div>
+          <div>
+            <h5>Engine</h5>
+            <div className="divider"></div>
+            <ul>
+              {options}
+            </ul>
+          </div>
         );
     }
 });
