@@ -90,10 +90,12 @@ var GraphFactory = React.createClass({
                     {countries}
                 </h3>
 
-                <GraphTypeBox
-                    current={this.state.graphType}
-                    setGraphType={this.setGraphType}
-                    {...this.props} />
+                <GraphConfigBox
+                  graphType={this.state.graphType}
+                  setGraphType={this.setGraphType}
+                  graphEngine={this.state.graphEngine}
+                  setGraphEngine={this.setGraphEngine}
+                  {...this.props} />
 
                 <GraphDatatable {...this.props} />
                 <div className="divider" />
@@ -156,7 +158,7 @@ var GraphConfigBox = React.createClass({
   render: function(){
     var randomKey = randomId();
     return (
-      <div className="right">
+      <div className="right" style={{zIndex:999}}>
         <ReactBootstrap.DropdownButton title="config" id={randomKey}>
           <ReactBootstrap.MenuItem>
             <GraphEngineBox
@@ -399,9 +401,10 @@ var GoogleGraphBox = React.createClass({
       var options = {
         title: this.props.title,
         subtitle: this.props.footer,
-        legend: 'bottom',
+        legend: "bottom",
         width: "100%",
-        height: 500
+        height: 500,
+        fill: "transparent"
       };
 
       // Render chart

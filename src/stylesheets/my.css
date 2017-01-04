@@ -12,14 +12,18 @@ h6 {
     font-family: 'Baloo Paaji', cursive;
 }
 
-
-.my-nobreak{
-    overflow: hidden; /* Fix for firefox and IE 10-11  */
-    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
-    page-break-inside: avoid; /* Deprecated Firefox */
-    -moz-column-break-inside:avoid; /* Current Firefox */
-    column-break-inside:avoid;
-    break-inside: avoid; /* IE 10+ */
+.my-nobreak {
+    overflow: hidden;
+    /* Fix for firefox and IE 10-11  */
+    -webkit-column-break-inside: avoid;
+    /* Chrome, Safari, Opera */
+    page-break-inside: avoid;
+    /* Deprecated Firefox */
+    -moz-column-break-inside: avoid;
+    /* Current Firefox */
+    column-break-inside: avoid;
+    break-inside: avoid;
+    /* IE 10+ */
     break-inside: avoid-column;
 }
 
@@ -89,8 +93,6 @@ h6 {
     -ms-transform: rotate(360deg);
 }
 
-
-
 .pin-card {
     width: 100%;
     background-color: #fefefe;
@@ -115,7 +117,6 @@ label {
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 600;
 }
-
 
 article p {
     line-height: 1.5em;
@@ -144,26 +145,45 @@ footer {
     color: #d52349;
 }
 
-article{
+article {
     counter-reset: figures;
 }
 
-figure{
+figure {
     counter-increment: figures;
 }
 
-figcaption{
+figcaption {
     margin-bottom: 1em;
     color: #545454;
     text-align: center;
 }
-figcaption:before{
+
+figcaption:before {
     content: 'Fig.' counter(figures) ': ';
 }
-figure img{
+
+figure img {
     max-width: 100%;
 }
 
-li.waves-effect a:hover{
+li.waves-effect a:hover {
     text-decoration: underline;
+}
+
+video#bgvid {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background: url(/images/polina.jpg) no-repeat;
+    background-size: cover;
 }
