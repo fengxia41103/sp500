@@ -215,9 +215,9 @@ var RootBox = React.createClass({
         // toggle it: if on the list, remove;
         // if not, add
         var modified = null;
-        if (_.some(existing, function(item){return item == code;})){
+        if (_.some(existing, function(item){return item.iso2Code == code.iso2Code;})){
           modified = _.filter(existing, function(item){
-            return item != code;
+            return item.iso2Code != code.iso2Code;
           });
         }else{
           existing.push(code);
@@ -267,7 +267,7 @@ var RootBox = React.createClass({
         const graphTypes = _.shuffle(["line","line","line","line","bar"]);
 
         // Generate more graphs
-        var code = this.state.countryCode;
+        var code = _.map(this.state.countryCode, "iso2Code");
         var index = this.state.index;
         var total = this.state.graphs.length;
         var tmp = [];

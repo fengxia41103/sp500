@@ -32,7 +32,7 @@ var CountryBox = React.createClass({
         // Determine an item is active
         var isItemActive = function(activeItem, i){
             return activeItem && _.some(activeItem, function(item){
-              return i.iso2Code == item;
+              return i.iso2Code == item.iso2Code;
             });
         };
 
@@ -43,7 +43,11 @@ var CountryBox = React.createClass({
 
         // Item value
         var getItemValue = function(i){
-            return i.iso2Code;
+            //return i.iso2Code;
+          return {
+            iso2Code: i.iso2Code,
+            name: i.name
+          }
         }
 
         // Item render display
