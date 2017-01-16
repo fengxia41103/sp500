@@ -129,13 +129,13 @@ footer {
 }
 
 .myheader {
-    //background: url("/images/photo-1451187580459-43490279c0fa.jpg") no-repeat;
+    background: url("/images/photo-1451187580459-43490279c0fa.jpg") no-repeat;
     min-height: 100vh;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    //color: #efefef;
+    color: #efefef;
     //color: #d52349;
     padding: 3em 0em;
     margin-bottom: 2em;

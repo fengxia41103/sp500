@@ -404,7 +404,11 @@ var GoogleGraphBox = React.createClass({
         legend: "bottom",
         width: "100%",
         height: 500,
-        fill: "transparent"
+        backgroundColor: "transparent", // Must have!
+        chartArea:{
+          width: "100%",
+          height: "80%"
+        }
       };
 
       // Render chart
