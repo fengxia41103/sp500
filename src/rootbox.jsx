@@ -6,6 +6,7 @@ import DhsGraphContainer from "./dhs-graph.jsx";
 import WbGraphContainer from "./wb-graph.jsx";
 import WbIndicators from "./wb-indicator.jsx";
 import CountryBox from "./country.jsx";
+import GDELTBox from "./gdelt.jsx";
 
 var _ = require('lodash');
 var classNames = require('classnames');
@@ -335,6 +336,10 @@ var RootBox = React.createClass({
                             activeItem={this.state.countryCode} />
 
                 <article>
+
+                <GDELTBox activeItem={this.state.countryCode} />
+
+                {/* graphs */}
                 {this.graphsInDisplay}
 
                 {haveMore}

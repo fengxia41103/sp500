@@ -1,14 +1,12 @@
 import React from 'react';
-import ProgressBox from "./progress.jsx";
-
 var _ = require('lodash');
 
 //****************************************
 //
-//    Common AJAX containers
+//    Common HTMLGetter  containers
 //
 //****************************************
-var AjaxContainer = React.createClass({
+var HTMLGetterContainer = React.createClass({
     getInitialState: function(){
         return {
             loading: false
@@ -31,10 +29,10 @@ var AjaxContainer = React.createClass({
         // Work horse
         fetch(api)
         .then(function(resp){
-            return resp.json();
-        }).then(function(json){
-            if ((typeof json != "undefined") && json){
-                handleUpdate(json);
+            return resp.text();
+        }).then(function(body){
+            if ((typeof body != "undefined") && body){
+                handleUpdate(body);
             }
         }).catch(function(error){
         });
@@ -51,9 +49,11 @@ var AjaxContainer = React.createClass({
         }
         return (
            // Progress bar
-          <ProgressBox />
+           <div className="progress">
+              <div className="indeterminate"></div>
+           </div>
         );
     }
 });
 
-module.exports = AjaxContainer;
+module.exports = HTMLGetterContainer;

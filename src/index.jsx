@@ -21,7 +21,7 @@ var IndexBox = React.createClass({
     getInitialState: function(){
         return {
             items: [],
-            index: "A"
+            index: "S"
         }
     },
     setIndex: function(letter){
