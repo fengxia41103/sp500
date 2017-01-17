@@ -23,7 +23,8 @@ var IFrameBox = React.createClass({
     return (
     <div>
       {!this.state.loaded?<ProgressBox />:null}
-      <iframe src={this.props.src} frameBorder="0" scrolling="no" seamless="true" height="500px" width="100%" onLoad={this._iframeOnLoad}/>
+      <iframe src={this.props.src} frameBorder="0" scrolling="no" seamless="true"
+              height="500px" onLoad={this._iframeOnLoad}/>
     </div>
     );
   }
@@ -32,7 +33,8 @@ var IFrameBox = React.createClass({
 
 var WordcloudBox = React.createClass({
    render: function() {
-     var src = "http://api.gdeltproject.org/api/v1/search_ftxtsearch/search_ftxtsearch?query="+this.props.activeCountry.name+"&output=wordcloud&outputtype=native";
+     var countryName = this.props.activeCountry.name.toLowerCase();
+     var src = "http://api.gdeltproject.org/api/v1/search_ftxtsearch/search_ftxtsearch?query="+countryName+"&output=wordcloud&outputtype=english";
 
      // Render content
      return (
