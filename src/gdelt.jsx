@@ -14,17 +14,25 @@ var IFrameBox = React.createClass({
       loaded: false
     }
   },
-   _iframeOnLoad: function(){
-     this.setState({
-       loaded: true
-     });
+  _iframeOnLoad: function(){
+    this.setState({
+      loaded: true
+    });
    },
   render: function() {
+    var style={
+      height: "100vh",
+      width: "100%"
+    }
     return (
     <div>
       {!this.state.loaded?<ProgressBox />:null}
-      <iframe src={this.props.src} frameBorder="0" scrolling="no" seamless="true"
-              height="500px" onLoad={this._iframeOnLoad}/>
+      <iframe src={this.props.src}
+              frameBorder="0"
+              scrolling="no"
+              seamless="true"
+              onLoad={this._iframeOnLoad}
+              style={style}/>
     </div>
     );
   }
@@ -40,7 +48,7 @@ var WordcloudBox = React.createClass({
      return (
        <div>
          <h3>{this.props.activeCountry.iso2Code}</h3>
-         <figure style={{minHeight:"500px"}}>
+         <figure>
          <figcaption>
            GDELT the most popular theme in the last 24 hours
          </figcaption>
@@ -59,6 +67,7 @@ var NewsImageBox = React.createClass({
      // Render content
      return (
        <div>
+         <h3>{this.props.activeCountry.iso2Code} news</h3>
          <IFrameBox src={src}/>
        </div>
     );
