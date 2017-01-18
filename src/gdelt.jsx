@@ -97,7 +97,8 @@ var ToneTimelineBox = React.createClass({
 
 var GDELTBox = React.createClass({
   render: function(){
-    const clouds = this.props.activeItem.map((c) => {
+    var countries = _.sortBy(this.props.activeItem, "iso2Code");
+    const clouds = countries.map((c) => {
       return (
       <div>
         <div className="row">
