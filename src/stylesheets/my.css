@@ -186,3 +186,12 @@ video {
     transition: 1s opacity;
     opacity: 0.2;
 }
+
+/* highchart tooltip box */
+.highcharts-tooltip span {
+    height:auto !important;
+    width: 200px !important;
+    max-width:250px !important;
+    overflow:auto !important;
+    white-space:normal !important;
+}

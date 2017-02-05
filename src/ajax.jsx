@@ -9,15 +9,15 @@ var _ = require('lodash');
 //
 //****************************************
 var AjaxContainer = React.createClass({
-    getInitialState: function(){
+    getInitialState: function() {
         return {
             loading: false
         }
     },
-    getData: function(){
-        if (this.state.loading){
+    getData: function() {
+        if (this.state.loading) {
             return null;
-        }else{
+        } else {
             this.setState({
                 loading: true
             });
@@ -26,32 +26,31 @@ var AjaxContainer = React.createClass({
         // Get data
         var api = this.props.apiUrl;
         var handleUpdate = this.props.handleUpdate;
-        console.log("Getting: "+api);
+        console.log("Getting: " + api);
 
         // Work horse
         fetch(api)
-        .then(function(resp){
-            return resp.json();
-        }).then(function(json){
-            if ((typeof json != "undefined") && json){
-                handleUpdate(json);
-            }
-        }).catch(function(error){
-        });
+            .then(function(resp) {
+                return resp.json();
+            }).then(function(json) {
+                if ((typeof json != "undefined") && json) {
+                    handleUpdate(json);
+                }
+            }).catch(function(error) {});
     },
-    componentWillMount: function(){
-        this.debounceGetData = _.debounce(function(){
+    componentWillMount: function() {
+        this.debounceGetData = _.debounce(function() {
             this.getData();
         }, 200);
     },
-    render: function(){
+    render: function() {
         // Get data
-        if (!this.state.loading && this.debounceGetData){
+        if (!this.state.loading && this.debounceGetData) {
             this.debounceGetData();
         }
         return (
-           // Progress bar
-          <ProgressBox />
+            // Progress bar
+            <ProgressBox />
         );
     }
 });

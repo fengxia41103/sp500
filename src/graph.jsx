@@ -11,8 +11,8 @@ var _ = require('lodash');
 var classNames = require('classnames');
 //import WayPoint from 'react-waypoint';
 
-var randomId = function(){
-    return "MY"+(Math.random()*1e32).toString(12);
+var randomId = function() {
+    return "MY" + (Math.random() * 1e32).toString(12);
 };
 
 //****************************************
@@ -21,29 +21,29 @@ var randomId = function(){
 //
 //****************************************
 var GraphFactory = React.createClass({
-    getInitialState: function(){
-        var type = (typeof this.props.type === "undefined" || !this.props.type)? "bar":this.props.type;
+    getInitialState: function() {
+        var type = (typeof this.props.type === "undefined" || !this.props.type) ? "bar" : this.props.type;
         return {
             graphType: type,
             graphEngine: "D3", // possible values: [D3, Google, Highchart]
         }
     },
-    setGraphEngine: function(newEngine){
-      this.setState({
-        graphEngine: newEngine
-      });
+    setGraphEngine: function(newEngine) {
+        this.setState({
+            graphEngine: newEngine
+        });
     },
     setGraphType: function(newType) {
         this.setState({
             graphType: newType
         });
     },
-    render: function(){
+    render: function() {
         var data = this.props.data;
         var graphType = this.state.graphType;
 
         // Validate data set
-        if (typeof data == "undefined" || data === null || data.length == 0){
+        if (typeof data == "undefined" || data === null || data.length == 0) {
             return null;
         }
 
@@ -51,23 +51,23 @@ var GraphFactory = React.createClass({
         var countries = this.props.countryCode.join("/");
 
         // Render graph by chart type
-        if (graphType == "pie"){
+        if (graphType == "pie") {
             // Regroup by year
             var tmp = {};
-            for (var i=0; i<data.length;i++){
+            for (var i = 0; i < data.length; i++) {
                 var year = data[i].year;
-                if (tmp.hasOwnProperty(year)){
+                if (tmp.hasOwnProperty(year)) {
                     tmp[year].push(data[i])
-                } else{
+                } else {
                     tmp[year] = [data[i]];
                 }
             }
 
             // One pie chart per year's data
             var graphs = [];
-            for (year in tmp){
+            for (year in tmp) {
                 var containerId = randomId();
-                var title= [this.props.title, year].join(" -- ");
+                var title = [this.props.title, year].join(" -- ");
 
                 graphs.push(
                     <div key={randomId()} style={{display:"inline-block"}}>
@@ -88,9 +88,9 @@ var GraphFactory = React.createClass({
                     <div className="divider" />
                 </div>
             );
-        } else if (graphType == "table"){
+        } else if (graphType == "table") {
             return (
-            <div>
+                <div>
                 <h3>
                     {countries}
                 </h3>
@@ -107,11 +107,11 @@ var GraphFactory = React.createClass({
             </div>
             );
         } else { // Default graphs
-          // container id
-          var containerId = randomId();
+            // container id
+            var containerId = randomId();
 
             return (
-            <div>
+                <div>
                 <h3>
                     {countries}
                 </h3>
@@ -139,37 +139,37 @@ var GraphFactory = React.createClass({
 });
 
 var GraphBox = React.createClass({
-  render: function(){
-    switch(this.props.graphEngine){
-      case "Google":
-        return (
-          <div>
+    render: function() {
+        switch (this.props.graphEngine) {
+            case "Google":
+                return (
+                    <div>
           <GoogleGraphBox {...this.props} />
           </div>
-        );
-      case "Highchart":
-        return (
-          <div>
+                );
+            case "Highchart":
+                return (
+                    <div>
           <HighchartGraphBox {...this.props} />
           </div>
-        );
+                );
 
-      case "D3":
-      default:
-        return (
-          <div>
+            case "D3":
+            default:
+                return (
+                    <div>
           <D3PlusGraphBox {...this.props} />
           </div>
-        );
+                );
+        }
     }
-  }
 });
 
 var GraphConfigBox = React.createClass({
-  render: function(){
-    var randomKey = randomId();
-    return (
-      <div className="right" style={{zIndex:999}}>
+    render: function() {
+        var randomKey = randomId();
+        return (
+            <div className="right" style={{zIndex:999}}>
         <ReactBootstrap.DropdownButton title="config" id={randomKey}>
           <ReactBootstrap.MenuItem>
             <GraphEngineBox
@@ -186,20 +186,21 @@ var GraphConfigBox = React.createClass({
            </ReactBootstrap.MenuItem>
          </ReactBootstrap.DropdownButton>
       </div>
-      );
+        );
     }
 });
 
 var GraphTypeBox = React.createClass({
-    render: function(){
+    render: function() {
         var current = this.props.current;
         var setGraphType = this.props.setGraphType;
-        var types = ["bar","line","table"];
+        var types = ["bar", "line", "table"];
         const options = types.map((t) => {
             var highlight = classNames(
                 "waves-effect waves-light",
-                "chip",
-                {'teal lighten-2 grey-text text-lighten-4': current==t}
+                "chip", {
+                    'teal lighten-2 grey-text text-lighten-4': current == t
+                }
             );
             return (
                 <li key={t}
@@ -211,7 +212,7 @@ var GraphTypeBox = React.createClass({
         });
 
         return (
-          <div>
+            <div>
             <h5>Graph Type</h5>
             <div className="divider"></div>
             <ul>
@@ -223,15 +224,16 @@ var GraphTypeBox = React.createClass({
 });
 
 var GraphEngineBox = React.createClass({
-    render: function(){
+    render: function() {
         var current = this.props.current;
         var setGraphEngine = this.props.setGraphEngine;
-      var types = ["D3","Google", "Highchart"];
+        var types = ["D3", "Google", "Highchart"];
         const options = types.map((t) => {
             var highlight = classNames(
                 "waves-effect waves-light",
-                "chip",
-                {'teal lighten-2 grey-text text-lighten-4': current==t}
+                "chip", {
+                    'teal lighten-2 grey-text text-lighten-4': current == t
+                }
             );
             return (
                 <li key={t}
@@ -243,7 +245,7 @@ var GraphEngineBox = React.createClass({
         });
 
         return (
-          <div>
+            <div>
             <h5>Engine</h5>
             <div className="divider"></div>
             <ul>
@@ -253,6 +255,5 @@ var GraphEngineBox = React.createClass({
         );
     }
 });
-
 
 module.exports = GraphFactory;

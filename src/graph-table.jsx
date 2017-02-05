@@ -1,13 +1,11 @@
 import React from 'react';
-import d3plus from 'd3plus';
-import * as ReactBootstrap from 'react-bootstrap';
 
 var _ = require('lodash');
 var classNames = require('classnames');
 //import WayPoint from 'react-waypoint';
 
-var randomId = function(){
-    return "MY"+(Math.random()*1e32).toString(12);
+var randomId = function() {
+    return "MY" + (Math.random() * 1e32).toString(12);
 };
 
 //****************************************
@@ -17,8 +15,8 @@ var randomId = function(){
 //****************************************
 
 var GraphDatatable = React.createClass({
-    render: function(){
-      const fields = this.props.data.map((d) => {
+    render: function() {
+        const fields = this.props.data.map((d) => {
             var randomKey = randomId();
             return (
                 <tr key={randomKey}><td>
@@ -32,7 +30,7 @@ var GraphDatatable = React.createClass({
         });
 
         return (
-        <div>
+            <div>
             <figure id={this.props.containerId}>
                 <figcaption>{this.props.title}</figcaption>
             <table className="table table-responsive table-striped">
@@ -51,5 +49,4 @@ var GraphDatatable = React.createClass({
     }
 });
 
-
-module.exports =  GraphDatatable;
+module.exports = GraphDatatable;
