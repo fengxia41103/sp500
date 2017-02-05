@@ -318,7 +318,6 @@ var RootBox = React.createClass({
             this.state.indicators.length<1?
                 <WbIndicators handleUpdate={this.handleIndicatorUpdate} />
             :null
-
         );
         var haveMore = (
             this.state.index>0 && this.state.index < this.state.graphs.length?
@@ -334,6 +333,9 @@ var RootBox = React.createClass({
             <div className="container">
                 <CountryBox setItem={this.setCountry}
                             activeItem={this.state.countryCode} />
+
+                {/* Load more WB indicators */}
+                {loadWbIndicators}
 
                 <article>
 
