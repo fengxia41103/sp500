@@ -6,9 +6,10 @@ var _ = require('lodash');
 var WbGraphContainer = React.createClass({
     getInitialState: function(){
         return {
-            data: [],
-            start: "1960",
-            end: "2015"
+          data: [],
+          unifiedData: [],
+          start: "1960",
+          end: "2015"
         }
     },
     getUrl: function(countryCode, indicator){
@@ -19,11 +20,15 @@ var WbGraphContainer = React.createClass({
         return baseUrl+tmp+query;
     },
     handleUpdate: function(data){
-        this.setState({
-            data: _.concat(this.state.data, this.cleanData(data[1]))
-        });
+      var cleaned =  _.concat(this.state.data, this._cleanData(data[1]));
+      var unified = this._unifiedData(cleaned);
+
+      this.setState({
+        data: cleaned,
+        unifiedData: unified
+      });
     },
-    cleanData:function(data){
+    _cleanData:function(data){
         // WB data cleanse function.
         // Here we are to normalize API data into a data format
         // that is uniform for consumption internally.
@@ -56,6 +61,58 @@ var WbGraphContainer = React.createClass({
             return  _.sortBy(tmp, 'year');
         }
     },
+    _unifiedData: function(data){
+      // Unifiy data set to fiill null or zero value for missing data.
+      // Not all countries have data for all the years. And even available
+      // years don't necessarily lineup nicely. So here we convert data array
+      // into a two dimensional array with columues:  Year, country A, country B....
+      // and each row is value: [Year, country A value, country B value,....].
+      // This format was first designed to generate Google datatable for its chart engine.
+      // I think it should also be the base format for other engines.
+      var d = d3.nest()
+        .key(function(d){return d.year})
+        .key(function(d){return d.category})
+        .entries(data);
+
+      // Get all categories. This is necessary so we can handle
+      // missing values. Otherwise, there will be row
+      // that has less values than the number of columns.
+      var categories = _.keys(_.countBy(data, function(item){
+        return item.category;
+      }));
+
+      // Convert format from a flat two-dimension array
+      // to a table with columns: year, category 1, category 2, ...
+      var datatable = new Array();
+      _.forEach(d, function(byYear){
+        var year = byYear.key;
+        var values = [];
+
+        var byCategory = _.groupBy(byYear.values, function(item){
+          return item.key;
+        });
+
+        _.forEach(categories, function(cat){
+          if (byCategory.hasOwnProperty(cat)){
+            _.forEach(byCategory[cat], function(item){
+              _.forEach(item.values, function(val){
+                values.push(val.value);
+              })
+            });
+          }else{
+            values.push(null);
+          }
+        });
+        datatable.push(_.flatten([year,values]));
+      });
+
+      // Catregories: list of countries
+      // databable: 2D array, each row is [Year, country A value, contry B value, ...]
+      return {
+        categories: categories,
+        datatable: datatable
+      }
+    },
     render: function(){
         // If country code changed, update data
         var changed = false;
@@ -85,11 +142,12 @@ var WbGraphContainer = React.createClass({
         // Render graphs
         var footer = "Source: The World Bank";
         return (
-            <GraphFactory
-                data={this.state.data}
-                footer={footer}
-                {...this.props}
-            />
+          <GraphFactory
+              data={this.state.data}
+              unifiedData={this.state.unifiedData}
+              footer={footer}
+              {...this.props}
+           />
         );
     }
 });

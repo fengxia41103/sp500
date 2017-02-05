@@ -5,6 +5,7 @@ import * as ReactBootstrap from 'react-bootstrap';
 import D3PlusGraphBox from "./graph-d3.jsx";
 import GoogleGraphBox from "./graph-googlechart.jsx";
 import GraphDatatable from "./graph-table.jsx";
+import HighchartGraphBox from "./graph-highchart.jsx";
 
 var _ = require('lodash');
 var classNames = require('classnames');
@@ -146,6 +147,12 @@ var GraphBox = React.createClass({
           <GoogleGraphBox {...this.props} />
           </div>
         );
+      case "Highchart":
+        return (
+          <div>
+          <HighchartGraphBox {...this.props} />
+          </div>
+        );
 
       case "D3":
       default:
@@ -219,7 +226,7 @@ var GraphEngineBox = React.createClass({
     render: function(){
         var current = this.props.current;
         var setGraphEngine = this.props.setGraphEngine;
-        var types = ["D3","Google"];
+      var types = ["D3","Google", "Highchart"];
         const options = types.map((t) => {
             var highlight = classNames(
                 "waves-effect waves-light",
