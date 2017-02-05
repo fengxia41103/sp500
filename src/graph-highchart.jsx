@@ -150,10 +150,10 @@ var HighchartGraphBox = React.createClass({
     // Render
     return (
       <div>
-            <figure id={this.props.containerId} style={{minHeight:"500px"}}>
-                <figcaption>{this.props.title}</figcaption>
-            </figure>
-        </div>
+        <figure id={this.props.containerId} style={{minHeight:"500px"}}>
+          <figcaption>{this.props.title}</figcaption>
+        </figure>
+      </div>
     );
   }
 });
