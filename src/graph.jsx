@@ -84,26 +84,26 @@ var GraphFactory = React.createClass({
       }
       return (
         <div className="my-multicol-2">
-                    {graphs}
-                    <div className="divider" />
-                </div>
+          {graphs}
+          <div className="divider" />
+        </div>
       );
     } else if (graphType == "table") {
       return (
-          <div>
-              <h3>
-                  {countries}
-              </h3>
+        <div>
+          <h3>
+            {countries}
+          </h3>
 
-              <GraphConfigBox graphType={this.state.graphType}
-                              setGraphType={this.setGraphType}
-                              graphEngine={this.state.graphEngine}
-                              setGraphEngine={this.setGraphEngine}
-                              {...this.props} />
+          <GraphConfigBox graphType={this.state.graphType}
+                          setGraphType={this.setGraphType}
+                          graphEngine={this.state.graphEngine}
+                          setGraphEngine={this.setGraphEngine}
+                          {...this.props} />
 
-              <GraphDatatable {...this.props} />
-              <div className="divider" />
-          </div>
+          <GraphDatatable {...this.props} />
+          <div className="divider" />
+        </div>
       );
     } else { // Default graphs
       // container id
@@ -111,21 +111,21 @@ var GraphFactory = React.createClass({
 
       return (
         <div>
-            <h3>
-              {countries}
-            </h3>
+          <h3>
+            {countries}
+          </h3>
 
-            <GraphConfigBox graphType={this.state.graphType}
-                            setGraphType={this.setGraphType}
-                            graphEngine={this.state.graphEngine}
-                            setGraphEngine={this.setGraphEngine}
-                            {...this.props} />
-            <GraphBox containerId={containerId}
-                      graphType={this.state.graphType}
-                      graphEngine={this.state.graphEngine}
-                      {...this.props} />
+          <GraphConfigBox graphType={this.state.graphType}
+                          setGraphType={this.setGraphType}
+                          graphEngine={this.state.graphEngine}
+                          setGraphEngine={this.setGraphEngine}
+                          {...this.props} />
+          <GraphBox containerId={containerId}
+                    graphType={this.state.graphType}
+                    graphEngine={this.state.graphEngine}
+                    {...this.props} />
 
-            <div className="divider" />
+          <div className="divider" />
         </div>
       );
     }
@@ -141,13 +141,13 @@ var GraphBox = React.createClass({
       case "Google":
         return (
           <div>
-          <GoogleGraphBox {...this.props} />
+            <GoogleGraphBox {...this.props} />
           </div>
         );
       case "Highchart":
         return (
           <div>
-          <HighchartGraphBox {...this.props} />
+            <HighchartGraphBox {...this.props} />
           </div>
         );
 
@@ -155,7 +155,7 @@ var GraphBox = React.createClass({
       default:
         return (
           <div>
-          <D3PlusGraphBox {...this.props} />
+            <D3PlusGraphBox {...this.props} />
           </div>
         );
     }
@@ -170,16 +170,16 @@ var GraphConfigBox = React.createClass({
         <ReactBootstrap.DropdownButton title="config" id={randomKey}>
           <ReactBootstrap.MenuItem>
             <GraphEngineBox
-              current={this.props.graphEngine}
-              setGraphEngine={this.props.setGraphEngine}
-              {...this.props} />
+                current={this.props.graphEngine}
+                setGraphEngine={this.props.setGraphEngine}
+                {...this.props} />
           </ReactBootstrap.MenuItem>
 
           <ReactBootstrap.MenuItem>
             <GraphTypeBox
-              current={this.props.graphType}
-              setGraphType={this.props.setGraphType}
-              {...this.props} />
+                current={this.props.graphType}
+                setGraphType={this.props.setGraphType}
+                {...this.props} />
           </ReactBootstrap.MenuItem>
         </ReactBootstrap.DropdownButton>
       </div>
@@ -189,68 +189,68 @@ var GraphConfigBox = React.createClass({
 
 var GraphTypeBox = React.createClass({
   render: function() {
-      var current = this.props.current;
-      var setGraphType = this.props.setGraphType;
-      var types = ["bar", "line", "table"];
-      const options = types.map((t) => {
-          var highlight = classNames(
-              "waves-effect waves-light",
-              "chip", {
-                  'teal lighten-2 grey-text text-lighten-4': current == t
-              }
-          );
-          return (
-              <li key={t}
-                  className={highlight}
-                  onClick={setGraphType.bind(null,t)}>
-               {t}
-              </li>
-          );
+    var current = this.props.current;
+    var setGraphType = this.props.setGraphType;
+    var types = ["bar", "line", "table"];
+    const options = types.map((t) => {
+      var highlight = classNames(
+        "waves-effect waves-light",
+        "chip", {
+          'teal lighten-2 grey-text text-lighten-4': current == t
+        }
+      );
+      return (
+        <li key={t}
+            className={highlight}
+            onClick={setGraphType.bind(null,t)}>
+          {t}
+        </li>
+      );
     });
 
     return (
       <div>
-          <h5>Graph Type</h5>
-          <div className="divider"></div>
-          <ul>
-            {options}
-          </ul>
+        <h5>Graph Type</h5>
+        <div className="divider"></div>
+        <ul>
+          {options}
+        </ul>
       </div>
     );
   }
 });
 
 var GraphEngineBox = React.createClass({
-    render: function() {
-        var current = this.props.current;
-        var setGraphEngine = this.props.setGraphEngine;
-        var types = ["D3", "Google", "Highchart"];
-        const options = types.map((t) => {
-            var highlight = classNames(
-                "waves-effect waves-light",
-                "chip", {
-                    'teal lighten-2 grey-text text-lighten-4': current == t
-                }
-            );
-            return (
-                <li key={t}
-                    className={highlight}
-                    onClick={setGraphEngine.bind(null,t)}>
-                 {t}
-                </li>
-            );
-        });
+  render: function() {
+    var current = this.props.current;
+    var setGraphEngine = this.props.setGraphEngine;
+    var types = ["D3", "Google", "Highchart"];
+    const options = types.map((t) => {
+      var highlight = classNames(
+        "waves-effect waves-light",
+        "chip", {
+          'teal lighten-2 grey-text text-lighten-4': current == t
+        }
+      );
+      return (
+        <li key={t}
+            className={highlight}
+            onClick={setGraphEngine.bind(null,t)}>
+          {t}
+        </li>
+      );
+    });
 
-        return (
-            <div>
-                <h5>Engine</h5>
-                <div className="divider"></div>
-                <ul>
-                  {options}
-                </ul>
-            </div>
-        );
-    }
+    return (
+      <div>
+        <h5>Engine</h5>
+        <div className="divider"></div>
+        <ul>
+          {options}
+        </ul>
+      </div>
+    );
+  }
 });
 
 module.exports = GraphFactory;
