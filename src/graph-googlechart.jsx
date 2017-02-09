@@ -53,13 +53,13 @@ var GoogleGraphBox = React.createClass({
   _updateGraphData: function(data) {
     // Return a new Google Datatable
     var d = d3.nest()
-      .key(function(d) {
-        return d.year
-      })
-      .key(function(d) {
-        return d.category
-      })
-      .entries(data);
+              .key(function(d) {
+                return d.year
+              })
+              .key(function(d) {
+                return d.category
+              })
+              .entries(data);
 
     // Get all categories. This is necessary so we can handle
     // missing values. Otherwise, there will be row
@@ -167,10 +167,10 @@ var GoogleGraphBox = React.createClass({
     // Render
     return (
       <div>
-            <figure id={this.props.containerId} style={{minHeight:"500px"}}>
-                <figcaption>{this.props.title}</figcaption>
-            </figure>
-        </div>
+        <figure id={this.props.containerId} style={{minHeight:"500px"}}>
+          <figcaption>{this.props.title}</figcaption>
+        </figure>
+      </div>
     );
   }
 });
