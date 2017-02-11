@@ -1,4 +1,4 @@
-himport React from 'react';
+import React from 'react';
 import GraphFactory from "./graph.jsx";
 import AjaxContainer from "./ajax.jsx";
 var _ = require('lodash');

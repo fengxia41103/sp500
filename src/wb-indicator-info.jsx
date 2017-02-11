@@ -11,17 +11,42 @@ var randomId = function() {
 
 var WbIndicatorInfo = React.createClass({
   getInitialState: function(){
-    this.api = "http://api.worldbank.org/v2/indicators/";
+    this.api = "http://api.worldbank.org/v2/indicators/"+this.props.indicator+"?format=json";
     return {
-      info: null
+      info: []
     }
   },
+  setInfo: function(data){
+    this.setState({
+      info: data[1][0].sourceNote
+    });
+  },
   render: function(){
-    if (this.info === null){
+    // Get items to list
+    if (typeof this.state.info=="undefined" || (this.state.info && this.state.info.length < 1)){
+      return (
+        <AjaxContainer
+            apiUrl={this.api}
+            handleUpdate={this.setInfo} />
+      );
     }
+
     // Render
     return (
-
+      <ReactBootstrap.DropdownButton title="info">
+        <ReactBootstrap.MenuItem>
+          <div className="row">
+            <div className="col s12 m6">
+              <div className="card blue-grey darken-1">
+                <div className="card-content white-text">
+                  <span className="card-title">{this.props.indicator}</span>
+                  <p>{this.state.info}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ReactBootstrap.MenuItem>
+      </ReactBootstrap.DropdownButton>
     );
   }
 });

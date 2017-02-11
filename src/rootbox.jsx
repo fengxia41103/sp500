@@ -297,32 +297,18 @@ var RootBox = React.createClass({
       }
 
       if (g.source === "dhs") {
-        tmp.push( <
-          DhsGraphContainer key = {
-            id
-          }
-          countryCode = {
-            code
-          }
-          type = {
-            graphType
-          } {...g
-          }
-          />
+        tmp.push(
+          <DhsGraphContainer
+              key={id}
+              countryCode = {code}
+              type = {graphType} {...g}/>
         );
       } else if (g.source === "wb") {
-        tmp.push( <
-          WbGraphContainer key = {
-            id
-          }
-          countryCode = {
-            code
-          }
-          type = {
-            graphType
-          } {...g
-          }
-          />
+        tmp.push(
+          <WbGraphContainer
+              key={id}
+              countryCode = {code}
+              type = {graphType} {...g}/>
         );
       }
     }
@@ -339,47 +325,37 @@ var RootBox = React.createClass({
   render: function() {
     var loadWbIndicators = (
       this.state.indicators.length < 1 ?
-      <
-      WbIndicators handleUpdate = {
-        this.handleIndicatorUpdate
-      }
-      /> :
-                                  null
+      <WbIndicators
+          handleUpdate = {this.handleIndicatorUpdate}/>:null
     );
     var haveMore = (
       this.state.index > 0 && this.state.index < this.state.graphs.length ?
-      <
-      div className = "right-align" >
-      <
-      span className = "waves-effect waves-light btn"
-      style = {
-        {
-          marginTop: "1em"
-        }
-      }
-      onClick = {
-        this._generateGraphs
-      } >
-      Load more <
-      /span> < /
-      div >:
-                null);
+      <div className = "right-align" >
+        <span
+            className = "waves-effect waves-light btn"
+            style = {{marginTop: "1em"}}
+            onClick = {this._generateGraphs} >
+          Load more </span> </div>:
+      null);
 
     return (
       <div className="container">
-        < CountryBox setItem={ this.setCountry } activeItem={ this.state.countryCode } />
+        <CountryBox
+            setItem={ this.setCountry }
+            activeItem={ this.state.countryCode } />
 
         {/* Load more WB indicators */}
         { loadWbIndicators }
 
         <article>
-          <GDELTBox activeItem={ this.state.countryCode } />
+          <GDELTBox
+              activeItem={ this.state.countryCode } />
 
           {/* graphs */}
           { this.graphsInDisplay }
           { haveMore }
-          < /article>
-          < / div>
+        </article>
+      </div>
     );
   }
 });

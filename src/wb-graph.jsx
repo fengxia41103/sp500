@@ -1,6 +1,8 @@
 import React from 'react';
 import GraphFactory from "./graph.jsx";
 import AjaxContainer from "./ajax.jsx";
+import WbIndicatorInfo from "./wb-indicator-info.jsx"
+
 var _ = require('lodash');
 
 var WbGraphContainer = React.createClass({
@@ -132,7 +134,7 @@ var WbGraphContainer = React.createClass({
           <AjaxContainer
               key={c}
               handleUpdate={this.handleUpdate}
-              apiUrl={api} />
+              apiUrl={api}/>
         );
       });
 
@@ -146,12 +148,18 @@ var WbGraphContainer = React.createClass({
     // Render graphs
     var footer = "Source: The World Bank";
     return (
-      <GraphFactory
-          data={this.state.data}
-          unifiedData={this.state.unifiedData}
-          footer={footer}
-          {...this.props}
-      />
+      <div>
+        {/* Graph */}
+        <GraphFactory
+            data={this.state.data}
+            unifiedData={this.state.unifiedData}
+            footer={footer}
+            {...this.props}/>
+
+        {/* Indicator info */}
+        <WbIndicatorInfo
+            {...this.props}/>
+      </div>
     );
   }
 });
