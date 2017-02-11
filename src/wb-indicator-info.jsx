@@ -1,4 +1,5 @@
 import React from 'react';
+import * as ReactBootstrap from 'react-bootstrap';
 import AjaxContainer from "./ajax.jsx";
 
 var _ = require('lodash');
@@ -33,20 +34,15 @@ var WbIndicatorInfo = React.createClass({
 
     // Render
     return (
-      <ReactBootstrap.DropdownButton title="info">
-        <ReactBootstrap.MenuItem>
-          <div className="row">
-            <div className="col s12 m6">
-              <div className="card blue-grey darken-1">
-                <div className="card-content white-text">
-                  <span className="card-title">{this.props.indicator}</span>
-                  <p>{this.state.info}</p>
-                </div>
-              </div>
+      <div>
+        <h5>Indicator</h5>
+        <div className="divider" />
+            <div className="card-panel teal" style={{"width":"200px"}}>
+              <span className="white-text" style={{wordWrap:"break-word"}}>
+                {this.state.info}
+              </span>
             </div>
-          </div>
-        </ReactBootstrap.MenuItem>
-      </ReactBootstrap.DropdownButton>
+      </div>
     );
   }
 });

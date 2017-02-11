@@ -1,7 +1,6 @@
 import React from 'react';
 import GraphFactory from "./graph.jsx";
 import AjaxContainer from "./ajax.jsx";
-import WbIndicatorInfo from "./wb-indicator-info.jsx"
 
 var _ = require('lodash');
 
@@ -154,10 +153,6 @@ var WbGraphContainer = React.createClass({
             data={this.state.data}
             unifiedData={this.state.unifiedData}
             footer={footer}
-            {...this.props}/>
-
-        {/* Indicator info */}
-        <WbIndicatorInfo
             {...this.props}/>
       </div>
     );

@@ -6,6 +6,7 @@ import D3PlusGraphBox from "./graph-d3.jsx";
 import GoogleGraphBox from "./graph-googlechart.jsx";
 import GraphDatatable from "./graph-table.jsx";
 import HighchartGraphBox from "./graph-highchart.jsx";
+import WbIndicatorInfo from "./wb-indicator-info.jsx"
 
 var _ = require('lodash');
 var classNames = require('classnames');
@@ -74,11 +75,12 @@ var GraphFactory = React.createClass({
             <h3>
               {countries}
             </h3>
-            <D3PlusGraphBox containerId={containerId}
-                            graphType={graphType}
-                            {...this.props}
-                            data={tmp[year]}
-                            title={title}/>
+            <D3PlusGraphBox
+                containerId={containerId}
+                graphType={graphType}
+                {...this.props}
+                data={tmp[year]}
+                title={title}/>
           </div>
         );
       }
@@ -95,11 +97,12 @@ var GraphFactory = React.createClass({
             {countries}
           </h3>
 
-          <GraphConfigBox graphType={this.state.graphType}
-                          setGraphType={this.setGraphType}
-                          graphEngine={this.state.graphEngine}
-                          setGraphEngine={this.setGraphEngine}
-                          {...this.props} />
+          <GraphConfigBox
+              graphType={this.state.graphType}
+              setGraphType={this.setGraphType}
+              graphEngine={this.state.graphEngine}
+              setGraphEngine={this.setGraphEngine}
+              {...this.props} />
 
           <GraphDatatable {...this.props} />
           <div className="divider" />
@@ -115,15 +118,17 @@ var GraphFactory = React.createClass({
             {countries}
           </h3>
 
-          <GraphConfigBox graphType={this.state.graphType}
-                          setGraphType={this.setGraphType}
-                          graphEngine={this.state.graphEngine}
-                          setGraphEngine={this.setGraphEngine}
-                          {...this.props} />
-          <GraphBox containerId={containerId}
-                    graphType={this.state.graphType}
-                    graphEngine={this.state.graphEngine}
-                    {...this.props} />
+          <GraphConfigBox
+              graphType={this.state.graphType}
+              setGraphType={this.setGraphType}
+              graphEngine={this.state.graphEngine}
+              setGraphEngine={this.setGraphEngine}
+              {...this.props} />
+          <GraphBox
+              containerId={containerId}
+              graphType={this.state.graphType}
+              graphEngine={this.state.graphEngine}
+              {...this.props} />
 
           <div className="divider" />
         </div>
@@ -180,6 +185,12 @@ var GraphConfigBox = React.createClass({
                 current={this.props.graphType}
                 setGraphType={this.props.setGraphType}
                 {...this.props} />
+          </ReactBootstrap.MenuItem>
+
+          <ReactBootstrap.MenuItem>
+            {/* Indicator info */}
+            <WbIndicatorInfo
+                {...this.props}/>
           </ReactBootstrap.MenuItem>
         </ReactBootstrap.DropdownButton>
       </div>
