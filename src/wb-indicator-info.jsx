@@ -37,11 +37,9 @@ var WbIndicatorInfo = React.createClass({
       <div>
         <h5>Indicator</h5>
         <div className="divider" />
-            <div className="card-panel teal" style={{"width":"200px"}}>
-              <span className="white-text" style={{wordWrap:"break-word"}}>
-                {this.state.info}
-              </span>
-            </div>
+        <div style={{whiteSpace:"normal"}}>
+          <p>{this.state.info}</p>
+        </div>
       </div>
     );
   }
