@@ -23,7 +23,8 @@ var WbIndicatorInfo = React.createClass({
   },
   setInfo: function(data){
     this.setState({
-      info: data[1][0].sourceNote
+      info: data[1][0].sourceNote,
+      org: data[1][0].sourceOrganization
     });
   },
   toggle: function() {
@@ -47,11 +48,14 @@ var WbIndicatorInfo = React.createClass({
         {this.state.showInfo?
          (<div className="card blue-grey darken-1" onClick={this.toggle}>
            <div className="card-content white-text">
-             <i className="fa fa-close right" onClick={this.toggle}></i>
              <h5 className="card-title">Detail</h5>
+             <small><em>{this.state.org}</em></small>
              <p style={{whiteSpace:"normal"}}>
                {this.state.info}
              </p>
+             <div className="card-action right-align">
+               <span className="btn" onClick={this.toggle}>Close</span>
+             </div>
            </div>
          </div>
          ):null}
