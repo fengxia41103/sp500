@@ -2,6 +2,9 @@ import React from 'react';
 import * as ReactBootstrap from 'react-bootstrap';
 import AjaxContainer from "./ajax.jsx";
 
+var Modal = require('react-bootstrap').Modal;
+var Button = require('react-bootstrap').Button;
+
 var _ = require('lodash');
 var classNames = require('classnames');
 //import WayPoint from 'react-waypoint';
@@ -14,13 +17,17 @@ var WbIndicatorInfo = React.createClass({
   getInitialState: function(){
     this.api = "http://api.worldbank.org/v2/indicators/"+this.props.indicator+"?format=json";
     return {
-      info: []
+      info: [],
+      showInfo: false
     }
   },
   setInfo: function(data){
     this.setState({
       info: data[1][0].sourceNote
     });
+  },
+  toggle: function() {
+    this.setState({ showInfo: !this.state.showInfo });
   },
   render: function(){
     // Get items to list
@@ -32,14 +39,23 @@ var WbIndicatorInfo = React.createClass({
       );
     }
 
+
     // Render
     return (
       <div>
-        <h5>Indicator</h5>
-        <div className="divider" />
-        <div style={{whiteSpace:"normal"}}>
-          <p>{this.state.info}</p>
-        </div>
+        <i className="fa fa-ellipsis-v left" onClick={this.toggle}/>
+        {this.state.showInfo?
+         (<div className="card blue-grey darken-1" onClick={this.toggle}>
+           <div className="card-content white-text">
+             <i className="fa fa-close right" onClick={this.toggle}></i>
+             <h5 className="card-title">Detail</h5>
+             <p style={{whiteSpace:"normal"}}>
+               {this.state.info}
+             </p>
+           </div>
+         </div>
+         ):null}
+
       </div>
     );
   }

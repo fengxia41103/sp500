@@ -118,12 +118,19 @@ var GraphFactory = React.createClass({
             {countries}
           </h3>
 
+          {/* Graph configurations */}
           <GraphConfigBox
               graphType={this.state.graphType}
               setGraphType={this.setGraphType}
               graphEngine={this.state.graphEngine}
               setGraphEngine={this.setGraphEngine}
               {...this.props} />
+
+          {/* Indicator info */}
+          <WbIndicatorInfo
+              {...this.props}/>
+
+          {/* Graphs */}
           <GraphBox
               containerId={containerId}
               graphType={this.state.graphType}
@@ -185,12 +192,6 @@ var GraphConfigBox = React.createClass({
                 current={this.props.graphType}
                 setGraphType={this.props.setGraphType}
                 {...this.props} />
-          </ReactBootstrap.MenuItem>
-
-          <ReactBootstrap.MenuItem>
-            {/* Indicator info */}
-            <WbIndicatorInfo
-                {...this.props}/>
           </ReactBootstrap.MenuItem>
         </ReactBootstrap.DropdownButton>
       </div>
