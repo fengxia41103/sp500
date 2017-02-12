@@ -49,9 +49,14 @@ var WbIndicatorInfo = React.createClass({
          (<div className="card blue-grey darken-1" onClick={this.toggle}>
            <div className="card-content white-text">
              <h5 className="card-title">Detail</h5>
-             <small><em>{this.state.org}</em></small>
+
              <p style={{whiteSpace:"normal"}}>
                {this.state.info}
+             </p>
+             <p>
+               <small className="left-align">
+                 <em>{this.state.org}</em>
+               </small>
              </p>
              <div className="card-action right-align">
                <span className="btn" onClick={this.toggle}>Close</span>
