@@ -6,6 +6,8 @@ import D3PlusGraphBox from "./graph-d3.jsx";
 import GoogleGraphBox from "./graph-googlechart.jsx";
 import GraphDatatable from "./graph-table.jsx";
 import HighchartGraphBox from "./graph-highchart.jsx";
+import MetricsGraphBox from "./graph-metrics.jsx";
+
 import WbIndicatorInfo from "./wb-indicator-info.jsx"
 
 var _ = require('lodash');
@@ -26,7 +28,7 @@ var GraphFactory = React.createClass({
     var type = (typeof this.props.type === "undefined" || !this.props.type) ? "bar" : this.props.type;
     return {
       graphType: type,
-      graphEngine: "D3", // possible values: [D3, Google, Highchart]
+      graphEngine: "D3", // possible values: [D3, Google, Highchart, Metrics]
     }
   },
   setGraphEngine: function(newEngine) {
@@ -162,6 +164,12 @@ var GraphBox = React.createClass({
             <HighchartGraphBox {...this.props} />
           </div>
         );
+      case "Metrics":
+        return (
+          <div>
+            <MetricsGraphBox {...this.props} />
+          </div>
+        );
 
       case "D3":
       default:
@@ -236,7 +244,7 @@ var GraphEngineBox = React.createClass({
   render: function() {
     var current = this.props.current;
     var setGraphEngine = this.props.setGraphEngine;
-    var types = ["D3", "Google", "Highchart"];
+    var types = ["D3", "Google", "Highchart", "Metrics"];
     const options = types.map((t) => {
       var highlight = classNames(
         "waves-effect waves-light",

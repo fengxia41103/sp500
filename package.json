@@ -25,6 +25,7 @@
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.3.2",
+    "react-metrics-graphics": "^0.6.0",
     "react-toolbox": "^1.2.3",
     "reveal": "0.0.4",
     "reveal.js": "^3.3.0",
