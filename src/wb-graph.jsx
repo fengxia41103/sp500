@@ -38,23 +38,23 @@ var WbGraphContainer = React.createClass({
     } else {
       var tmp = [];
       for (var i = 0; i < data.length; i++) {
-        // Original data can be null or 0, skip both
-        // in the final data set
-        if (data[i].value !== null) {
-          data[i].value = parseFloat(data[i].value);
-          if (data[i].value > 0) {
-            var country = data[i].country.id;
+        var country = data[i].country.id;
 
-            // Internal data format is a dict.
-            tmp.push({
-              uniqueKey: country + i,
-              country: country,
-              year: data[i].date,
-              value: data[i].value,
-              category: country,
-              text: [country, data[i].date].join('-') // Label for each data point
-            });
-          }
+        // Original data can be null or 0,
+        // Do NOT skip! Set null to 0.
+        var value = 0;
+        if (data[i].value !== null) {
+          value = parseFloat(data[i].value);
+          // Internal data format is a dict.
+          tmp.push({
+            uniqueKey: country + i,
+            country: country,
+            year: data[i].date,
+            value: value,
+            category: country,
+            text: [country, data[i].date].join('-') // Label for each data point
+          })
+
         }
       }
 
