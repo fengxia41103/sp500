@@ -1,14 +1,8 @@
 import React from 'react';
-import MetricsGraphics from 'react-metrics-graphics';
+import MG from "metrics-graphics";
 
 var _ = require('lodash');
 var classNames = require('classnames');
-
-
-var randomId = function() {
-  return "MY" + (Math.random() * 1e32).toString(12);
-};
-
 
 //****************************************
 //
@@ -17,29 +11,24 @@ var randomId = function() {
 //****************************************
 var MetricsGraphBox = React.createClass({
   _makeViz: function() {
-    // Reformat query data to datatable consumable forms.
     var data = this.props.data;
+    var type = this.props.graphType;
+    var containerId = this.props.containerId;
 
     // Render chart
-    MG.data_graphic({
-        title: "",
-        description: "Source: "+this.props.footer,
-        data: data,
-        full_width: true,
-        full_height: true,
-        target: "#"+this.props.containerId,
-        x_accessor: 'year',
-        y_accessor: 'value'
+    return MG.data_graphic({
+      title: "",
+      chart_type:type,
+      description: "",
+      data: data,
+      full_width: true,
+      full_height: true,
+      target: "#"+containerId,
+      small_width_threshold: 1200,
+      rotate_x_labels: 45,
+      x_accessor: 'year',
+      y_accessor: 'value'
     });
-  },
-  _mapChartType: function(askingType) {
-    // Map container box GraphType state values to Google chart types
-    switch (askingType) {
-      case 'bar':
-        return 'column';
-      default:
-        return askingType;
-    }
   },
   componentDidMount: function() {
     // Initialize graph
@@ -49,23 +38,13 @@ var MetricsGraphBox = React.createClass({
     // Set up data updater
     var that = this;
     this.debounceUpdate = _.debounce(function(data) {
-      var datatable = that._updateGraphData(data);
-      that.chart.update({
-        series: datatable.series
-      })
+      that._makeViz();
     }, 1000);
 
     // Set up graph type updater
     this.debounceGraphTypeUpdate = _.debounce(function(type) {
-      that.chart.update({
-        chart: {
-          type: that._mapChartType(type)
-        }
-      })
+      that._makeViz();
     }, 500);
-  },
-  componentWillUnmount: function() {
-    this.chart.destroy();
   },
   render: function() {
     // If data changed
@@ -74,7 +53,7 @@ var MetricsGraphBox = React.createClass({
       this.preValue = currentValue;
 
       // Update graph data
-      if (this.chart && this.debounceUpdate) {
+      if (this.debounceUpdate) {
         this.debounceUpdate(this.props.data);
       }
     }
@@ -85,7 +64,7 @@ var MetricsGraphBox = React.createClass({
       this.preType = currentType;
 
       // Update graph data
-      if (this.chart && this.debounceGraphTypeUpdate) {
+      if (this.debounceGraphTypeUpdate) {
         this.debounceGraphTypeUpdate(this.props.graphType);
       }
     }

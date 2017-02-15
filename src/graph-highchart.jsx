@@ -66,7 +66,7 @@ var HighchartGraphBox = React.createClass({
     );
   },
   _mapChartType: function(askingType) {
-    // Map container box GraphType state values to Google chart types
+    // Map container box GraphType state values to proper chart types
     switch (askingType) {
       case 'bar':
         return 'column';
