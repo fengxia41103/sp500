@@ -10,13 +10,34 @@ var classNames = require('classnames');
 //
 //****************************************
 var MetricsGraphBox = React.createClass({
+  _updateGraphData: function(data){
+    var transposed = _.zip.apply(_, data.datatable);
+
+    if (transposed.length < 3){ // at least [[year..], [vals..]]
+      return this.props.data;
+    }else{
+      var newData = [];
+      var years = transposed[0];
+      for(var i = 1; i<transposed.length; i++){
+        var tmp = _.zip(years, transposed[i]);
+        tmp = _.forEach(tmp, function(val, index){
+          tmp[index] = {
+            year: val[0],
+            value: val[1]
+          }
+        })
+        newData.push(tmp);
+      }
+      return newData;
+    }
+  },
   _makeViz: function() {
-    var data = this.props.data;
+    var data = this._updateGraphData(this.props.unifiedData);
     var type = this.props.graphType;
     var containerId = this.props.containerId;
 
     // Render chart
-    return MG.data_graphic({
+    MG.data_graphic({
       title: "",
       chart_type:type,
       description: "",
@@ -24,10 +45,11 @@ var MetricsGraphBox = React.createClass({
       full_width: true,
       full_height: true,
       target: "#"+containerId,
-      small_width_threshold: 1200,
       rotate_x_labels: 45,
+      area: false,
       x_accessor: 'year',
-      y_accessor: 'value'
+      y_accessor: 'value',
+      legend: this.props.unifiedData.categories
     });
   },
   componentDidMount: function() {

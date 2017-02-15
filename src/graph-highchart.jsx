@@ -76,7 +76,8 @@ var HighchartGraphBox = React.createClass({
   },
   _updateGraphData: function(data) {
     // data: is a 2D array, [[1970, val 1, val 2,..], [1971, val3, val 4],...]
-    // First transpose this matrix so the now it becomes [[1970, 1971, ...], [val1, val3, ....]]
+    // First transpose this matrix so the now it becomes
+    // [[1970, 1971, ...], [val1, val3, ....]]
     var transposed = _.zip.apply(_, data.datatable);
 
     var highchartData = data.categories.map(function(country, index) {
