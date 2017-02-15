@@ -16,16 +16,26 @@ var randomId = function() {
 
 var GraphDatatable = React.createClass({
   render: function() {
-    const fields = this.props.data.map((d) => {
-      var randomKey = randomId();
+    const headers = this.props.unifiedData.categories.map((h) => {
       return (
-        <tr key={randomKey}><td>
-          {d.year}
-        </td><td>
-          {d.value}
-        </td><td>
-          {d.country}
-        </td></tr>
+        <th key={randomId()}>
+          {h}
+        </th>
+      )
+    });
+    const fields = this.props.unifiedData.datatable.map((rows) => {
+      var randomKey = randomId();
+      const values = rows.map( (val) => {
+        return (
+          <td key={randomId()}>
+            {val}
+          </td>
+        );
+      });
+      return (
+        <tr key={randomKey}>
+          {values}
+        </tr>
       );
     });
 
@@ -36,8 +46,7 @@ var GraphDatatable = React.createClass({
           <table className="table table-responsive table-striped">
             <thead>
               <th>Year</th>
-              <th>Value</th>
-              <th>Country</th>
+              {headers}
             </thead>
             <tbody>
               {fields}
