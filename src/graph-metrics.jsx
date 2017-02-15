@@ -36,23 +36,32 @@ var MetricsGraphBox = React.createClass({
     var type = this.props.graphType;
     var containerId = this.props.containerId;
 
+    // Update options
+    // Note: we do NOT render bar chart using MetricsGraphics
+    this.options.chart_type = "line";
+    this.options.data = data;
+    this.options.target = "#"+containerId;
+    this.options.legend = this.props.unifiedData.categories;
+
     // Render chart
-    MG.data_graphic({
+    MG.data_graphic(this.options);
+  },
+  componentDidMount: function() {
+    // Graph options
+    this.options = {
       title: "",
-      chart_type:type,
       description: "",
-      data: data,
       full_width: true,
       full_height: true,
-      target: "#"+containerId,
       rotate_x_labels: 45,
       area: false,
       x_accessor: 'year',
       y_accessor: 'value',
-      legend: this.props.unifiedData.categories
-    });
-  },
-  componentDidMount: function() {
+      legend_target: 'div#custom-color-key',
+      colors: ['blue', 'rgb(255,100,43)', '#CCCCFF'],
+      aggregate_rollover: true
+    }
+
     // Initialize graph
     // Apply funnel after window is present
     this._makeViz();
@@ -63,10 +72,6 @@ var MetricsGraphBox = React.createClass({
       that._makeViz();
     }, 1000);
 
-    // Set up graph type updater
-    this.debounceGraphTypeUpdate = _.debounce(function(type) {
-      that._makeViz();
-    }, 500);
   },
   render: function() {
     // If data changed
@@ -77,17 +82,6 @@ var MetricsGraphBox = React.createClass({
       // Update graph data
       if (this.debounceUpdate) {
         this.debounceUpdate(this.props.data);
-      }
-    }
-
-    // If type changed
-    var currentType = this.props.graphType && this.props.graphType.valueOf();
-    if (currentType != null && this.preType !== currentType) {
-      this.preType = currentType;
-
-      // Update graph data
-      if (this.debounceGraphTypeUpdate) {
-        this.debounceGraphTypeUpdate(this.props.graphType);
       }
     }
 
