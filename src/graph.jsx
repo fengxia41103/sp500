@@ -106,6 +106,10 @@ var GraphFactory = React.createClass({
               setGraphEngine={this.setGraphEngine}
               {...this.props} />
 
+        {/* Indicator info */}
+          <WbIndicatorInfo
+              {...this.props}/>
+          
           <GraphDatatable {...this.props} />
           <div className="divider" />
         </div>
