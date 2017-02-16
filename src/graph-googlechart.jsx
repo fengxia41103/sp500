@@ -29,6 +29,26 @@ var GoogleGraphBox = React.createClass({
       chartArea: {
         width: "100%",
         height: "80%"
+      },
+      animation: {
+        startup: true,
+        duration: 1000,
+        easing: "out"
+      },
+      explorer: {
+        axis: "horizontal"
+      },
+      hAxis: {
+        title: "Year",
+        slantedTextAngle: 45,
+        slantedText: true,
+        textStyle:{
+          fontSize: 8
+        }
+      },
+      pointSize: 1,
+      legend: {
+        alignment: "end"
       }
     };
 
