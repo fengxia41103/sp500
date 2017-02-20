@@ -7,6 +7,7 @@ import GoogleGraphBox from "./graph-googlechart.jsx";
 import GraphDatatable from "./graph-table.jsx";
 import HighchartGraphBox from "./graph-highchart.jsx";
 import MetricsGraphBox from "./graph-metrics.jsx";
+import ChartJSGraphBox from "./graph-chartjs.jsx";
 
 import WbIndicatorInfo from "./wb-indicator-info.jsx"
 
@@ -155,27 +156,34 @@ var GraphFactory = React.createClass({
 
 var GraphBox = React.createClass({
   render: function() {
-    switch (this.props.graphEngine) {
-      case "Google":
+    var engine = this.props.graphEngine.toLowerCase();
+    switch (engine) {
+      case "google":
         return (
           <div>
             <GoogleGraphBox {...this.props} />
           </div>
         );
-      case "Highchart":
+      case "highchart":
         return (
           <div>
             <HighchartGraphBox {...this.props} />
           </div>
         );
-      case "Metrics":
+      case "metrics":
         return (
           <div>
             <MetricsGraphBox {...this.props} />
           </div>
         );
+      case "chartjs":
+        return (
+          <div>
+            <ChartJSGraphBox {...this.props} />
+          </div>
+        );
 
-      case "D3":
+      case "d3plus":
       default:
         return (
           <div>
@@ -248,7 +256,7 @@ var GraphEngineBox = React.createClass({
   render: function() {
     var current = this.props.current;
     var setGraphEngine = this.props.setGraphEngine;
-    var types = ["D3", "Google", "Highchart", "Metrics"];
+    var types = ["D3Plus", "Google", "Highchart", "Metrics", "ChartJS"];
     const options = types.map((t) => {
       var highlight = classNames(
         "waves-effect waves-light",
