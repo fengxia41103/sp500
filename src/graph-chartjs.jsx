@@ -38,8 +38,7 @@ var ChartJSGraphBox = React.createClass({
       },
       responsive: true,
       title:{
-        display: true,
-        text: this.props.title, // title text
+        display: true
       },
       animation:{
         animateScale:true
@@ -130,13 +129,13 @@ var ChartJSGraphBox = React.createClass({
     return (
       <div>
         <figure>
+          <figcaption >
+            {this.props.title}
+          </figcaption>
           <canvas
             id={this.props.containerId}
               style={{minHeight: "500px"}}>
           </canvas>
-          <figcaption >
-            {this.props.title}
-          </figcaption>
         </figure>
       </div>
     );
