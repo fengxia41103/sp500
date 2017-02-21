@@ -8,6 +8,7 @@ import GraphDatatable from "./graph-table.jsx";
 import HighchartGraphBox from "./graph-highchart.jsx";
 import MetricsGraphBox from "./graph-metrics.jsx";
 import ChartJSGraphBox from "./graph-chartjs.jsx";
+import PlotlyGraphBox from "./graph-plotly.jsx";
 
 import WbIndicatorInfo from "./wb-indicator-info.jsx"
 
@@ -182,6 +183,12 @@ var GraphBox = React.createClass({
             <ChartJSGraphBox {...this.props} />
           </div>
         );
+      case "plotly":
+        return (
+          <div>
+            <PlotlyGraphBox {...this.props} />
+          </div>
+        );
 
       case "d3plus":
       default:
@@ -256,7 +263,7 @@ var GraphEngineBox = React.createClass({
   render: function() {
     var current = this.props.current;
     var setGraphEngine = this.props.setGraphEngine;
-    var types = ["D3Plus", "Google", "Highchart", "Metrics", "ChartJS"];
+    var types = ["D3Plus", "Google", "Highchart", "Metrics", "ChartJS", "Plotly"];
     const options = types.map((t) => {
       var highlight = classNames(
         "waves-effect waves-light",

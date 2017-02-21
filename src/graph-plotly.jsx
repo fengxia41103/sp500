@@ -1,5 +1,5 @@
 import React from 'react';
-import Chart from 'chart.js';
+import Plotly from 'plotly.js';
 
 var _ = require('lodash');
 var classNames = require('classnames');
@@ -8,8 +8,8 @@ var randomId = function() {
   return "MY" + (Math.random() * 1e32).toString(12);
 };
 
-var randomColorGenerator = function () { 
-    return '#' + (Math.random().toString(16) + '0000000').slice(2, 8); 
+var randomColorGenerator = function () {
+    return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
 };
 
 //****************************************
@@ -17,63 +17,57 @@ var randomColorGenerator = function () {
 //    Common graph containers
 //
 //****************************************
-var ChartJSGraphBox = React.createClass({
+var PlotlyGraphBox = React.createClass({
   _makeViz: function() {
-    // Destroy old one if exists
-    if (this.chart != "undefined" && this.chart != null){
-      this.chart.destroy();
-    }
-
     // Reformat query data to datatable consumable forms.
     var data = this._updateGraphData(this.props.unifiedData);
+    var type = this._mapChartType(this.props.graphType);
+    var id = this.props.containerId;
+
+    // Cleanse data, Plotly builds some details, such as
+    // chart type, in each data point.
+    var dataWithType = data.series.map(function(d){
+      d.type = type;
+      switch(type){
+        case "scatter":
+          d.mode = "lines";
+          break;
+      }
+      return d;
+    })
 
     // Chart options
-    var options ={
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero:true
-          }
-        }]
-      },
-      responsive: true,
-      title:{
-        display: true
-      },
-      animation:{
-        animateScale:true
-      }
+    var layout = {
+      title: this.props.title
+    };
+    if (type == "bar" && dataWithType.length > 1){
+      layout.barmode = "group";
     }
 
     // Render chart
-    var id = this.props.containerId;
-    this.chart = new Chart(id, {
-      type: this.props.graphType,
-      data: {
-        labels: data.categories,
-        datasets: data.series
-      },
-      options: options
-    });
-    
+    console.log(dataWithType);
+    Plotly.newPlot(id, dataWithType);
+  },
+  _mapChartType: function(askingType) {
+    // Map container box GraphType state values to proper chart types
+    switch (askingType) {
+      case 'line':
+        return 'scatter';
+      default:
+        return askingType;
+    }
   },
   _updateGraphData: function(data) {
     // data: is a 2D array, [[1970, val 1, val 2,..], [1971, val3, val 4],...]
     // First transpose this matrix so the now it becomes
     // [[1970, 1971, ...], [val1, val3, ....]]
     var transposed = _.zip.apply(_, data.datatable);
-
+    var categories = transposed[0];
     var formattedData = data.categories.map(function(country, index) {
       return {
-        label: country,
-        data: transposed[index + 1],
-        fill: false,
-        strokeColor: randomColorGenerator(),
-        pointColor: randomColorGenerator(),
-        backgroundColor: randomColorGenerator(),        
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(220,220,220,1)",
+        name: country,
+        y: transposed[index + 1],
+        x: categories
       }
     });
 
@@ -89,8 +83,7 @@ var ChartJSGraphBox = React.createClass({
     // Set up data updater
     var that = this;
     this.debounceUpdate = _.debounce(function(data) {
-      that.chart.data = that._updateGraphData(data);
-      that.chart.update();
+      that._makeViz();
     }, 1000);
 
     // Set up graph type updater
@@ -99,7 +92,7 @@ var ChartJSGraphBox = React.createClass({
     }, 500);
   },
   componentWillUnmount: function() {
-    this.chart.destroy();
+    Plotly.purge(this.props.containerId);
   },
   render: function() {
     // If data changed
@@ -141,4 +134,4 @@ var ChartJSGraphBox = React.createClass({
   }
 });
 
-module.exports = ChartJSGraphBox;
+module.exports = PlotlyGraphBox;
