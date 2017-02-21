@@ -30,23 +30,34 @@ var PlotlyGraphBox = React.createClass({
       d.type = type;
       switch(type){
         case "scatter":
-          d.mode = "lines";
+          d.mode = "lines+markers";
           break;
       }
       return d;
     })
 
     // Chart options
-    var layout = {
-      title: this.props.title
+    var options = {
+      displaylogo: false,
+      displayModBar: true,
+      xaxis: {
+        type: 'date',
+        title: 'Year',
+        showexponent: 'All',
+        tickangle: 45,
+        autotick: true
+      },
+      yaxis: {
+        title: 'Value'
+      },
     };
     if (type == "bar" && dataWithType.length > 1){
-      layout.barmode = "group";
+      options.barmode = "group";
     }
 
     // Render chart
     this.containerId = id;
-    this.chart = Plotly.newPlot(id, dataWithType);
+    this.chart = Plotly.newPlot(id, dataWithType, options);
   },
   _mapChartType: function(askingType) {
     // Map container box GraphType state values to proper chart types
