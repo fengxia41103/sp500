@@ -45,8 +45,8 @@ var PlotlyGraphBox = React.createClass({
     }
 
     // Render chart
-    console.log(dataWithType);
-    Plotly.newPlot(id, dataWithType);
+    this.containerId = id;
+    this.chart = Plotly.newPlot(id, dataWithType);
   },
   _mapChartType: function(askingType) {
     // Map container box GraphType state values to proper chart types
@@ -92,7 +92,9 @@ var PlotlyGraphBox = React.createClass({
     }, 500);
   },
   componentWillUnmount: function() {
-    Plotly.purge(this.props.containerId);
+    if (this.chart != "undefined" && this.chart != null){
+      Plotly.purge(this.containerId);
+    }
   },
   render: function() {
     // If data changed
@@ -124,10 +126,9 @@ var PlotlyGraphBox = React.createClass({
           <figcaption >
             {this.props.title}
           </figcaption>
-          <canvas
+          <div
             id={this.props.containerId}
-              style={{minHeight: "500px"}}>
-          </canvas>
+            style={{minHeight: "500px"}} />
         </figure>
       </div>
     );
