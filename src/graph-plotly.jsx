@@ -41,7 +41,6 @@ var PlotlyGraphBox = React.createClass({
       displaylogo: false,
       displayModBar: true,
       xaxis: {
-        type: 'date',
         title: 'Year',
         showexponent: 'All',
         tickangle: 45,
