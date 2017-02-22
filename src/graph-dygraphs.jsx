@@ -31,7 +31,9 @@ var DygraphsGraphBox = React.createClass({
     var legendFormatter = function (data) {
       if (data.x == null) {
         // This happens when there's no selection and {legend: 'always'} is set.
-        return '<br>' + data.series.map(function(series) { return series.dashHTML + ' ' + series.labelHTML }).join('<br>');
+        return '<br>' + data.series.map(function(series){
+          return series.dashHTML + ' ' + series.labelHTML
+        }).join('<br>');
       }
 
       var html = this.getLabels()[0] + ': ' + data.xHTML;
@@ -140,9 +142,11 @@ var DygraphsGraphBox = React.createClass({
       xlabel: 'Year',
       highlightSeriesOpts: { strokeWidth: 2 }
     };
+
     switch(type){
       case "bar":
-        if (data.length > 1){
+        if (headers.length > 2 ){
+          // Multi bar charts
           options.plotter = multiColumnBarPlotter;
         }else{
           options.plotter = barChartPlotter;
@@ -161,10 +165,11 @@ var DygraphsGraphBox = React.createClass({
     // data: is a 2D array, [[1970, val 1, val 2,..], [1971, val3, val 4],...]
     // First transpose this matrix so the now it becomes
     // [[1970, 1971, ...], [val1, val3, ....]]
-    return data.datatable.map(function(d){
+    var formatted = data.datatable.map(function(d){
       d[0] = parseInt(d[0]);
       return d;
-    })
+    });
+    return formatted;
   },
   componentDidMount: function() {
     // Initialize graph
