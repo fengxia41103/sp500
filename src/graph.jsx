@@ -240,8 +240,7 @@ var GraphTypeBox = React.createClass({
     var types = ["bar", "line", "table"];
     const options = types.map((t) => {
       var highlight = classNames(
-        "waves-effect waves-light",
-        "chip", {
+        "badge", {
           'teal lighten-2 grey-text text-lighten-4': current == t
         }
       );
@@ -280,8 +279,7 @@ var GraphEngineBox = React.createClass({
       "Dygraphs"];
     const options = types.map((t) => {
       var highlight = classNames(
-        "waves-effect waves-light",
-        "chip", {
+        "badge", {
           'teal lighten-2 grey-text text-lighten-4': current == t
         }
       );

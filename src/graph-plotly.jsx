@@ -76,7 +76,7 @@ var PlotlyGraphBox = React.createClass({
       return {
         name: country,
         y: transposed[index + 1],
-        x: categories
+        x: transposed[0]
       }
     });
 
