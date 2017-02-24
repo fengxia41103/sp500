@@ -29,6 +29,31 @@ var DygraphsGraphBox = React.createClass({
     var headers = ["x"].concat(this.props.unifiedData.categories);
 
     var legendFormatter = function (data) {
+      var legends = data.series.forEach(function(series) {
+        if (!series.isVisible) return;
+
+        var highlight = ""; 
+        if (series.isHighlighted) {
+          highlight = "pink darken-3"
+        }
+        var legendLine = (
+          <tr><td className={highlight}>
+            {series.labelHTML}
+          </td><td>
+            {series.yHTML}
+          </td></tr>
+        );
+      });
+
+      // Legend render
+      return (
+        <table className="table table-responsive table-hover">
+          {legends}
+        </table>
+      );
+    }
+    
+    var legendFormatter2 = function (data) {
       if (data.x == null) {
         // This happens when there's no selection and {legend: 'always'} is set.
         return '<br>' + data.series.map(function(series){
@@ -41,7 +66,7 @@ var DygraphsGraphBox = React.createClass({
         if (!series.isVisible) return;
         var labeledData = series.labelHTML + ': ' + series.yHTML;
         if (series.isHighlighted) {
-          labeledData = '<b>' + labeledData + '</b>';
+          labeledData = '<span class="pink darken-3 white-text">' + labeledData + '</span>';
         }
         html += '<br>' + series.dashHTML + ' ' + labeledData;
       });
@@ -140,7 +165,8 @@ var DygraphsGraphBox = React.createClass({
       labels: headers,
       legend: "always",
       xlabel: 'Year',
-      highlightSeriesOpts: { strokeWidth: 2 }
+      highlightSeriesOpts: { strokeWidth: 2 },
+      legendFormatter: legendFormatter2
     };
 
     switch(type){

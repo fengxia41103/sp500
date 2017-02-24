@@ -205,3 +205,7 @@ video {
 .dygraph-ylabel {
   float: right;
 }
+
+.dygraph-legend {
+  margin-left: 200px;
+}
