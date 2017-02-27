@@ -10,6 +10,7 @@ import MetricsGraphBox from "./graph-metrics.jsx";
 import ChartJSGraphBox from "./graph-chartjs.jsx";
 import PlotlyGraphBox from "./graph-plotly.jsx";
 import DygraphsGraphBox from "./graph-dygraphs.jsx";
+import C3GraphBox from "./graph-c3.jsx";
 
 import WbIndicatorInfo from "./wb-indicator-info.jsx"
 
@@ -160,6 +161,12 @@ var GraphBox = React.createClass({
   render: function() {
     var engine = this.props.graphEngine.toLowerCase();
     switch (engine) {
+      case "c3":
+        return (
+          <div>
+            <C3GraphBox {...this.props} />
+          </div>
+        );
       case "google":
         return (
           <div>
@@ -271,6 +278,7 @@ var GraphEngineBox = React.createClass({
     var setGraphEngine = this.props.setGraphEngine;
     var types = [
       "D3Plus",
+      "C3",
       "Google",
       "Highchart",
       "Metrics",

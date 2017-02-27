@@ -64,11 +64,22 @@ var config = {
         ]
     },
     plugins: [
-        new CopyWebpackPlugin([
-            { from: "../index.html"},
-            { from: 'images', to: "images" },
-            { from: 'downloads', to: "downloads"},
-        ])
+        new CopyWebpackPlugin([{
+                from: "../index.html"
+            },
+            {
+                from: 'images',
+                to: "images"
+            },
+            {
+                from: 'downloads',
+                to: "downloads"
+            },
+        ]),
+        new webpack.ProvidePlugin({
+            d3: 'd3',
+            $: 'jquery'
+        })
     ]
 };
 
