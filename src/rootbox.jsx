@@ -348,8 +348,8 @@ var RootBox = React.createClass({
         { loadWbIndicators }
 
         <article>
-          <GDELTBox
-              activeItem={ this.state.countryCode } />
+          {/* <GDELTBox
+              activeItem={ this.state.countryCode } /> */}
 
           {/* graphs */}
           { this.graphsInDisplay }
