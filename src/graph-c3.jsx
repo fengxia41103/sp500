@@ -39,15 +39,16 @@ var C3GraphBox = React.createClass({
         //width: 100 // this makes bar width 100px
       },
       data: {
-        x: "x",
+        x: "x", // hard-coded x-axos indicator
         type: this._mapChartType(this.props.graphType),
         columns: data.series
       }
     }
 
     // Render chart
+    var that = this;
     require(["d3", "c3"], function(d3, c3) {
-      this.chart = c3.generate(options);
+      that.chart = c3.generate(options);
     });
   },
   _mapChartType: function(askingType) {
@@ -69,6 +70,10 @@ var C3GraphBox = React.createClass({
       data.unshift(country);
       return data;
     });
+
+    // Add x-axis data, must be in format
+    // ["x", val1, val2, ....] <-- first element
+    // is the same character defined in optioon(see above)
     var x = transposed[0];
     x.unshift("x");
     formattedData.unshift(x);
@@ -84,10 +89,12 @@ var C3GraphBox = React.createClass({
     // Set up data updater
     var that = this;
     this.debounceUpdate = _.debounce(function(data) {
+      this._makeViz();
     }, 1000);
 
     // Set up graph type updater
     this.debounceGraphTypeUpdate = _.debounce(function(type) {
+      this._makeViz();
     }, 500);
   },
   _destroyViz: function(){
