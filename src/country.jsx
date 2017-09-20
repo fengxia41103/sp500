@@ -52,47 +52,26 @@ var CountryBox = React.createClass({
 
     // Item render display
     var getItemRender = function(i) {
-      return ( <
-        div > {
-          i.name
-        }({
-          i.iso2Code
-        }) <
-        /div>
+      return (
+        <div>
+          {i.name}({i.iso2Code})
+        </div>
       );
     }
 
     // Render
-    return ( <
-      div >
-      <
-      IndexBox indexes = {
-        indexes
-      }
-      indexItemUrl = {
-        indexItemUrl
-      }
-      getItems = {
-        getItems
-      }
-      isIndexActive = {
-        isIndexActive
-      }
-      isItemActive = {
-        isItemActive
-      }
-      itemMapToIndex = {
-        itemMapToIndex
-      }
-      getItemValue = {
-        getItemValue
-      }
-      getItemRender = {
-        getItemRender
-      } {...this.props
-      }
-      /> <
-      /div>
+    return (
+      <div >
+        <IndexBox indexes = {indexes}
+                  indexItemUrl = {indexItemUrl}
+                  getItems = {getItems}
+                  isIndexActive = {isIndexActive}
+                  isItemActive = {isItemActive}
+                  itemMapToIndex = {itemMapToIndex}
+                  getItemValue = {getItemValue}
+                  getItemRender = {getItemRender}
+                  {...this.props}/>
+      </div>
     );
   }
 });
