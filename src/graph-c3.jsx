@@ -1,12 +1,6 @@
 import React from 'react';
 import c3 from "c3";
 
-requirejs.config({
-    paths: {
-        d3: 'https://d3js.org/d3.v4.js' // Or whatever
-    }
-})
-
 var _ = require('lodash');
 var classNames = require('classnames');
 //import WayPoint from 'react-waypoint';
@@ -31,31 +25,21 @@ var C3GraphBox = React.createClass({
     // Chart options
     var options = {
       bindto: "#"+this.props.containerId,
-      bar: {
-        width: {
-          ratio: 0.5 // this makes bar width 50% of length between ticks
-        }
-        // or
-        //width: 100 // this makes bar width 100px
-      },
       data: {
-        x: "x", // hard-coded x-axos indicator
+        x: "x", // hard-coded x-axis indicator
         type: this._mapChartType(this.props.graphType),
         columns: data.series
       }
     }
 
     // Render chart
-    var that = this;
-    require(["d3", "c3"], function(d3, c3) {
-      that.chart = c3.generate(options);
-    });
+    this.chart = c3.generate(options);
   },
   _mapChartType: function(askingType) {
     // Map container box GraphType state values to proper chart types
     switch (askingType) {
-      case 'bar':
-        return 'bar';
+      case 'line':
+        return 'spline';
       default:
         return askingType;
     }
