@@ -32,7 +32,7 @@ var GraphFactory = React.createClass({
     var type = (typeof this.props.type === "undefined" || !this.props.type) ? "bar" : this.props.type;
     return {
       graphType: type,
-      graphEngine: "D3", // possible values: [D3, Google, Highchart, Metrics]
+      graphEngine: "highchart", // possible values: [D3, Google, Highchart, Metrics]
     }
   },
   setGraphEngine: function(newEngine) {
@@ -123,7 +123,7 @@ var GraphFactory = React.createClass({
       var containerId = randomId();
 
       return (
-        <div>
+        <div className="row">
           <h3>
             {countries}
           </h3>
@@ -219,16 +219,17 @@ var GraphConfigBox = React.createClass({
   render: function() {
     var randomKey = randomId();
     return (
-      <div className="right" style={{zIndex:999}}>
-        <ReactBootstrap.DropdownButton title="config" id={randomKey}>
-          <ReactBootstrap.MenuItem>
+      <div className="right col l3 m3 s12" style={{zIndex:999}}>
+        <ReactBootstrap.DropdownButton title="config"
+                                       id={randomKey}>
+          <ReactBootstrap.MenuItem className="row">
             <GraphEngineBox
                 current={this.props.graphEngine}
                 setGraphEngine={this.props.setGraphEngine}
                 {...this.props} />
           </ReactBootstrap.MenuItem>
 
-          <ReactBootstrap.MenuItem>
+          <ReactBootstrap.MenuItem className="row">
             <GraphTypeBox
                 current={this.props.graphType}
                 setGraphType={this.props.setGraphType}
@@ -247,7 +248,7 @@ var GraphTypeBox = React.createClass({
     var types = ["bar", "line", "table"];
     const options = types.map((t) => {
       var highlight = classNames(
-        "badge", {
+        "collection-item", {
           'teal lighten-2 grey-text text-lighten-4': current == t
         }
       );
@@ -262,11 +263,10 @@ var GraphTypeBox = React.createClass({
 
     return (
       <div>
-        <h5>Graph Type</h5>
-        <div className="divider"></div>
-        <ul>
+        <li className="collection-header">
+          <h5>Graph Type</h5>
+        </li>
           {options}
-        </ul>
       </div>
     );
   }
@@ -274,20 +274,20 @@ var GraphTypeBox = React.createClass({
 
 var GraphEngineBox = React.createClass({
   render: function() {
-    var current = this.props.current;
+    var current = this.props.current.toLowerCase();
     var setGraphEngine = this.props.setGraphEngine;
     var types = [
-      "D3Plus",
-      "C3",
-      "Google",
-      "Highchart",
-      "Metrics",
-      "ChartJS",
-      "Plotly",
-      "Dygraphs"];
+      "d3Plus",
+      "c3",
+      "google",
+      "highchart",
+      "metrics",
+      "chartJS",
+      "plotly",
+      "dygraphs"];
     const options = types.map((t) => {
       var highlight = classNames(
-        "badge", {
+        "collection-item", {
           'teal lighten-2 grey-text text-lighten-4': current == t
         }
       );
@@ -302,11 +302,10 @@ var GraphEngineBox = React.createClass({
 
     return (
       <div>
-        <h5>Engine</h5>
-        <div className="divider"></div>
-        <ul>
+        <li className="collection-header">
+          <h5>Engine</h5>
+        </li>
           {options}
-        </ul>
       </div>
     );
   }
