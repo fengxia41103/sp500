@@ -38,9 +38,10 @@ var AlphaGraph = React.createClass({
       // with a variable key which depends on the function in use!
       var tmp = [];
       _.each(data[this.props.datakey], function(val,key){
-        tmp.push([key, parseFloat(val['1. open'])]);
+        var d_in_milseconds = new Date(key);
+        tmp.push([d_in_milseconds.getTime(), parseFloat(val['1. open'])]);
       });
-      return tmp;
+      return _.reverse(tmp);
     }
   },
   render: function() {

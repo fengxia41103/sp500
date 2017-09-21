@@ -39,8 +39,8 @@ var RootBox = React.createClass({
             symbol ={this.state.symbol}
             function="TIME_SERIES_DAILY_ADJUSTED"
             datakey="Time Series (Daily)"
-            outputsize="compact"
-            series="high"
+            outputsize="full"
+            series="open"
             interval="daily"/>
       </div>
     );
