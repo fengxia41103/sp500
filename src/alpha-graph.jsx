@@ -8,49 +8,54 @@ var AlphaGraph = React.createClass({
   getInitialState: function() {
     return {
       data: [],
-      key: '4W4899YHR2QYOFQ2'
+      key: '4W4899YHR2QYOFQ2' // fxia1@lenovo.com
     }
   },
   getUrl: function(symbol, configs) {
     // Build API url
     var baseUrl = "https://www.alphavantage.co/query?";
     var query = [];
-    _.each(configs, function(key,val){
+
+    // NOTE: key, val order is reversed!!
+    // see https://lodash.com/docs/4.17.4#forEach
+    _.each(configs, function(val, key){
       query.push(key+'='+val);
     })
     return baseUrl + query.join('&');
   },
   handleUpdate: function(data) {
-    var cleaned = _.concat(this.state.data, this._cleanData(data));
-    var unified = this._unifiedData(cleaned);
-    console.log(cleaned);
+    var cleaned = this._cleanData(data);
     this.setState({
-      data: cleaned,
+      data: cleaned
     });
   },
   _cleanData: function(data) {
-    // WB data cleanse function.
-    // Here we are to normalize API data into a data format
-    // that is uniform for consumption internally.
     if (typeof data === "undefined" || data === null) {
       return [];
     } else {
-      return data;
+      // This is completely depending on the returned
+      // data format. For AlphaVantage data, it's a dict
+      // with a variable key which depends on the function in use!
+      var tmp = [];
+      _.each(data[this.props.datakey], function(val,key){
+        tmp.push([key, parseFloat(val['1. open'])]);
+      });
+      return tmp;
     }
   },
   render: function() {
     // If symbol changed, update data
     var changed = false;
-    var currentValue = this.props.symbol && this.props.symbol.valueOf();
+    var currentValue = this.props.symbol;
     if (currentValue != null && this.preValue !== currentValue) {
       this.preValue = currentValue;
       var api = this.getUrl(currentValue, {
         symbol: currentValue,
-        'function': 'TIME_SERIES_DAILY_ADJUSTED',
-        outputsize: 'compact',
+        'function': this.props.function,
+        outputsize: this.props.outputsize,
         apikey: this.state.key,
-        datakey: 'Time Series (Daily)'
-      })
+      });
+
       return (
         <AjaxContainer
             key={currentValue}
@@ -65,8 +70,10 @@ var AlphaGraph = React.createClass({
       <div>
         {/* Graph */}
         <GraphFactory
+            categories={this.props.function}
             data={this.state.data}
             footer={footer}
+            title={this.props.function}
             {...this.props}/>
       </div>
     );

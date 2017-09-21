@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import d3plus from 'd3plus';
-import AjaxContainer from "./ajax.jsx";
 import SymbolBox from "./symbol.jsx";
+import AlphaGraph from "./alpha-graph.jsx";
 
 var _ = require('lodash');
 var classNames = require('classnames');
@@ -28,7 +27,6 @@ var RootBox = React.createClass({
     });
   },
   _generateGraphs: function() {
-
   },
 
   render: function() {
@@ -37,6 +35,13 @@ var RootBox = React.createClass({
         <SymbolBox
             setItem={ this.setSymbol }
             activeItem={ this.state.symbol } />
+        <AlphaGraph
+            symbol ={this.state.symbol}
+            function="TIME_SERIES_DAILY_ADJUSTED"
+            datakey="Time Series (Daily)"
+            outputsize="compact"
+            series="high"
+            interval="daily"/>
       </div>
     );
   }

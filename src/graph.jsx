@@ -17,8 +17,6 @@ var randomId = function() {
 //
 //****************************************
 var GraphFactory = React.createClass({
-  getInitialState: function() {
-  },
   render: function() {
     var data = this.props.data;
 
