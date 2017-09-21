@@ -36,7 +36,7 @@ var RootBox = React.createClass({
       <div className="container">
         <SymbolBox
             setItem={ this.setSymbol }
-            activeItem={ this.state.symbols } />
+            activeItem={ this.state.symbol } />
       </div>
     );
   }
