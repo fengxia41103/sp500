@@ -1,5 +1,5 @@
 import React from 'react';
-import AjaxContainer from "./ajax.jsx";
+import AjaxCsvContainer from "./ajax_csv.jsx";
 
 var _ = require('lodash');
 var classNames = require('classnames');
@@ -37,9 +37,10 @@ var IndexBox = React.createClass({
   },
   render: function(){
     // Get items to list
-    if (typeof this.state.items=="undefined" || (this.state.items && this.state.items.length < 1)){
+    if (typeof this.state.items=="undefined" ||
+        (this.state.items && this.state.items.length < 1)){
       return (
-        <AjaxContainer
+        <AjaxCsvContainer
             apiUrl={this.props.indexItemUrl}
             handleUpdate={this.setItems} />
       );
