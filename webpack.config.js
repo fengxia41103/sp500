@@ -78,9 +78,12 @@ var config = {
         ]),
         new webpack.ProvidePlugin({
             d3: 'd3',
-            $: 'jquery'
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.$': 'jquery',
+            'window.jQuery': 'jquery',
         })
-    ]
+    ],
 };
 
 module.exports = config;

@@ -19,7 +19,6 @@
     "es5-shim": "^4.5.9",
     "extract-text-webpack-plugin": "^1.0.1",
     "fetch-jsonp": "^1.0.2",
-    "file-loader": "^0.9.0",
     "font-awesome": "^4.6.3",
     "highcharts": "^5.0.7",
     "jquery": "^3.1.1",
@@ -29,6 +28,7 @@
     "materialize-loader": "^1.1.1",
     "metrics-graphics": "^2.11.0",
     "moment": "^2.17.1",
+    "papaparse": "^4.3.6",
     "plotly.js": "^1.23.1",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.7",
@@ -37,7 +37,6 @@
     "reveal": "0.0.4",
     "reveal.js": "^3.3.0",
     "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",
     "whatwg-fetch": "^1.0.0"
@@ -52,9 +51,11 @@
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.11.1",
     "copy-webpack-plugin": "^4.0.0",
+    "file-loader": "^0.9.0",
     "highcharts": "^5.0.7",
     "react-addons-css-transition-group": "^15.3.2",
     "react-tap-event-plugin": "^1.0.0",
+    "url-loader": "^0.5.9",
     "webpack": "^1.14.0"
   }
 }

@@ -1,10 +1,91 @@
 import React from 'react';
 import GraphFactory from "./graph.jsx";
 import AjaxContainer from "./ajax.jsx";
+import FormBox from "./forms.jsx";
+
+import $ from 'jquery' //this one is not needed if your eslint is disabled
+
+var createReactClass = require('create-react-class');
 
 var _ = require('lodash');
+var classNames = require('classnames');
 
-var AlphaGraph = React.createClass({
+var AlphaBox = createReactClass({
+   getInitialState: function() {
+     var tmp = {
+       "example msrp": {
+         label: "Example MSRP",
+         value: 18881,
+         step: 1000
+       }
+     }
+     return tmp;
+   },
+   handleFieldChange: function(fieldId, value) {
+     var newState = this.state[fieldId];
+     newState.value = parseFloat(value); // convert to Float
+     this.setState(newState);
+   },
+  getFields: function(pickList){
+    var s = this.state;
+    return pickList.map(function(i){
+       var tmp = s[i];
+       tmp.name = i;
+       if (typeof tmp.value  == "undefined"){
+         tmp.value = 0;
+       }
+      return tmp;
+    });
+   },
+
+  render: function(){
+    var test_form = {
+      title: "me",
+      fields: this.getFields(['example msrp']),
+      assumptions: []
+    };
+    return (
+      <div>
+        <FormBox data={test_form} onChange={this.handleFieldChange} />
+      </div>
+    );
+  }
+});
+
+class AlphaConfig extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render(){
+    var inputs = [];
+    var setSeries = this.props.setSeries;
+    var series = this.props.series;
+    var options = this.props.seriesOptions.split(",").map((v) => {
+      var clean_v = v.trim();
+      var active = classNames(
+        "waves-effect btn-flat",
+        {"teal lighten-2 grey-text text-lighten-4 waves-teal": clean_v===series}
+      );
+
+      return (
+        <a className={active}
+            onClick={setSeries.bind(null,clean_v)}>
+          {clean_v} |
+        </a>
+      );
+    });
+
+    return (
+      <div className="row">
+        Pick series: {options}
+      </div>
+    )
+  }
+}
+
+
+var AlphaGraph = createReactClass({
   getInitialState: function() {
     return {
       data: [],
@@ -110,4 +191,4 @@ var AlphaGraph = React.createClass({
   }
 });
 
-module.exports = AlphaGraph;
+module.exports = AlphaBox;

@@ -25,7 +25,6 @@ var IndexBox = React.createClass({
     }
   },
   setIndex: function(letter){
-    console.log(letter);
     this.setState({
       index: letter
     });
