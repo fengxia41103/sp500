@@ -275,13 +275,13 @@ var AlphaBox = createReactClass({
           time_period: 60,
           series_type: "close"
         }
-      },{
-        func: "AROON",
-        datakey: "Technical Analysis: AROON",
-        configs: {
-          interval: "daily",
-          time_period: 60
-        }
+        /* },{
+         *   func: "AROON",
+         *   datakey: "Technical Analysis: AROON",
+         *   configs: {
+         *     interval: "daily",
+         *     time_period: 60
+         *   }*/
       },{
         func: "AROONOSC",
         datakey: "Technical Analysis: AROONOSC",
@@ -515,7 +515,7 @@ var AlphaBox = createReactClass({
     });
 
     return (
-      <div>
+      <div className="row">
         {graphs}
         {/* <FormBox data={form_data}
             onChange={this.handleFieldChange} /> */}
@@ -529,6 +529,7 @@ var AlphaGraph = createReactClass({
   getInitialState: function() {
     return {
       data: [],
+      meta: [],
       key: '4W4899YHR2QYOFQ2' // fxia1@lenovo.com
     }
   },
@@ -548,8 +549,9 @@ var AlphaGraph = createReactClass({
     this.setState({
       data: _.concat(this.state.data, {
         name: this.props.symbol,
-        data: cleaned
-      })
+        data: cleaned.data,
+      }),
+      meta: cleaned.meta
     });
   },
   _cleanData: function(data) {
@@ -560,6 +562,7 @@ var AlphaGraph = createReactClass({
       // data format. For AlphaVantage data, it's a dict
       // with a variable key which depends on the function in use!
       var points = data[this.props.datakey];
+      var meta = data["Meta Data"];
 
       // Extract data we care about.
       var series = this.props.configs.series_type;
@@ -610,7 +613,10 @@ var AlphaGraph = createReactClass({
         }
         return [d.getTime(), parseFloat(v)];
       });
-      return _.reverse(tmp);
+      return {
+        meta: meta,
+        data: _.reverse(tmp)
+      }
     }
   },
   render: function() {
@@ -635,15 +641,18 @@ var AlphaGraph = createReactClass({
     }
 
     // Render graphs
-    var footer = "Source: AlphaVantage";
+    var title = this.state.meta['2: Indicator'];
+    title = title?title:_.startCase(this.props.func);
+
+    var footer = this.props.func;
     return (
-      <div>
+      <div className="col l6 m12 s12">
         {/* Graph */}
         <GraphFactory
             categories={this.props.func}
             data={this.state.data}
             footer={footer}
-            title={_.startCase(this.props.func)}
+            title={title}
             {...this.props}/>
       </div>
     );
