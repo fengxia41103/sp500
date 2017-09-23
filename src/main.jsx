@@ -6,8 +6,6 @@ require("font-awesome/css/font-awesome.css");
 require("materialize-loader");
 require("./stylesheets/my.css");
 
-import 'materialize-css/dist/js/materialize.min.js'
-import 'materialize-css/dist/css/materialize.min.css'
 
 import React from "react";
 import ReactDom from "react-dom";

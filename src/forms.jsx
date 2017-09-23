@@ -15,25 +15,46 @@ var FormInput = React.createClass({
     var inputStyle = {
       float: "left"
     };
-    var dollar = (typeof this.props.unit=="undefined") || this.props.unit =="$"?"$":null;
-    var negativeHighlight = this.props.value > 0 ? "": "myhighlight";
-    var pcnt = (this.props.unit=="%" || this.props.unit=="month") ?
-               this.props.unit: null;
-    var max = this.props.max? this.props.max:"";
-    var min = this.props.min? this.props.min:"0";
-    var step = this.props.step? this.props.step: "1";
+
+    // default data type is "number"
+    var datatype = this.props.datatype?this.props.datatype:"number";
+    var input = null;
+    var pattern = "["+this.props.options.split(",").join("|")+"]";
+    switch(datatype){
+      case "number":
+        var negativeHighlight = this.props.value > 0 ? "": "myhighlight";
+        var max = this.props.max? this.props.max:"";
+        var min = this.props.min? this.props.min:"0";
+        var step = this.props.step? this.props.step: "1";
+
+        input = (
+          <input type="number"
+                 className={negativeHighlight}
+                 placeholder={this.props.value}
+                 max={max} min={min} step={step}
+                 value={this.props.value}
+                 onChange={this.handleChange} />
+        );
+        break;
+
+      default:
+        input = (
+          <input type="text"
+                 className="validate"
+                 placeholder={this.props.value}
+                 value={this.props.value}
+                 pattern={pattern}
+                 onChange={this.handleChange} />
+        );
+        break;
+    }
 
     return (
       <div className="input-field col s6">
         <label className="active">
-          {this.props.label} ({dollar}{pcnt})
+          {this.props.label}
         </label>
-        <input type="number"
-               placeholder={this.props.value}
-               className="{negativeHighlight}"
-               max={max} min={min} step={step}
-               value={this.props.value}
-               onChange={this.handleChange} />
+        {input}
        </div>
     );
   }
@@ -105,23 +126,26 @@ var AssumptionBox = React.createClass({
       );
     });
 
-    var id = randomId();
-    return (
-      <div>
-        <h6 className="myhighlight nocount">
-          Assumptions
-        </h6>
-        <table className="table bordered striped highlgiht">
-          <tbody>
-            <tr>
-              <th>Item</th>
-              <th>Value</th>
-            </tr>
-            {fields}
-          </tbody>
-        </table>
-      </div>
-    );
+    if (fields.length>0){
+      var id = randomId();
+      return (
+        <div>
+          <h6 className="myhighlight nocount">
+            Assumptions
+          </h6>
+          <table className="table bordered striped highlgiht">
+            <tbody>
+              <tr>
+                <th>Item</th>
+                <th>Value</th>
+              </tr>
+              {fields}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+    return null;
   }
 });
 

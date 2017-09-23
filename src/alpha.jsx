@@ -3,31 +3,99 @@ import GraphFactory from "./graph.jsx";
 import AjaxContainer from "./ajax.jsx";
 import FormBox from "./forms.jsx";
 
-import $ from 'jquery' //this one is not needed if your eslint is disabled
+
 
 var createReactClass = require('create-react-class');
 
 var _ = require('lodash');
 var classNames = require('classnames');
+var randomId = function() {
+ return "MY" + (Math.random() * 1e32).toString(12);
+};
 
 var AlphaBox = createReactClass({
-   getInitialState: function() {
-     var tmp = {
-       "example msrp": {
-         label: "Example MSRP",
-         value: 18881,
-         step: 1000
-       }
-     }
-     return tmp;
-   },
-   handleFieldChange: function(fieldId, value) {
-     var newState = this.state[fieldId];
-     newState.value = parseFloat(value); // convert to Float
-     this.setState(newState);
-   },
-  getFields: function(pickList){
-    var s = this.state;
+  getInitialState: function() {
+    return {
+      forms: {
+        "series": {
+          label: "Price point",
+          value: "close",
+          datatype:"text",
+          options:"open,high,low,close",
+        }
+      },
+      graphs:[{
+        func: "TIME_SERIES_DAILY_ADJUSTED",
+        datakey: "Time Series (Daily)",
+        is_indicator: false,
+        configs: {
+          series_type: "close"
+        }
+      },{
+        func: "TIME_SERIES_WEEKLY",
+        datakey: "Weekly Time Series",
+        is_indicator: false,
+        configs: {
+          series_type: "close"
+        }
+      },{
+        func: "TIME_SERIES_MONTHLY",
+        datakey: "Monthly Time Series",
+        is_indicator: false,
+        configs: {
+          series_type: "close"
+        }
+      },{
+        func: "SMA",
+        datakey: "Technical Analysis: SMA",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          time_period: 10,
+        }
+      },{
+        func: "EMA",
+        datakey: "Technical Analysis: EMA",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          time_period: 60,
+        }
+      },{
+        func: "WMA",
+        datakey: "Technical Analysis: WMA",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          time_period:60
+        }
+      },{
+        func: "DEMA",
+        datakey: "Technical Analysis: DEMA",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          time_period: 60
+        }
+      }]
+    }
+  },
+  handleFieldChange: function(fieldId, value) {
+    var newState = this.state.forms[fieldId];
+
+    switch(newState.datatype){
+      case "number":
+        newState.value = parseFloat(value); // convert to Float
+        break;
+      default:
+        newState.value=value;
+        break;
+    }
+
+    this.setState(newState);
+  },
+  getFormFields: function(pickList){
+    var s = this.state.forms;
     return pickList.map(function(i){
        var tmp = s[i];
        tmp.name = i;
@@ -39,50 +107,34 @@ var AlphaBox = createReactClass({
    },
 
   render: function(){
-    var test_form = {
-      title: "me",
-      fields: this.getFields(['example msrp']),
-      assumptions: []
-    };
+    var getFormFields = this.getFormFields;
+    var fields = _.flatMap(this.state.forms, function(val,key) {
+      var tmp = val;
+      tmp.title = key;
+      tmp.fields = getFormFields([key]);
+      tmp.assumptions = [];
+      return tmp;
+    });
+
+    var form_data = {
+      title: "Config",
+      fields: fields
+    }
+
+    var graphs = this.state.graphs.map((m) => {
+      return <AlphaGraph {...m}
+                         {...this.props}/>
+    });
+
     return (
       <div>
-        <FormBox data={test_form} onChange={this.handleFieldChange} />
+        {graphs}
+        {/* <FormBox data={form_data}
+            onChange={this.handleFieldChange} /> */}
       </div>
     );
   }
 });
-
-class AlphaConfig extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render(){
-    var inputs = [];
-    var setSeries = this.props.setSeries;
-    var series = this.props.series;
-    var options = this.props.seriesOptions.split(",").map((v) => {
-      var clean_v = v.trim();
-      var active = classNames(
-        "waves-effect btn-flat",
-        {"teal lighten-2 grey-text text-lighten-4 waves-teal": clean_v===series}
-      );
-
-      return (
-        <a className={active}
-            onClick={setSeries.bind(null,clean_v)}>
-          {clean_v} |
-        </a>
-      );
-    });
-
-    return (
-      <div className="row">
-        Pick series: {options}
-      </div>
-    )
-  }
-}
 
 
 var AlphaGraph = createReactClass({
@@ -95,12 +147,11 @@ var AlphaGraph = createReactClass({
   getUrl: function(symbol, configs) {
     // Build API url
     var baseUrl = "https://www.alphavantage.co/query?";
-    var query = [];
 
     // NOTE: key, val order is reversed!!
     // see https://lodash.com/docs/4.17.4#forEach
-    _.each(configs, function(val, key){
-      query.push(key+'='+val);
+    var query = _.flatMap(configs, function(val, key){
+      return [key,val].join("=");
     })
     return baseUrl + query.join('&');
   },
@@ -117,39 +168,53 @@ var AlphaGraph = createReactClass({
       // This is completely depending on the returned
       // data format. For AlphaVantage data, it's a dict
       // with a variable key which depends on the function in use!
-      var tmp = [];
-      _.each(data[this.props.datakey], function(val,key){
-        var d_in_milseconds = new Date(key);
-        var v = 0.0;
-        switch (this.props.series){
-          case 'open':
-            if (val.hasOwnProperty('1. open')){
-              v = val['1. open'];
-            }
-            break;
-          case 'high':
-            if (val.hasOwnProperty('2. high')){
-              v = val['2. high'];
-            }
-            break;
-          case 'low':
-            if (val.hasOwnProperty('3. low')){
-              v = val['3. low'];
-            }
-            break;
-          case 'close':
-            if (val.hasOwnProperty('4. close')){
-              v = val['4. close'];
-            }
-            break;
-          default:
-            if (val.hasOwnProperty(this.props.series)){
-              v = val[this.props.series];
-            }
-            break
-        }
+      var points = data[this.props.datakey];
 
-        tmp.push([d_in_milseconds.getTime(), parseFloat(v)]);
+      // Extract data we care about.
+      var series = this.props.configs.series_type;
+      var func = this.props.func;
+      var is_indicator = this.props.is_indicator===false?false:true;
+
+      var tmp = _.map(points, function(val, key){
+        // date stamp, yyyy-mm-dd
+        var d = new Date(key);
+
+        // get data value
+        var v = 0.0;
+        if (is_indicator){
+          if (val.hasOwnProperty(func)){
+            v = val[func];
+          }
+        }else{
+          switch (series){
+            case 'open':
+              if (val.hasOwnProperty('1. open')){
+                v = val['1. open'];
+              }
+              break;
+            case 'high':
+              if (val.hasOwnProperty('2. high')){
+                v = val['2. high'];
+              }
+              break;
+            case 'low':
+              if (val.hasOwnProperty('3. low')){
+                v = val['3. low'];
+              }
+              break;
+            case 'close':
+              if (val.hasOwnProperty('4. close')){
+                v = val['4. close'];
+              }
+              break;
+            default:
+              if (val.hasOwnProperty(series)){
+                v = val[func];
+              }
+              break;
+          }
+        }
+        return [d.getTime(), parseFloat(v)];
       });
       return _.reverse(tmp);
     }
@@ -160,13 +225,13 @@ var AlphaGraph = createReactClass({
     var currentValue = this.props.symbol;
     if (currentValue != null && this.preValue !== currentValue) {
       this.preValue = currentValue;
-      var api = this.getUrl(currentValue, {
-        symbol: currentValue,
-        'function': this.props.function,
-        outputsize: this.props.outputsize,
-        apikey: this.state.key,
-      });
+      var configs = this.props.configs;
+      configs.symbol = currentValue;
+      configs.function=this.props.func;
+      configs.outputsize = "full";
+      configs.apikey = this.state.key;
 
+      var api = this.getUrl(currentValue, configs);
       return (
         <AjaxContainer
             key={currentValue}
@@ -181,10 +246,10 @@ var AlphaGraph = createReactClass({
       <div>
         {/* Graph */}
         <GraphFactory
-            categories={this.props.function}
+            categories={this.props.func}
             data={this.state.data}
             footer={footer}
-            title={this.props.function}
+            title={this.props.func}
             {...this.props}/>
       </div>
     );
