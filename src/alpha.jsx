@@ -51,7 +51,7 @@ var AlphaBox = createReactClass({
         configs: {
           interval: "daily",
           series_type: "close",
-          time_period: 10,
+          time_period: 60,
         }
       },{
         func: "EMA",
@@ -77,6 +77,394 @@ var AlphaBox = createReactClass({
           series_type: "close",
           time_period: 60
         }
+      },{
+        func: "TEMA",
+        datakey: "Technical Analysis: TEMA",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          time_period: 60
+        }
+      },{
+        func: "TRIMA",
+        datakey: "Technical Analysis: TRIMA",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          time_period: 60
+        }
+      },{
+        func: "KAMA",
+        datakey: "Technical Analysis: KAMA",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          time_period: 60
+        }
+      },{
+        func: "MAMA",
+        datakey: "Technical Analysis: MAMA",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          fastlimit: 0.01,
+          slowlimit: 0.01
+        }
+      },{
+        func: "T3",
+        datakey: "Technical Analysis: T3",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          time_period: 60
+        }
+      },{
+        func: "TEMA",
+        datakey: "Technical Analysis: TEMA",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          time_period: 60
+        }
+      },{
+        func: "MACD",
+        datakey: "Technical Analysis: MACD",
+        configs: {
+          interval: "daily",
+          series_type: "close",
+          fastperiod: 12,
+          slowperiod:26,
+          signalperiod:9
+        }
+        /* },{
+         *   func: "MACDEXT",
+         *   datakey: "Technical Analysis: MACDEXT",
+         *   configs: {
+         *     interval: "daily",
+         *     series_type: "close",
+         *     fastperiod: 12,
+         *     slowperiod:26,
+         *     signalperiod:9,
+         *     fastmatype: 0,
+         *     slowmatype: 0,
+         *     signalmatype: 0
+         *   }
+         * },{
+         *   func: "STOCH",
+         *   datakey: "Technical Analysis: STOCH",
+         *   configs: {
+         *     interval: "daily",
+         *     fastkperiod: 5,
+         *     slowkperiod: 3,
+         *     slowdperiod: 3,
+         *     slowkmatype: 0,
+         *     slowdmatype: 0
+         *   }
+         * },{
+         *   func: "STOCHF",
+         *   datakey: "Technical Analysis: STOCHF",
+         *   configs: {
+         *     interval: "daily",
+         *     fastkperiod: 5,
+         *     fastdperiod: 3
+         *   }*/
+      },{
+        func: "RSI",
+        datakey: "Technical Analysis: RSI",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+          series_type: "close"
+        }
+        /* },{
+         *   func: "STOCHRSI",
+         *   datakey: "Technical Analysis: STOCHRSI",
+         *   configs: {
+         *     interval: "daily",
+         *     time_period: 60,
+         *     series_type: "close",
+         *     fastkperiod: 5,
+         *     fastdperiod: 3,
+         *     fastdmatype: 0
+         *   }*/
+      },{
+        func: "WILLR",
+        datakey: "Technical Analysis: WILLR",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+        }
+      },{
+        func: "ADX",
+        datakey: "Technical Analysis: ADX",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+        }
+      },{
+        func: "ADXR",
+        datakey: "Technical Analysis: ADXR",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+        }
+      },{
+        func: "APO",
+        datakey: "Technical Analysis: APO",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+          series_type: "close",
+          fastperiod: 12,
+          slowperiod: 26,
+          matype: 0
+        }
+      },{
+        func: "PPO",
+        datakey: "Technical Analysis: PPO",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+          series_type: "close",
+          fastperiod: 12,
+          slowperiod: 26,
+          matype: 0
+        }
+      },{
+        func: "MOM",
+        datakey: "Technical Analysis: MOM",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+          series_type: "close",
+        }
+      },{
+        func: "BOP",
+        datakey: "Technical Analysis: BOP",
+        configs: {
+          interval: "daily",
+        }
+      },{
+        func: "CCI",
+        datakey: "Technical Analysis: CCI",
+        configs: {
+          interval: "daily",
+          time_period: 60
+        }
+      },{
+        func: "CMO",
+        datakey: "Technical Analysis: CMO",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+          series_type: "close"
+        }
+      },{
+        func: "ROC",
+        datakey: "Technical Analysis: ROC",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+          series_type: "close"
+        }
+      },{
+        func: "ROCR",
+        datakey: "Technical Analysis: ROCR",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+          series_type: "close"
+        }
+      },{
+        func: "AROON",
+        datakey: "Technical Analysis: AROON",
+        configs: {
+          interval: "daily",
+          time_period: 60
+        }
+      },{
+        func: "AROONOSC",
+        datakey: "Technical Analysis: AROONOSC",
+        configs: {
+          interval: "daily",
+          time_period: 60
+        }
+      },{
+        func: "MFI",
+        datakey: "Technical Analysis: MFI",
+        configs: {
+          interval: "daily",
+          time_period: 60
+        }
+      },{
+        func: "TRIX",
+        datakey: "Technical Analysis: TRIX",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+          series_type: "close"
+        }
+      },{
+        func: "ULTOSC",
+        datakey: "Technical Analysis: ULTOSC",
+        configs: {
+          interval: "daily",
+          timeperiod1: 7,
+          timeperiod2: 14,
+          timeperiod3: 28
+        }
+      },{
+        func: "DX",
+        datakey: "Technical Analysis: DX",
+        configs: {
+          interval: "daily",
+          time_period: 60
+        }
+      },{
+        func: "MINUS_DI",
+        datakey: "Technical Analysis: MINUS_DI",
+        configs: {
+          interval: "daily",
+          time_period: 60
+        }
+      },{
+        func: "PLUS_DI",
+        datakey: "Technical Analysis: PLUS_DI",
+        configs: {
+          interval: "daily",
+          time_period: 60
+        }
+      },{
+        func: "MINUS_DM",
+        datakey: "Technical Analysis: MINUS_DM",
+        configs: {
+          interval: "daily",
+          time_period: 60
+        }
+      },{
+        func: "PLUS_DM",
+        datakey: "Technical Analysis: PLUS_DM",
+        configs: {
+          interval: "daily",
+          time_period: 60
+        }
+        /* },{
+         *   func: "BBANDS",
+         *   datakey: "Technical Analysis: BBANDS",
+         *   configs: {
+         *     interval: "daily",
+         *     time_period: 60,
+         *     series_type: "close",
+         *     nbdevup: 2,
+         *     nbdevdn: 2,
+         *     matype: 0
+         *   }*/
+       },{
+        func: "MIDPOINT",
+        datakey: "Technical Analysis: MIDPOINT",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+          series_type: "close"
+        }
+       },{
+        func: "MIDPRICE",
+        datakey: "Technical Analysis: MIDPRICE",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+          series_type: "close"
+        }
+      },{
+        func: "SAR",
+        datakey: "Technical Analysis: SAR",
+        configs: {
+          interval: "daily",
+          acceleration: 0.01,
+          maximu: 0.2
+        }
+      },{
+        func: "TRANGE",
+        datakey: "Technical Analysis: TRANGE",
+        configs: {
+          interval: "daily",
+        }
+      },{
+        func: "ATR",
+        datakey: "Technical Analysis: ATR",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+        }
+      },{
+        func: "NATR",
+        datakey: "Technical Analysis: NATR",
+        configs: {
+          interval: "daily",
+          time_period: 60,
+        }
+        /* },{
+         *   func: "AD",
+         *   datakey: "Technical Analysis: Chaikin A/D",
+         *   configs: {
+         *     interval: "daily"
+         *   }*/
+      },{
+        func: "ADOSC",
+        datakey: "Technical Analysis: ADOSC",
+        configs: {
+          interval: "daily",
+          fastperiod: 3,
+          slowperiod: 10
+        }
+      },{
+        func: "OBV",
+        datakey: "Technical Analysis: OBV",
+        configs: {
+          interval: "daily"
+        }
+      },{
+        func: "HT_TRENDLINE",
+        datakey: "Technical Analysis: HT_TRENDLINE",
+        configs: {
+          interval: "daily",
+          series_type: "close"
+        }
+        /* },{
+         *   func: "HT_SINE",
+         *   datakey: "Technical Analysis: HT_SINE",
+         *   configs: {
+         *     interval: "daily",
+         *     series_type: "close"
+         *   }
+         * },{
+         *   func: "HT_TRENDMODE",
+         *   datakey: "Technical Analysis: HT_TRENDMODE",
+         *   configs: {
+         *     interval: "daily",
+         *     series_type: "close"
+         *   }
+         * },{
+         *   func: "HT_DCPERIOD",
+         *   datakey: "Technical Analysis: HT_DCPERIOD",
+         *   configs: {
+         *     interval: "daily",
+         *     series_type: "close"
+         *   }*/
+      },{
+        func: "HT_DCPHASE",
+        datakey: "Technical Analysis: HT_DCPHASE",
+        configs: {
+          interval: "daily",
+          series_type: "close"
+        }
+        /* },{
+         *   func: "HT_PHASOR",
+         *   datakey: "Technical Analysis: HT_PHASOR",
+         *   configs: {
+         *     interval: "daily",
+         *     series_type: "close"
+         *   }*/
       }]
     }
   },
@@ -158,7 +546,10 @@ var AlphaGraph = createReactClass({
   handleUpdate: function(data) {
     var cleaned = this._cleanData(data);
     this.setState({
-      data: cleaned
+      data: _.concat(this.state.data, {
+        name: this.props.symbol,
+        data: cleaned
+      })
     });
   },
   _cleanData: function(data) {
@@ -203,7 +594,10 @@ var AlphaGraph = createReactClass({
               }
               break;
             case 'close':
-              if (val.hasOwnProperty('4. close')){
+              // NOTE: always prefere `adjusted` close
+              if (val.hasOwnProperty('5. adjusted close')){
+                v = val['5. adjusted close'];
+              } else if (val.hasOwnProperty('4. close')){
                 v = val['4. close'];
               }
               break;
@@ -249,7 +643,7 @@ var AlphaGraph = createReactClass({
             categories={this.props.func}
             data={this.state.data}
             footer={footer}
-            title={this.props.func}
+            title={_.startCase(this.props.func)}
             {...this.props}/>
       </div>
     );

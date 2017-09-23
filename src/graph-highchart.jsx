@@ -2,7 +2,6 @@ import React from 'react';
 
 var _ = require('lodash');
 var classNames = require('classnames');
-//import WayPoint from 'react-waypoint';
 
 var randomId = function() {
   return "MY" + (Math.random() * 1e32).toString(12);
@@ -25,7 +24,20 @@ var HighchartGraphBox = React.createClass({
     // Chart options
     var options = {
       chart: {
-        type: "line"
+        type: "line",
+        zoomType: 'x'
+      },
+      legend: {
+        enabled: true,
+      },
+      colors: ['#7cb5ec', '#434348',
+               '#90ed7d', '#f7a35c',
+               '#8085e9', '#f15c80',
+               '#e4d354', '#2b908f',
+               '#f45b5b', '#91e8e1'
+      ],
+      rangeSelector: {
+        selected: 5 // default to ALL
       },
       title: {
         text: this.props.title
@@ -39,29 +51,31 @@ var HighchartGraphBox = React.createClass({
       yAxis: {
         title: {
           text: this.props.series
-        }
+        },
+        labels: {
+          formatter: function () {
+            return (this.value > 0 ? ' + ' : '') + this.value + '%';
+          }
+        },
       },
       tooltip: {
         headerFormat: '<h5 class="page-header">{point.key}</h5><table class="table table-striped">',
         pointFormat: '<tr><td><b>{series.name}</b></td>' +
-                     '<td>{point.y:,.2f}</td></tr>',
+                     '<td>${point.y:,.2f}</td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
       },
       plotOptions: {
-        column: {
-          pointPadding: 0.2,
-          borderWidth: 0
+        series: {
+          compare: 'percent',
+          showInNavigator: true
         }
       },
       rangeSelector: {
-        selected: 1
+        selected: 4
       },
-      series: [{
-        name: this.props.symbol,
-        data: data
-      }]
+      series: data
     }
 
     // Render chart
