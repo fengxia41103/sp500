@@ -4,6 +4,7 @@ import SymbolBox from "./symbol.jsx";
 import AlphaBox from "./alpha.jsx";
 
 var _ = require('lodash');
+var randomColor = require('randomcolor');
 var classNames = require('classnames');
 
 var randomId = function() {

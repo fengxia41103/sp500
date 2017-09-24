@@ -30,9 +30,9 @@ var GraphFactory = React.createClass({
 
     return (
       <div className="row">
-        <h3>
+        <h6>
           {this.props.symbol}
-        </h3>
+        </h6>
 
         {/* Graphs */}
         <HighchartGraphBox

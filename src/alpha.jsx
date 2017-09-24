@@ -11,17 +11,6 @@ var randomId = function() {
  return "MY" + (Math.random() * 1e32).toString(12);
 };
 
-/* var randomColor = function () {
- *     return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
- * };*/
-
-var randomColor = function(){
-  var allowed = "0369cf".split( '' ), s = "#";
-  while ( s.length < 4 ) {
-    s += allowed.splice( Math.floor( ( Math.random() * allowed.length ) ), 1 );
-  }
-  return s;
-}
 
 var AlphaBox = createReactClass({
   getInitialState: function() {
