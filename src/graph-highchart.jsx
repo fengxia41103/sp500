@@ -61,7 +61,7 @@ var HighchartGraphBox = React.createClass({
       tooltip: {
         headerFormat: '<h5 class="page-header">{point.key}</h5><table class="table table-striped">',
         pointFormat: '<tr><td><b>{series.name}</b></td>' +
-                     '<td>${point.y:,.2f}</td></tr>',
+                     '<td>{point.y:,.2f}</td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true

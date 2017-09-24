@@ -3,8 +3,6 @@ import GraphFactory from "./graph.jsx";
 import AjaxContainer from "./ajax.jsx";
 import FormBox from "./forms.jsx";
 
-
-
 var createReactClass = require('create-react-class');
 
 var _ = require('lodash');
@@ -12,6 +10,18 @@ var classNames = require('classnames');
 var randomId = function() {
  return "MY" + (Math.random() * 1e32).toString(12);
 };
+
+/* var randomColor = function () {
+ *     return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+ * };*/
+
+var randomColor = function(){
+  var allowed = "0369cf".split( '' ), s = "#";
+  while ( s.length < 4 ) {
+    s += allowed.splice( Math.floor( ( Math.random() * allowed.length ) ), 1 );
+  }
+  return s;
+}
 
 var AlphaBox = createReactClass({
   getInitialState: function() {
@@ -546,10 +556,13 @@ var AlphaGraph = createReactClass({
   },
   handleUpdate: function(data) {
     var cleaned = this._cleanData(data);
+    var color = this.props.colors[this.state.data.length];
+
     this.setState({
       data: _.concat(this.state.data, {
         name: this.props.symbol,
         data: cleaned.data,
+        color: color
       }),
       meta: cleaned.meta
     });

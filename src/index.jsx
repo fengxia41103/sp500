@@ -93,7 +93,7 @@ var IndexList = React.createClass({
     return (
       <div>
         <nav>
-          <div className="nav-wrapper">
+          <div className="nav-wrapper blue-grey darken-2">
             <ul className="left hide-on-med-and-down">
               {theList}
             </ul>

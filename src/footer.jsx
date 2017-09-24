@@ -5,7 +5,7 @@ import React from "react";
 var Footer = React.createClass({
   render () {
     return (
-      <footer className="page-footer">
+      <footer className="page-footer blue-grey darken-2">
         <div className="container">
           <h5>Data source</h5>
           <ul>
