@@ -29,7 +29,12 @@ var config = {
     inline: true,
     hot: true,
     contentBase: BUILD_DIR,
-    outputPath: BUILD_DIR
+    outputPath: BUILD_DIR,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    }    
   },
   module: {
     loaders: [{

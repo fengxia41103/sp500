@@ -25,21 +25,26 @@ var GraphFactory = React.createClass({
       return null;
     }
 
-      // container id
+    // container id
     var containerId = randomId();
 
+    // google finance statement link
+    var staements = "https://finance.google.com/finance?q="+this.props.symbol+"&fstype=ii";
     return (
       <div className="row">
-        <h6>
-          {this.props.symbol}
-        </h6>
+      <h6>
+      {this.props.symbol}
+      </h6>
 
-        {/* Graphs */}
-        <HighchartGraphBox
-            containerId={containerId}
-            {...this.props} />
+      {/* link to google financial statements */}
+      <a href={statements}>statement</a>
 
-        <div className="divider" />
+      {/* Graphs */}
+      <HighchartGraphBox
+        containerId={containerId}
+        {...this.props} />
+
+      <div className="divider" />
       </div>
     );
 
