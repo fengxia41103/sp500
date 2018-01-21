@@ -29,9 +29,7 @@ var AjaxContainer = React.createClass({
     console.log("Getting: " + api);
 
     // Work horse
-    fetch(api,{
-          method:"get",
-          mode: 'no-cors'})
+    fetch(api)
         .then(function(resp) {
           return resp.json();
       }).then(function(json) {

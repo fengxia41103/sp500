@@ -508,7 +508,9 @@ var AlphaBox = createReactClass({
       fields: fields
     }
 
-    var graphs = this.state.graphs.map((m) => {
+    var tmpp = this.state.graphs.slice(0,1);
+    /*     var graphs = this.state.graphs.map((m) => {*/
+    var graphs = tmpp.map((m) => {
       return <AlphaGraph {...m}
                          {...this.props}/>
     });
