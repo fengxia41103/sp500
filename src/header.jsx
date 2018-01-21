@@ -9,8 +9,12 @@ var Header = React.createClass({
     return (
       <div className="myheader blue-grey darken-2">
         <div className="container text-right">
-          <h1>SP500 Snapshot</h1>
-          <p>Make . Money . Better</p>
+          <h1 className="myhighlight">
+            SP500 Snapshot
+          </h1>
+          <p className="myhighlight">
+            Make . Money . Better
+          </p>
         </div>
       </div>
     );
