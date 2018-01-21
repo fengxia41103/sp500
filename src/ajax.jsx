@@ -30,13 +30,15 @@ var AjaxContainer = React.createClass({
 
     // Work horse
     fetch(api)
-        .then(function(resp) {
-          return resp.json();
+      .then(function(resp) {
+        return resp.json();
       }).then(function(json) {
         if ((typeof json != "undefined") && json) {
           handleUpdate(json);
         }
-      }).catch(function(error) {});
+      }).catch(function(error) {
+        console.log(error);
+      });
   },
   componentWillMount: function() {
     this.debounceGetData = _.debounce(function() {

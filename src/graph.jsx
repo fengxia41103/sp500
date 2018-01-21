@@ -29,7 +29,7 @@ var GraphFactory = React.createClass({
     var containerId = randomId();
 
     // google finance statement link
-    var staements = "https://finance.google.com/finance?q="+this.props.symbol+"&fstype=ii";
+    var statements = "https://finance.google.com/finance?q="+this.props.symbol+"&fstype=ii";
     return (
       <div className="row">
       <h6>
