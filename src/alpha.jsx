@@ -644,11 +644,13 @@ var AlphaGraph = createReactClass({
 
     // Render graphs
     var title="";
+    var data = null;
     if (this.state.meta == "undefined" || this.state.meta==null ){
       title = "Unknown";
     }else {
       title = this.state.meta['2: Indicator'];
       title = title?title:_.startCase(this.props.func);
+      data = this.state.data;
     }
 
     var footer = this.props.func;
@@ -657,7 +659,7 @@ var AlphaGraph = createReactClass({
         {/* Graph */}
         <GraphFactory
             categories={this.props.func}
-            data={this.state.data}
+            data={data}
             footer={footer}
             title={title}
             {...this.props}/>
