@@ -643,8 +643,13 @@ var AlphaGraph = createReactClass({
     }
 
     // Render graphs
-    var title = this.state.meta['2: Indicator'];
-    title = title?title:_.startCase(this.props.func);
+    var title="";
+    if (this.state.meta == "undefined" || this.state.meta==null ){
+      title = "Unknown";
+    }else {
+      title = this.state.meta['2: Indicator'];
+      title = title?title:_.startCase(this.props.func);
+    }
 
     var footer = this.props.func;
     return (
