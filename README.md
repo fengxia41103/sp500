@@ -28,5 +28,4 @@ satisfied with dev result, time to update bucket version.
 4. assuming you have setup your AWS account, `aws s3 sync . s3://sp500chart/`.
 5. verify on a browser.   
 
-3. (optional) install `s3cmd`: `pip install s3cmd`
-4. Upload to s3: `s3cmd put --recursive * s3://sp500chart`
+
