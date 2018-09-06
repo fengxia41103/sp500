@@ -24,5 +24,9 @@ satisfied with dev result, time to update bucket version.
 
 1. Compile `bundle.js` build: `npm run build`
 2. Switch to `dist` folder: `cd dist`
+3. `pip install awscli`
+4. assuming you have setup your AWS account, `aws s3 sync . s3://sp500chart/`.
+5. verify on a browser.   
+
 3. (optional) install `s3cmd`: `pip install s3cmd`
 4. Upload to s3: `s3cmd put --recursive * s3://sp500chart`

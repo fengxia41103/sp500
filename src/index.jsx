@@ -137,9 +137,9 @@ var ItemList = React.createClass({
 
         return (
           <div key={randomKey} className={itemClass}>
-            <button onClick={setItem.bind(null,val)}>
+            <span onClick={setItem.bind(null,val)}>
               {item}
-            </button>
+            </span>
           </div>
         );
       }
